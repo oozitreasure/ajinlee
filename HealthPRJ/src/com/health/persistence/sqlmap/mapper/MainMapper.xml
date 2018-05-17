@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.health.persistence.mapper.MainMapper">
+
+<insert parameterType ="mainDTO" id="insertJoin">
+INSERT INTO USER_INFO
+( USER_NO, USER_ID, USER_NAME, PASSWORD, EMAIL, ADDR, REG_NO, REG_DT, AUTH )
+ VALUES ( (SELECT IFNULL(MAX(UI.USER_NO),0)+1 FROM USER_INFO UI),
+  #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(UI.REG_NO),0)+1 FROM USER_INFO UI),
+   NOW(), 'u' )
+</insert>
+
+<select parameterType="mainDTO" id="getUserInfo" resultType="mainDTO">
+SELECT USER_NO, USER_ID, USER_NAME, PASSWORD FROM 
+USER_INFO WHERE USER_ID = #{user_id} AND PASSWORD = #{password}
+</select>
+
+<select parameterType="mainDTO" id="getUserid" resultType="mainDTO">
+SELECT USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_NAME = #{user_name} AND EMAIL = #{email}
+</select>
+
+
+<select id="getUserList" resultType="mainDTO">
+
+<![CDATA[SELECT ROWNUM, USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM 
+( SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM USER_INFO WHERE AUTH = 'g' ORDER BY USER_NO ASC ) MOREPAGE WHERE ROWNUM <= 10]]>
+
+</select>
+
+<select parameterType="String" id="getUserInfoOne" resultType="mainDTO">
+ SELECT * FROM USER_INFO WHERE USER_NO = #{user_no} 
+</select>
+
+
+</mapper>
