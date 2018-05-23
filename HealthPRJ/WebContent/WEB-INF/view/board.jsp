@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-	<title>Join</title>
+	<title>자유게시판</title>
 	<jsp:include page="top.jsp" flush="false"></jsp:include>
 </head>
 <style>

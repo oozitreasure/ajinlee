@@ -1,31 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.health.DTO.mainDTO" %>
-<%@ page import="com.health.DTO.parkDTO" %>
 <%@ page import="com.health.util.CmmUtil"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
 <%
-   List<parkDTO> pList = (List<parkDTO>)request.getAttribute("pList");
-   if(pList == null){
-      pList = new ArrayList();
+   List<mainDTO> uList = (List<mainDTO>)request.getAttribute("uList");
+   if(uList == null){
+      uList = new ArrayList();
    }
+  
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-	<title>park</title>
+	<title>Join</title>
 	<jsp:include page="top.jsp" flush="false"></jsp:include>
 </head>
 <script>
 function doDetail(n){
     var user_no = n;
-    location.href="#";/* "/mypage2.do?user_no="+user_no; */
+    location.href="/mypage2.do?user_no="+user_no;
  }
 </script>
-
 <style>
 div.blueTable {
   background-color: #FFFFFF;
@@ -102,21 +101,21 @@ div.blueTable {
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">공원명</div>
-<div class="divTableHead">공원구분</div>
-<div class="divTableHead">도로명주소</div>
-<div class="divTableHead">관리기관명</div>
-<div class="divTableHead">전화번호</div>
+<div class="divTableHead">번호</div>
+<div class="divTableHead">이름</div>
+<div class="divTableHead">아이디</div>
+<div class="divTableHead">이메일</div>
+<div class="divTableHead">지역</div>
 </div>
 </div>
 <div class="divTableBody">
-<%for (parkDTO pDTO : pList) { %>
+<%for (mainDTO uDTO : uList) { %>
 <div class="divTableRow">
-<div class="divTableCell"onclick="doDetail(<%=pDTO.getPark_name()%>);"><%=pDTO.getPark_name()%></div>
-<div class="divTableCell"><%=pDTO.getPark_div() %></div>
-<div class="divTableCell"><%=pDTO.getAddr1() %></div>
-<div class="divTableCell"><%=pDTO.getAddr2() %></div>
-<div class="divTableCell"><%=pDTO.getNumber() %></div>
+<div class="divTableCell"><%=uDTO.getUser_no() %></div>
+<div class="divTableCell" onclick="doDetail(<%=uDTO.getUser_no()%>);"><%=uDTO.getUser_name() %></div>
+<div class="divTableCell"><%=uDTO.getUser_id() %></div>
+<div class="divTableCell"><%=uDTO.getEmail() %></div>
+<div class="divTableCell"><%=uDTO.getAddr() %></div>
 </div>
 <%} %>
 </div>

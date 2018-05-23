@@ -32,7 +32,7 @@
 	var sca = '01';
 	</script>
 	<script>
-/*	$(function(){
+	$(function(){
 
 	
  	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=9387cf9977f607739cd8bcf11b24d319";
@@ -43,7 +43,7 @@
             async: "false",
             success: function(resp) {
                  console.log(resp);
-                console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+                console.log("현재온도 : "+ (resp.main.temp- 273.15));
                 console.log("현재습도 : "+ resp.main.humidity);
                 console.log("날씨 : "+ resp.weather[0].main );
                 console.log("상세날씨설명 : "+ resp.weather[0].description );
@@ -55,25 +55,20 @@
                 
                 var tableStr ="<table>";
     			
-    			tableStr += "<tr><th>  </th><th>  </th></tr>";
+    			tableStr += "<tr><th>현재온도</th><th>현재습도</th></tr>";
+                tableStr += "<tr><th>"+ (resp.main.temp-273.15) +"</th><th>" + resp.main.humidity +"</th></tr>";
+                tableStr += "<tr><th>날씨</th><th>상세날씨설명</th></tr>";
+                tableStr += "<tr><th>"+ resp.weather[0].main +"</th><th>" + resp.weather[0].description +"</th></tr>";
+                tableStr += "<tr><th>날씨 이미지</th><th>바람</th></tr>";
+                tableStr += "<tr><th>"+ resp.weather[0].icon +"</th><th>" + resp.wind.speed +"</th></tr>";
+                tableStr += "<tr><th>나라</th><th>도시이름</th></tr>";
+                tableStr += "<tr><th>"+ resp.sys.country +"</th><th>" + resp.name +"</th></tr>";
+                tableStr += "<tr><th>구름</th>";
+                tableStr += "<tr><th>"+ (resp.clouds.all) +"%";
                 
-               $.each(resp, function(){
-                  console.log("현재온도 : "+ (resp.main.temp- 273.15) );
-                  console.log("현재습도 : "+ resp.main.humidity);
-                  console.log("날씨 : "+ resp.weather[0].main );
-                  console.log("상세날씨설명 : "+ resp.weather[0].description );
-                  console.log("날씨 이미지 : "+ resp.weather[0].icon );
-                  console.log("바람   : "+ resp.wind.speed );
-                  console.log("나라   : "+ resp.sys.country );
-                  console.log("도시이름  : "+ resp.name );
-                  console.log("구름  : "+ (resp.clouds.all) +"%" );
-                  
-                  tableStr += "<tr><th>"+ (resp.main.temp- 273.15) +"</th><th>" + resp.main.humidity +"</th></tr>";
-            	  
-              }); 
-               
+                    
                tableStr += "</table>";
-   			
+
    			$(".divs").append(tableStr);
 
                     
@@ -90,7 +85,8 @@
         });
 
 
-	}); */
+	});
+
 
 
 
@@ -145,18 +141,19 @@
 #ulsan{ left:200px; top:225px; }
 #jeju{ left:80px; top:340px; }
 
-.row, .area-map ui-display-on{
+.row, #canvas{
+display: inline-block;
+}
+#seoulMap, #seoulAllMap{
+display: inline-block;
+}
+.divs{
 display: inline-block;
 }
 </style>
   </head>
 
   <body>
-  
-  <div class="divs">
-  
-  
-  </div>
 
     <!-- Page Content -->
     <div class="container">
@@ -218,7 +215,8 @@ display: inline-block;
 							<area shape="poly" href="#" class="js-ajax js-image-changer ui-set-image-changer ui-set-ajax-link" data-image="#seoulAllMap" data-image-over="/img/section/ln/map/map_seoul_25.gif" onclick="javascript:setSiCode('11500');" alt="서울특별시 강서구" coords="65,139,66,152,68,157,61,171,51,175,45,197,34,199,45,211,63,221,74,215,89,217,95,212,101,217,108,234,124,237,131,231,129,208,133,206,139,208,146,208,144,197,118,175">
 						</map>
 					</div>
-	
+					
+	  <div class="divs"></div>
       
       <div class="row my-4">
         <div class="col-lg-8">

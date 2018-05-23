@@ -43,9 +43,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
      window.open("login.do", "childForm", "width=450, height=500,left=730, top=230, resizable = no, scrollbars = no"); 
    
  }		
-
- 
-
  </script>
 
   <body>
@@ -60,11 +57,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
         
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="home.do" style="font-size:20px; color:black;">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
             <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
             <li class="nav-item">
               <a class="nav-link" onclick="openLogin()" style="font-size:20px; color:black;">Login</a>
@@ -80,7 +72,9 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
               <a class="nav-link" href="/logout_proc.do" style="font-size:20px; color:black;">Logout</a>
             </li>
             <%if (SESSION_USER_ID.equals("admin")){ %>
-
+			<li class="nav-item">
+              <a class="nav-link" href="userList.do" style="font-size:20px; color:black;">회원정보</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="park.do" style="font-size:20px; color:black;">Park</a>
             </li>
@@ -102,6 +96,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
         </div>
       </div>
+      <input type="text" style="height:35px;">
       <button class="dd" style="border:0px; background-color:transparent;"><img src="/resources/img/search1.png" style="width:45px; height:45px"></button>
     </nav>
     

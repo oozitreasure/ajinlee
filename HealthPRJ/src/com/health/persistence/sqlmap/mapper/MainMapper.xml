@@ -21,16 +21,24 @@ SELECT USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_NAME = #{user_name} A
 </select>
 
 
-<select id="getUserList" resultType="mainDTO">
-
-<![CDATA[SELECT ROWNUM, USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM 
-( SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM USER_INFO WHERE AUTH = 'g' ORDER BY USER_NO ASC ) MOREPAGE WHERE ROWNUM <= 10]]>
-
-</select>
-
 <select parameterType="String" id="getUserInfoOne" resultType="mainDTO">
  SELECT * FROM USER_INFO WHERE USER_NO = #{user_no} 
 </select>
 
+<update parameterType="mainDTO" id="getupdateUserInfo">
+UPDATE USER_INFO SET EMAIL = #{email}, ADDR = #{addr}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE USER_NO = #{user_no}
+</update>
+
+<delete parameterType="mainDTO" id="deleteUserInfo">
+DELETE FROM USER_INFO WHERE USER_NO = #{user_no}
+</delete>
+
+<select id="getUserList" resultType="mainDTO">
+SELECT * FROM USER_INFO
+</select>
+
+<select id="getParkList" resultType="parkDTO">
+SELECT * FROM APARK_INFO
+</select>
 
 </mapper>

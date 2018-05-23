@@ -30,6 +30,16 @@
 	<link rel="stylesheet" type="text/css" href="/resources/login/css/main.css">
 <!--===============================================================================================-->
 </head>
+
+<script>
+function Sub(){
+	
+	window.opener.top.location.href="/home.do"
+	window.opener.top.location.reload(); //새로고침
+	window.close()
+}
+</script>
+
 <body>
 	
 	<div class="limiter">

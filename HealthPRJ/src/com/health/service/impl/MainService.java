@@ -1,11 +1,13 @@
 package com.health.service.impl;
 
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.health.DTO.mainDTO;
+import com.health.DTO.parkDTO;
 import com.health.persistence.mapper.MainMapper;
 import com.health.service.IMainService;
 
@@ -37,6 +39,31 @@ public class MainService implements IMainService {
 		
 		return mainMapper.getUserInfoOne(user_no);
 	}
+
+	@Override
+	public int updateUserInfo(mainDTO pDTO) {
+		
+		return mainMapper.getupdateUserInfo(pDTO);
+	}
+
+	@Override
+	public int deleteUserInfo(mainDTO dDTO) {
+	
+		return mainMapper.deleteUserInfo(dDTO);
+	}
+
+	@Override
+	public List<mainDTO> getUserList() {
+		
+		return mainMapper.getUserList();
+	}
+
+	@Override
+	public List<parkDTO> getParkList() {
+
+		return mainMapper.getParkList();
+	}
+
 
 		
 }

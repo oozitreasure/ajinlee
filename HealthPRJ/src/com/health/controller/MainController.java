@@ -1,5 +1,8 @@
 package com.health.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.health.DTO.mainDTO;
+import com.health.DTO.parkDTO;
 import com.health.service.IMainService;
-import com.health.service.impl.MainService;
 import com.health.util.CmmUtil;
 	
 @Controller
@@ -36,6 +39,13 @@ public class MainController {
 	public String register(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
 		return "register";
+		
+	}
+	
+	@RequestMapping(value="mypage3", method=RequestMethod.GET)
+	public String mypage3(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "mypage3";
 		
 	}
 	
@@ -112,11 +122,35 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value = "/user_info/Login")
-	public String Login(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
-			throws Exception {
-		return "/user_info/Login";
+	@RequestMapping(value="board2", method=RequestMethod.GET)
+	public String board2(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "board2";
+		
 	}
+	
+	@RequestMapping(value = "/mypage2")
+	public String mypage2(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   user_detail start!!!");
+		
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		
+		log.info("user_no : " + user_no);
+		
+		mainDTO gDTO = mainService.getUserInfoOne(user_no);
+		
+		if (gDTO == null) {
+			gDTO = new mainDTO();
+		}
+		model.addAttribute("gDTO", gDTO);
+		
+		log.info(this.getClass() + "   user_detail end!!!");
+		
+		return "/mypage2";
+	}
+
 
 	@RequestMapping(value = "/login_proc")
 	public String login_proc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
@@ -143,7 +177,7 @@ public class MainController {
 			session.setAttribute("session_user_no", gDTO.getUser_no());
 			session.setAttribute("session_user_id", gDTO.getUser_id());
 			session.setAttribute("session_user_name", gDTO.getUser_name());
-			returnURL = "/home";
+			returnURL = "/close";
 			
 		} else {
 			
@@ -217,20 +251,15 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "mypage")
-	public String mypage(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
-			throws Exception {
-		return "mypage";
-	}
-	
-	
-	@RequestMapping(value = "/user_detail")
+	@RequestMapping(value = "/mypage")
 	public String user_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   user_detail start!!!");
 		
-		String user_no = CmmUtil.nvl(re.getParameter("user_no"));
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		
+		log.info("user_no : " + user_no);
 		
 		mainDTO gDTO = mainService.getUserInfoOne(user_no);
 		
@@ -241,7 +270,134 @@ public class MainController {
 		
 		log.info(this.getClass() + "   user_detail end!!!");
 		
-		return "/user_detail";
+		return "/mypage";
+	}
+	
+	
+	@RequestMapping(value = "/user_update")
+	public String user_update(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   user_update start!!!");
+		
+		String user_no = CmmUtil.nvl(re.getParameter("user_no"));
+		String email = CmmUtil.nvl(re.getParameter("email"));
+		String addr = CmmUtil.nvl(re.getParameter("addr"));
+		
+		String chg_no = (String)session.getAttribute("session_user_no");
+		
+
+		log.info("email :" + email);
+		log.info("addr : " + addr);
+		log.info("chg_no : " + chg_no);
+		log.info("user_no : " + user_no);
+
+		mainDTO pDTO = new mainDTO();
+
+		pDTO.setUser_no(user_no);
+		pDTO.setEmail(email);
+		pDTO.setAddr(addr);
+		pDTO.setChg_no(chg_no);
+
+		int result = mainService.updateUserInfo(pDTO);
+
+		if (result != 0) {
+			model.addAttribute("msg", "회원 정보가 수정되었습니다.");
+			model.addAttribute("url", "/mypage.do?user_no=" + user_no);
+	
+			
+		} else {
+			
+			model.addAttribute("msg", "회원정보 수정에 실패하였습니다.");
+			model.addAttribute("url", "/mypage.do?user_no=" + user_no);
+		}
+		
+		log.info(this.getClass() + "   user_update end!!!");
+		
+		return "/alert";
+	}
+	
+	
+	
+
+	@RequestMapping(value = "/user_delete")
+	public String user_delete(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   user_delete start!!!");
+		
+		/*String user_no = CmmUtil.nvl(re.getParameter("user_no"));*/
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		
+		log.info("user_no : " + user_no);
+		
+		mainDTO dDTO = new mainDTO();
+		
+		dDTO.setUser_no(user_no);
+		
+		log.info("user_no : " + user_no);
+
+		int result = mainService.deleteUserInfo(dDTO);
+		
+		if (result != 0) {
+			session.setAttribute("session_user_no", "");
+			session.setAttribute("session_user_id", "");
+			session.setAttribute("session_user_name", "");
+			model.addAttribute("msg", "회원이 탈퇴되었습니다.");
+			model.addAttribute("url", "/home.do");
+			
+		} else {
+			
+			model.addAttribute("msg", "회원탈퇴에 실패하였습니다.");
+			model.addAttribute("url", "/mypage.do?user_no=" + user_no);
+		}
+		
+		log.info(this.getClass() + "   user_delete end!!!");
+		
+		return "/alert";
+	}
+	
+	@RequestMapping(value = "/userList")
+	
+	public String userList(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   userList start!!!");
+		
+		List<mainDTO> uList = mainService.getUserList();
+		
+		if (uList == null) {
+			
+			uList = new ArrayList<>();
+		}
+		
+		model.addAttribute("uList", uList);
+		
+		log.info(this.getClass() + "   userList end!!!");
+		
+		return "/userList";
+	}
+	
+	
+	@RequestMapping(value = "/park")
+	
+	public String park(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   getParkList start!!!");
+		
+		List<parkDTO> pList = mainService.getParkList();
+		
+		if (pList == null) {
+			
+			pList = new ArrayList<>();
+		}
+		
+		model.addAttribute("pList", pList);
+		
+		log.info(this.getClass() + "   getParkList end!!!");
+		
+		return "/park";
 	}
 	
 
