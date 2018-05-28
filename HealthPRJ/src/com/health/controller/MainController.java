@@ -14,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
 import com.health.service.IMainService;
@@ -29,8 +32,22 @@ public class MainController {
 	
 
 	@RequestMapping(value="home", method=RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
+	public String home(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   userList start!!!");
+		
+		List<freeDTO> fList = mainService.getFreeList();
+		
+		if (fList == null) {
+			
+			fList = new ArrayList<>();
+		}
+		
+		model.addAttribute("fList", fList);
+		
+		log.info(this.getClass() + "   userList end!!!");
+		
 		return "home";
 		
 	}
@@ -42,12 +59,41 @@ public class MainController {
 		
 	}
 	
+	@RequestMapping(value="free_detail", method=RequestMethod.GET)
+	public String free_detail(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "free_detail";
+		
+	}
+	
+	@RequestMapping(value="free_insert", method=RequestMethod.GET)
+	public String free_insert(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "free_insert";
+		
+	}
+	
 	@RequestMapping(value="mypage3", method=RequestMethod.GET)
 	public String mypage3(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
 		return "mypage3";
 		
 	}
+	
+	@RequestMapping(value="park_detail", method=RequestMethod.GET)
+	public String park_detail(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "park_detail";
+		
+	}
+	
+	@RequestMapping(value="park_insert", method=RequestMethod.GET)
+	public String park_insert(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "park_insert";
+		
+	}
+	
 	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(HttpServletRequest re, HttpServletResponse response, 
@@ -110,22 +156,25 @@ public class MainController {
 	@RequestMapping(value="PWDs", method=RequestMethod.GET)
 	public String PWDs(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
+		
+		
 		return "PWDs";
 		
 	}
 	
-	
-	@RequestMapping(value="board", method=RequestMethod.GET)
-	public String board(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
-		return "board";
-		
-	}
+
 	
 	@RequestMapping(value="board2", method=RequestMethod.GET)
 	public String board2(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
 		return "board2";
+		
+	}
+	
+	@RequestMapping(value="park_1", method=RequestMethod.GET)
+	public String park_1(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "park_1";
 		
 	}
 	
@@ -159,7 +208,7 @@ public class MainController {
 		log.info(this.getClass() + "login_proc start!!!");
 
 		String user_id = re.getParameter("user_id");
-		String password = /*SHA256.SHA256_encode(*/re.getParameter("password");
+		String password =/* SHA256.SHA256_encode(*/re.getParameter("password");
 
 		log.info(getClass() + "user_id : " + user_id);
 		log.info(getClass() + "password : " + password);
@@ -221,6 +270,7 @@ public class MainController {
 	@RequestMapping(value = "/idsearch_proc")
 	public String idsearch_proc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
+		
 		log.info(this.getClass() + "   idsearch_proc start!!!");
 
 		String user_name = re.getParameter("user_name");
@@ -249,6 +299,48 @@ public class MainController {
 		
 		return "/alert";
 	}
+	
+	
+	@RequestMapping(value = "/password_proc")
+	public String PwSearchProc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   pw_search_proc start!!!");
+
+		String user_no = re.getParameter("user_no");
+		String user_name = re.getParameter("user_name");
+		String user_id = re.getParameter("user_id");
+		String email = re.getParameter("email");
+
+		log.info(this.getClass() + "user_name : " + user_name);
+		log.info(this.getClass() + "user_id : " + user_id);
+		log.info(this.getClass() + "email :" + email);
+		log.info(this.getClass() + "user_no : " + user_no);
+
+		mainDTO kDTO = new mainDTO();
+
+		kDTO.setUser_name(user_name);
+		kDTO.setUser_id(user_id);
+		kDTO.setEmail(email);
+
+		kDTO = mainService.getPassword(kDTO);
+
+		if (kDTO != null) {
+			model.addAttribute("msg", "비밀번호변경페이지로 이동합니다.");
+			model.addAttribute("url", "home.do");
+			session.setAttribute("session_user_no", kDTO.getUser_no());
+		} else {
+			model.addAttribute("msg", "일치하는 회원이 없습니다. 다시 확인해주세요");
+			model.addAttribute("url", "PWDs.do");
+		}
+		kDTO = null;
+		
+		log.info(this.getClass() + "   pw_search_proc end!!!");
+		
+		return "/alert";
+	}
+	
+	
 	
 	
 	@RequestMapping(value = "/mypage")
@@ -400,7 +492,47 @@ public class MainController {
 		return "/park";
 	}
 	
-
+	
+	@RequestMapping(value = "/freeList")
+	
+	public String freeList(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
 		
+		log.info(this.getClass() + "   userList start!!!");
+		
+		List<freeDTO> fList = mainService.getFreeList();
+		
+		if (fList == null) {
+			
+			fList = new ArrayList<>();
+		}
+		
+		model.addAttribute("fList", fList);
+		
+		log.info(this.getClass() + "   userList end!!!");
+		
+		return "/freeList";
+	}
+	
+	
+	@RequestMapping(value="/getSearch")
+	public @ResponseBody List<parkDTO> getSearch(@RequestParam(value = "search") String search)throws Exception{
+		
+		log.info(this.getClass() + "   parksearch start!!!");
+		
+		parkDTO fDTO = new parkDTO();
+		
+		fDTO.setSearch("%"+search+"%");
+		
+		log.info("search : " + search);
+		
+		List<parkDTO> flist = mainService.getSearch(fDTO);
+		
+		
+		log.info(this.getClass() + "   parksearch end!!!");
+		
+		return flist;
+	}
+	
 
-}
+	}

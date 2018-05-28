@@ -43,6 +43,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
      window.open("login.do", "childForm", "width=450, height=500,left=730, top=230, resizable = no, scrollbars = no"); 
    
  }		
+
  </script>
 
   <body>
@@ -79,7 +80,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
               <a class="nav-link" href="park.do" style="font-size:20px; color:black;">Park</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="board.do" style="font-size:20px; color:black;">Board</a>
+              <a class="nav-link" href="freeList.do" style="font-size:20px; color:black;">Board</a>
             </li>
             <%}else{ %>      
                <%} %>
@@ -89,15 +90,16 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
               <a class="nav-link" href="park.do" style="font-size:20px; color:black;">Park</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="board.do" style="font-size:20px; color:black;">Board</a>
+              <a class="nav-link" href="freeList.do" style="font-size:20px; color:black;">Board</a>
             </li>
             <%} %>
           </ul>
 
         </div>
       </div>
-      <input type="text" style="height:35px;">
+     <form role="search" method="post" class="left" action="/park.do">
       <button class="dd" style="border:0px; background-color:transparent;"><img src="/resources/img/search1.png" style="width:45px; height:45px"></button>
+      </form>
     </nav>
     
     <!-- Bootstrap core JavaScript -->

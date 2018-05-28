@@ -16,7 +16,7 @@
 <html lang="en">
 <head>
 
-	<title>Join</title>
+	<title>userList</title>
 	<jsp:include page="top.jsp" flush="false"></jsp:include>
 </head>
 <script>
@@ -112,7 +112,7 @@ div.blueTable {
 <%for (mainDTO uDTO : uList) { %>
 <div class="divTableRow">
 <div class="divTableCell"><%=uDTO.getUser_no() %></div>
-<div class="divTableCell" onclick="doDetail(<%=uDTO.getUser_no()%>);"><%=uDTO.getUser_name() %></div>
+<div class="divTableCell" onclick="doDetail(<%=uDTO.getUser_no()%>)"><%=uDTO.getUser_name() %></div>
 <div class="divTableCell"><%=uDTO.getUser_id() %></div>
 <div class="divTableCell"><%=uDTO.getEmail() %></div>
 <div class="divTableCell"><%=uDTO.getAddr() %></div>

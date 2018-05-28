@@ -2,6 +2,7 @@ package com.health.service;
 
 import java.util.List;
 
+import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
 
@@ -22,6 +23,12 @@ public interface IMainService {
 	List<mainDTO> getUserList();
 
 	List<parkDTO> getParkList();
+
+	List<freeDTO> getFreeList();
+
+	mainDTO getPassword(mainDTO kDTO);
+
+	List<parkDTO> getSearch(parkDTO fDTO);
 
 	
 }

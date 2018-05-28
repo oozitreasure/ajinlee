@@ -1,11 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.health.DTO.freeDTO" %>
+<%@ page import="com.health.util.CmmUtil"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%
+   List<freeDTO> fList = (List<freeDTO>)request.getAttribute("fList");
+   if(fList == null){
+      fList = new ArrayList();
+   }
+  
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
 	<title>자유게시판</title>
+	
 	<jsp:include page="top.jsp" flush="false"></jsp:include>
 </head>
+
+<script>
+
+function doDetail(n){
+	var fr_no = n;
+	   location.href="/free_detail.do?fr_no="+ fr_no;
+	}
+ 
+</script>
+
 <style>
 div.blueTable {
   background-color: #FFFFFF;
@@ -82,27 +104,23 @@ div.blueTable {
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">head1</div>
-<div class="divTableHead">head2</div>
-<div class="divTableHead">head3</div>
-<div class="divTableHead">head4</div>
-<div class="divTableHead">head5</div>
-<div class="divTableHead">head6</div>
-<div class="divTableHead">head7</div>
-<div class="divTableHead">head8</div>
+<div class="divTableHead">번호</div>
+<div class="divTableHead">제목</div>
+<div class="divTableHead">작성자</div>
+<div class="divTableHead">작성일</div>
+<div class="divTableHead">조회수</div>
 </div>
 </div>
 <div class="divTableBody">
+<%for (freeDTO fDTO : fList) { %>
 <div class="divTableRow">
-<div class="divTableCell">cell1_1</div>
-<div class="divTableCell">cell2_1</div>
-<div class="divTableCell">cell3_1</div>
-<div class="divTableCell">cell4_1</div>
-<div class="divTableCell">cell5_1</div>
-<div class="divTableCell">cell6_1</div>
-<div class="divTableCell">cell7_1</div>
-<div class="divTableCell">cell8_1</div>
+<div class="divTableCell"><%=fDTO.getFr_no() %></div>
+<div class="divTableCell" onclick="doDetail(<%=fDTO.getTitle()%>)"><%=fDTO.getTitle() %></div>
+<div class="divTableCell"><%=fDTO.getUser_id() %></div>
+<div class="divTableCell"><%=fDTO.getReg_dt() %></div>
+<div class="divTableCell"><%=fDTO.getCnt() %></div>
 </div>
+<%} %>
 </div>
 </div>
 <div class="blueTable outerTableFooter">

@@ -41,4 +41,17 @@ SELECT * FROM USER_INFO
 SELECT * FROM APARK_INFO
 </select>
 
+<select id="getFreeList" resultType="freeDTO">
+SELECT * FROM FREE_INFO
+</select>
+
+<select parameterType="mainDTO" id="getPassword" resultType="mainDTO">
+SELECT USER_NO, USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
+</select>
+
+<select parameterType="parkDTO" id="getSearch" resultType="parkDTO">
+SELECT ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, ADMIN_NAME, NUMBER FROM USER_INFO WHERE AUTH = 'f' AND
+(PARK_NAME LIKE #{search} OR ADDR1 LIKE #{search}) ORDER BY ADMIN_NO ASC
+</select>
+
 </mapper>

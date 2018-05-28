@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%@ page import="com.health.DTO.freeDTO" %>
+<%@ page import="com.health.util.CmmUtil"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+<%
+   List<freeDTO> fList = (List<freeDTO>)request.getAttribute("fList");
+   if(fList == null){
+      fList = new ArrayList();
+   }
+  
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -116,6 +127,45 @@
 </script>
 
 <style>
+.divTableCell{
+display: inline-block;
+}
+
+div.blueTable {
+  border: 0px solid #FFFFFF;
+  background-color: #FFFFFF;
+  width: 50%;
+  text-align: left;
+}
+.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+  border: 0px solid #FFFFFF;
+}
+.divTable.blueTable .divTableBody .divTableCell {
+  font-size: 15px;
+  color: #333333;
+}
+.divTable.blueTable .divTableRow:nth-child(even) {
+  background: #FFFFFF;
+}
+.divTable.blueTable .divTableHeading {
+  background: #FFFFFF;
+}
+.divTable.blueTable .divTableHeading .divTableHead {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  text-align: left;
+}
+/* DivTable.com */
+.divTable{ display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+
+
 #canvas {float:left; position:relative; width: 380px; height:430px; margin: 0;}
 #south {width: 380px; height:430px; top: 0px; left: 0;}
 
@@ -232,14 +282,6 @@ display: inline-block;
       </div>
       <!-- /.row -->
 
-      <!-- Call to Action Well -->
-      <div class="card text-white bg-secondary my-4 text-center">
-        <div class="card-body">
-          <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
-        </div>
-      </div>
-
-
       <!-- Content Row -->
       <div class="row">
         <div class="col-md-4 mb-4">
@@ -265,24 +307,32 @@ display: inline-block;
             </div>
           </div>
         </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">Card Three</h2>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
-            </div>
-          </div>
         </div>
-        <!-- /.col-md-4 -->
-
-      </div>
-      <!-- /.row -->
-
-    </div>
+<div align="right"><a href="freeList.do" style="color:black" >+ 더보기</a></div>
+<div align="right">        
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">오늘의 자유게시판</div>
+<hr>
+<!-- <div class="divTableHead">작성자</div>
+<div class="divTableHead">조회수</div>
+<div class="divTableHead">작성일</div> -->
+</div>
+</div>
+<div class="divTableBody">
+<%for (freeDTO uDTO : fList) { %>
+<div class="divTableRow">
+<div class="divTableCell" onclick="doDetail(<%=uDTO.getTitle()%>);"><%=uDTO.getTitle() %></div><a style="color:red">(<%=uDTO.getCnt() %>)</a>
+<%-- <div class="divTableCell"><%=uDTO.getUser_id() %></div>
+<div class="divTableCell"><%=uDTO.getCnt() %></div>
+<div class="divTableCell"><%=uDTO.getReg_dt() %></div> --%>
+</div>
+<%} %>
+</div>
+</div>
+</div>
+</div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="/resources/vendor/jquery/jquery.min.js"></script>

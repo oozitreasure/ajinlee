@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
 import com.health.persistence.mapper.MainMapper;
@@ -62,6 +63,24 @@ public class MainService implements IMainService {
 	public List<parkDTO> getParkList() {
 
 		return mainMapper.getParkList();
+	}
+
+	@Override
+	public List<freeDTO> getFreeList() {
+		
+		return mainMapper.getFreeList();
+	}
+
+	@Override
+	public mainDTO getPassword(mainDTO kDTO) {
+		
+		return mainMapper.getPassword(kDTO);
+	}
+
+	@Override
+	public List<parkDTO> getSearch(parkDTO fDTO) {
+		
+		return mainMapper.getSearch(fDTO);
 	}
 
 

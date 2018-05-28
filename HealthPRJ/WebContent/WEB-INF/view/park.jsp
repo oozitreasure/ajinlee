@@ -22,8 +22,78 @@
 <script>
 function doDetail(n){
     var user_no = n;
-    location.href="#";/* "/mypage2.do?user_no="+user_no; */
+    location.href="/park_detail.do?admin_no="+admin_no;
  }
+ 
+ 
+ function doSearch() {
+ 	
+ 	var contents = "";
+ 	var cnt = 10;
+ 	var search = $('.searchbox').val();
+ 	
+ 	if (search == "") {
+ 		location.href="/park.do";
+ 		
+ 	} else {
+ 		
+ 		$.ajax({
+ 			
+ 			url : "/getSearch.do",
+ 			method : "post",
+ 			data : {'search' : search},
+ 			datatype : "json", 
+ 			success : function(data) {
+ 					var contents = "";
+ 					var content = "";
+					
+					contents += "<div class='divTable blueTable'>";
+					contents += "<div class='divTableHeading'>";
+					contents += "<div class='divTableRow'>";
+					contents += "<div class='divTableHead'>공원명</div>";
+					contents += "<div class='divTableHead'>공원구분</div>";
+					contents += "<div class='divTableHead'>도로명주소</div>";
+					contents += "<div class='divTableHead'>관리기관명</div>";
+					contents += "<div class='divTableHead'>전화번호</div></div></div>";
+ 					
+				$.each(data, function (key, value) {
+
+					content += "<div class='divTable blueTable'>";
+					content += "<div class='divTableHeading'>";
+					content += "<div class='divTableRow'>";
+					content += "<div class='divTableHead'>"+value.park_name+"</div>";
+					content += "<div class='divTableHead'>"+value.park_div+"</div>";
+					content += "<div class='divTableHead'>"+value.addr1+"</div>";
+					content += "<div class='divTableHead'>"+value.admin_name+"</div>";
+					content += "<div class='divTableHead'>"+value.number+"</div></div></div>";
+		 			
+ 				});
+				
+				
+				if(content == ""){
+					
+					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
+					
+		 			$('.divTable blueTable').html(content);
+		 			/* $('#delete').remove(); */
+		 			
+				}else{
+					
+ 				$('.divTable blueTable').html(contents+content);				
+				}
+				
+ 				if ((data).length<10) {
+ 					/* $('#addview').remove(); */
+ 					
+ 				}
+ 			}
+ 			
+ 		});
+ 		
+ 	}
+ 	
+}
+
 </script>
 
 <style>
@@ -99,6 +169,10 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style>
 <body>
+
+<input type="text" onchange="doSearch()" class="searchbox">
+<input type="submit" value="검색">
+
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
@@ -115,12 +189,13 @@ div.blueTable {
 <div class="divTableCell"onclick="doDetail(<%=pDTO.getPark_name()%>);"><%=pDTO.getPark_name()%></div>
 <div class="divTableCell"><%=pDTO.getPark_div() %></div>
 <div class="divTableCell"><%=pDTO.getAddr1() %></div>
-<div class="divTableCell"><%=pDTO.getAddr2() %></div>
+<div class="divTableCell"><%=pDTO.getAdmin_name() %></div>
 <div class="divTableCell"><%=pDTO.getNumber() %></div>
 </div>
 <%} %>
 </div>
 </div>
+
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>

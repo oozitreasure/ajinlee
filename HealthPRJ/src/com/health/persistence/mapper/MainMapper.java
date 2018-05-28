@@ -2,6 +2,7 @@ package com.health.persistence.mapper;
 
 import java.util.List;
 
+import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
 import com.health.config.Mapper;
@@ -25,6 +26,12 @@ public interface MainMapper {
 	List<mainDTO> getUserList();
 
 	List<parkDTO> getParkList();
+
+	List<freeDTO> getFreeList();
+
+	mainDTO getPassword(mainDTO kDTO);
+
+	List<parkDTO> getSearch(parkDTO fDTO);
 	
 
 }

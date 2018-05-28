@@ -7,5 +7,6 @@
     	<!-- <typeAlias type="poly.dto.BoardDTO" alias="BoardDTO" /> -->
     	<typeAlias type="com.health.DTO.mainDTO" alias="mainDTO" />
     	<typeAlias type="com.health.DTO.parkDTO" alias="parkDTO" /> 
+    	<typeAlias type="com.health.DTO.freeDTO" alias="freeDTO" /> 
     </typeAliases>
 </configuration>
