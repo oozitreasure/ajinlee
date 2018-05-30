@@ -15,12 +15,15 @@ public class freeDTO {
 	private String chg_no;
 	private String chg_dt;
 	
+
+	
 	public String getFr_no() {
 		return fr_no;
 	}
 	public void setFr_no(String fr_no) {
 		this.fr_no = fr_no;
 	}
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -87,6 +90,7 @@ public class freeDTO {
 	public void setChg_dt(String chg_dt) {
 		this.chg_dt = chg_dt;
 	}
+
 	
 
 }

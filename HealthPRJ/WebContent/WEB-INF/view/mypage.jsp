@@ -103,7 +103,7 @@ function mylike(){
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "Userid is required">
 						<!-- <input class="input100" type="text" name="user_id" placeholder="아이디"> -->
-						<input class="input100" type="hidden" id="user_no" name="user_no" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
+						<input class="input100" type="hidden" id="user_id" name="user_id" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
                 		<input class="input100" type="text" id="user_id" style="background-color:white;" name="user_id" value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly />
 						<span class="focus-input100"></span>
 					</div>
@@ -143,8 +143,8 @@ function mylike(){
 					</select>
 					</div> -->
 					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
-						<input class="input100" type="email" name="email" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "addr is required">
+						<input class="input100" type="text" name="addr1" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
 						<span class="focus-input100"></span>
 					</div>
 

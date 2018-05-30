@@ -7,6 +7,8 @@
 <%
  String user_no = CmmUtil.nvl(request.getParameter("user_no"));
 
+System.out.println("user_no : " + user_no);
+
 mainDTO uDTO = (mainDTO)request.getAttribute("uDTO");
 if(uDTO == null) uDTO = new mainDTO();
 

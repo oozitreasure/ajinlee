@@ -28,7 +28,6 @@ public interface IMainService {
 
 	List<freeDTO> getFreeList();
 
-
 	freeDTO getFree(String fr_no);
 
 	parkDTO getPark(String admin_no);
@@ -38,6 +37,8 @@ public interface IMainService {
 	String park_insert_proc(parkDTO pDTO);
 
 	int updatePassword(mainDTO uDTO);
+
+	void updateFree(freeDTO rDTO);
 
 	
 }

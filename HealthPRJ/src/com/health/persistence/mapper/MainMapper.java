@@ -39,7 +39,7 @@ public interface MainMapper {
 
 	String park_insert_proc(parkDTO pDTO);
 
-	int updatePassword(mainDTO uDTO);
+	int updatePassword(mainDTO rDTO);
 	
 
 }

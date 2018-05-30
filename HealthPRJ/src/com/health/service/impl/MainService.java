@@ -106,5 +106,11 @@ public class MainService implements IMainService {
 
 		return mainMapper.updatePassword(uDTO);
 	}
+
+	@Override
+	public void updateFree(freeDTO rDTO) {
+
+		
+	}
 		
 }

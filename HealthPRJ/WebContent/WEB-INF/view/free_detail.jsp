@@ -73,7 +73,7 @@ display: inline;
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/free_update_proc.do">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="free_E.do">
 				
 					<input class="input100" type="hidden" id="user_no" name="fr_no" value="<%=CmmUtil.nvl(rDTO.getFr_no()) %>">
 					<div class="wrap-input100 validate-input m-b-20">
@@ -82,11 +82,11 @@ display: inline;
 					
 					<div class="wrap-input100 validate-input m-b-20">
 					<br>
-						<textarea class="input100" name="cont" id="cont" style="background-color:white; height:500px" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
+						<textarea class="input100" name="content" id="content" style="background-color:white; height:500px" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
 					</div>
 					
  					<div class="container-login100-form-btn">
-						<input type="submit" class="login100-form-btn" value="수정">
+						<input type="submit" class="login100-form-btn" value="수정" />
 					</div> 
 					
 					</form>

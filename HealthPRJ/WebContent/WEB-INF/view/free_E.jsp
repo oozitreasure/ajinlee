@@ -71,9 +71,9 @@ display: inline;
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/free_delete_proc.do">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/freeUpdate.do">
 				
-					<input class="input100" type="hidden" id="user_no" name="fr_no" value="<%=CmmUtil.nvl(rDTO.getFr_no()) %>">
+					<input class="input100" type="hidden" id="fr_no" name="fr_no" value="<%=CmmUtil.nvl(rDTO.getFr_no()) %>">
 					<div class="wrap-input100 validate-input m-b-20">
                 		<input class="input100" type="text" id="title" name="title" style="background-color:white;" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" />
 					<span class="focus-input100"></span>
@@ -81,7 +81,7 @@ display: inline;
 					
 					<div class="wrap-input100 validate-input m-b-20">
 					<br>
-						<textarea class="input100" name="cont" id="cont" style="background-color:white; height:500px"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
+						<textarea class="input100" name="content" id="content" style="background-color:white; height:500px"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
 					<span class="focus-input100"></span>
 					</div>
 					

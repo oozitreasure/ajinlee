@@ -93,14 +93,29 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="free_E", method=RequestMethod.GET)
-	public String free_E(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
+	@RequestMapping(value = "free_E")
+	public String free_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   free_detail start!!!");
+		
+		String fr_no = CmmUtil.nvl(re.getParameter("fr_no"));
+		
+		log.info("fr_no : " + fr_no);
+		
+		freeDTO rDTO = mainService.getFree(fr_no);
+		
+		if (rDTO == null) {
+			rDTO = new freeDTO();
+		}
+		model.addAttribute("rDTO", rDTO);
+		
+		log.info(this.getClass() + "   free_detail end!!!");
+		
 		return "free_E";
-		
-		
-		
 	}
+			
+			
 	
 	@RequestMapping(value="PWDschange", method=RequestMethod.GET)
 	public String PWDschange(HttpServletRequest request, HttpServletResponse response, 
@@ -527,13 +542,14 @@ public class MainController {
 	
 	
 	@RequestMapping(value = "/password_update.do")
-	public String password_update(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
+	public String password_update(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   pw_update start!!!");
 		
-		String user_no = req.getParameter("user_no");
-		String password = CmmUtil.nvl/*(SHA256.SHA256_encode*/(req.getParameter("password"));
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		
+		String password = CmmUtil.nvl/*(SHA256.SHA256_encode*/(re.getParameter("password"));
 
 		log.info("user_no : " + user_no);
 		log.info("password : " + password);
@@ -735,6 +751,74 @@ public class MainController {
 		
 		return "/freeList";
 	}
+	
+	
+	
+	   @RequestMapping(value = "/freeUpdate")
+	   public String FreeUpdate(@RequestParam String fr_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	         ModelMap model) throws Exception {
+
+	      log.info(this.getClass().getName() + "   FreeUpdate start!");
+
+	      String msg = "";
+	      String url = "";
+
+	      try {
+
+	         String user_id = CmmUtil.nvl((String) session.getAttribute("session_user_id")); // 아이디
+	         String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
+	         String chg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+	         String titled = CmmUtil.nvl((String) request.getParameter("title"));
+	         String title = TextUtil.exchangeEscapeNvl(titled);
+				String notice_check = CmmUtil.nvl(request.getParameter("notice_check")); // 공지글 여부
+				String contentd = CmmUtil.nvl((String) request.getParameter("content"));
+				String content = TextUtil.exchangeEscapeNvl(contentd);
+				content = content.replace("\r\n", "<br>");
+				
+	         log.info("user_id : " + user_id);
+	         log.info("user_name : " + user_name);
+	         log.info("fr_no : " + fr_no);
+	         log.info("title : " + title);
+	         log.info("notice_check : " + notice_check);
+	         log.info("content : " + content);
+	         log.info("user_no : " + chg_no);
+
+	         freeDTO rDTO = new freeDTO();
+
+	         rDTO.setUser_id(user_id);
+	         rDTO.setUser_name(user_name);
+	         rDTO.setFr_no(fr_no);
+	         rDTO.setTitle(title);
+	         rDTO.setNotice_check(notice_check);
+	         rDTO.setContent(content);
+	         rDTO.setChg_no(chg_no);
+
+	         mainService.updateFree(rDTO);
+	         msg = "수정되었습니다.";
+
+	         url = "/free_detail.do?fr_no=" + fr_no;
+
+	         rDTO = null;
+
+	      } catch (Exception e) {
+
+	         msg = "실패하였습니다. : " + e.toString();
+	         url = "/free_E.do?fr_no=" + fr_no;
+
+	         log.info(e.toString());
+	         e.printStackTrace();
+
+	      } finally {
+	         log.info(this.getClass().getName() + "   FreeUpdate end!");
+
+	         // 결과 메시지 전달하기
+	         model.addAttribute("msg", msg);
+	         model.addAttribute("url", url);
+
+	      }
+	      // return "/alert";
+	      return "/alert";
+	   }
 
 	
 

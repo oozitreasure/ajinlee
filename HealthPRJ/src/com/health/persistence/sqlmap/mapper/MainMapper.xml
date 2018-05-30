@@ -74,4 +74,8 @@ VALUES( (SELECT IFNULL(MAX(CAST(PI.ADMIN_NO AS UNSIGNED)),0)+1 FROM APARK_INFO P
 UPDATE USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
 </update>
 
+<update parameterType="freeDTO" id="updateFree">
+UPDATE FREE_INFO SET NOTICE_CHECK = #{notice_check}, TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
+</update>
+
 </mapper>
