@@ -6,8 +6,8 @@
 <insert parameterType ="mainDTO" id="insertJoin">
 INSERT INTO USER_INFO
 ( USER_NO, USER_ID, USER_NAME, PASSWORD, EMAIL, ADDR, REG_NO, REG_DT, AUTH )
- VALUES ( (SELECT IFNULL(MAX(UI.USER_NO),0)+1 FROM USER_INFO UI),
-  #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(UI.REG_NO),0)+1 FROM USER_INFO UI),
+ VALUES ( (SELECT IFNULL(MAX(CAST(UI.USER_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
+  #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(CAST(UI.REG_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
    NOW(), 'u' )
 </insert>
 
@@ -46,12 +46,32 @@ SELECT * FROM FREE_INFO
 </select>
 
 <select parameterType="mainDTO" id="getPassword" resultType="mainDTO">
-SELECT USER_NO, USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
+SELECT USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
 </select>
 
-<select parameterType="parkDTO" id="getSearch" resultType="parkDTO">
-SELECT ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, ADMIN_NAME, NUMBER FROM USER_INFO WHERE AUTH = 'f' AND
-(PARK_NAME LIKE #{search} OR ADDR1 LIKE #{search}) ORDER BY ADMIN_NO ASC
+<select parameterType="String" id="getFree" resultType="freeDTO">
+ SELECT * FROM FREE_INFO WHERE FR_NO = #{fr_no}
 </select>
+
+
+<select parameterType="String" id="getPark" resultType="parkDTO">
+ SELECT * FROM APARK_INFO WHERE ADMIN_NO = #{admin_no} 
+</select>
+
+<insert parameterType="freeDTO" id="free_insert_proc">
+INSERT INTO FREE_INFO ( FR_NO, USER_NAME, TITLE, CONTENT, CNT, REG_NO, REG_DT, USER_ID )
+VALUES( (SELECT IFNULL(MAX(CAST(FI.FR_NO AS UNSIGNED)),0)+1 FROM FREE_INFO FI), #{user_name}, #{title}, #{content}, 0 , #{reg_no}, NOW(), #{user_id})
+</insert>
+
+
+<insert parameterType="parkDTO" id="park_insert_proc">
+INSERT INTO APARK_INFO ( ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, PARK_EST1, PARK_EST2, PARK_EST3, PARK_EST4, PARK_EST5, ADMIN_NAME, NUMBER )
+VALUES( (SELECT IFNULL(MAX(CAST(PI.ADMIN_NO AS UNSIGNED)),0)+1 FROM APARK_INFO PI), #{park_name}, #{park_div}, #{addr1}, #{park_est1}, #{park_est2}, #{park_est3}, #{park_est4}, #{park_est5}, #{admin_name}, #{number})
+</insert>
+
+
+<update id="updatePassword">
+UPDATE USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
+</update>
 
 </mapper>

@@ -5,6 +5,10 @@
 <%@ page import="com.health.util.CmmUtil"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+
+
+
+
 <%
    List<freeDTO> fList = (List<freeDTO>)request.getAttribute("fList");
    if(fList == null){
@@ -41,8 +45,21 @@
 	
 	<script>
 	var sca = '01';
+	
+	
+	function doDetail(n){
+		var fr_no = n;
+		   location.href="free_detail.do?fr_no="+ fr_no;
+		}
+	
 	</script>
+	
+	
+	
 	<script>
+	
+	
+
 	$(function(){
 
 	
@@ -202,7 +219,6 @@ display: inline-block;
 }
 </style>
   </head>
-
   <body>
 
     <!-- Page Content -->
@@ -210,7 +226,7 @@ display: inline-block;
 
       <!-- Heading Row -->
       
-    <div style="width:100%;height:400px;" class="row">
+   <!--  <div style="width:100%;height:400px;" class="row">
 	<div id="canvas">
 
 	<div id="south"></div>
@@ -233,7 +249,7 @@ display: inline-block;
 	<div id="jeju"><h2>제주특별자치도</h2></div>
 
 	</div>
-	</div>
+	</div> -->
 	
 	  <div id="seoulMap" class="area-map ui-display-on"><!-- 서울특별시 -->
 	  <img usemap="#seoulArea" alt="서울특별시 구선택 지도" src="/resources/img/map.png" id="seoulAllMap">
@@ -268,52 +284,13 @@ display: inline-block;
 					
 	  <div class="divs"></div>
       
-      <div class="row my-4">
-        <div class="col-lg-8">
-          <img class="img-fluid rounded" src="http://placehold.it/900x400" alt="">
-        </div>
-        <!-- /.col-lg-8 -->
-        <div class="col-lg-4">
-          <h1>Business Name or Tagline</h1>
-          <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-          <a class="btn btn-primary btn-lg" href="#">Call to Action!</a>
-        </div>
-        <!-- /.col-md-4 -->
-      </div>
-      <!-- /.row -->
-
-      <!-- Content Row -->
-      <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">Card One</h2>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
-            </div>
-          </div>
-        </div>
-        <!-- /.col-md-4 -->
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h2 class="card-title">Card Two</h2>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">More Info</a>
-            </div>
-          </div>
-        </div>
-        </div>
+      
 <div align="right"><a href="freeList.do" style="color:black" >+ 더보기</a></div>
 <div align="right">        
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">오늘의 자유게시판</div>
+<div class="divTableHead" style="font-size:20px;">오늘의 자유게시판</div>
 <hr>
 <!-- <div class="divTableHead">작성자</div>
 <div class="divTableHead">조회수</div>
@@ -323,7 +300,7 @@ display: inline-block;
 <div class="divTableBody">
 <%for (freeDTO uDTO : fList) { %>
 <div class="divTableRow">
-<div class="divTableCell" onclick="doDetail(<%=uDTO.getTitle()%>);"><%=uDTO.getTitle() %></div><a style="color:red">(<%=uDTO.getCnt() %>)</a>
+<div class="divTableCell" onclick="doDetail(<%=uDTO.getFr_no()%>)""><%=uDTO.getTitle() %></div><a style="color:red">(<%=uDTO.getCnt() %>)</a>
 <%-- <div class="divTableCell"><%=uDTO.getUser_id() %></div>
 <div class="divTableCell"><%=uDTO.getCnt() %></div>
 <div class="divTableCell"><%=uDTO.getReg_dt() %></div> --%>
@@ -333,7 +310,7 @@ display: inline-block;
 </div>
 </div>
 </div>
-
+<br>
     <!-- Bootstrap core JavaScript -->
     <script src="/resources/vendor/jquery/jquery.min.js"></script>
     <script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -73,6 +73,7 @@ display: inline;
 display: inline;
 }
 </style>
+
 <script>
 
 function delete_check() {
@@ -84,10 +85,14 @@ function delete_check() {
     }
   }
   
+function mylike(){
+	location.href="mylike.do";
+  }
+  
 </script>
 
 <body>
-	
+	<div style="width:40%">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
@@ -99,26 +104,25 @@ function delete_check() {
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "Userid is required">
 						<!-- <input class="input100" type="text" name="user_id" placeholder="아이디"> -->
 						<input class="input100" type="hidden" id="user_no" name="user_no" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
-                		<input class="input100" type="text" id="user_id" name="user_id" value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly />
+                		<input class="input100" type="text" id="user_id" style="background-color:white;" name="user_id" value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly />
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "Username is required">
-						<input class="input100" type="text" name="user_name" value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly />
+						<input class="input100" type="text" name="user_name" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly />
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
-						<input class="input100" type="email" name="email" value="<%= CmmUtil.nvl(gDTO.getEmail()) %>" />
+						<input class="input100" type="email" name="email" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getEmail()) %>" />
 						<span class="focus-input100"></span>
 					</div>
 					
 					
-					<div class="wrap-input100 validate-input m-b-45" data-validate = "addr is required">
-						<input class="input100" type="text" name="addr" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
-						<select class="input100" name="addr" name="addr">
+					<!-- <div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
+						<select class="input100" name="addr" style="background-color:white; width:100%" >
   						<option value="서울특별시">서울특별시</option>
  						<option value="경기도">경기도</option>
   						<option value="인천광역시">인천광역시</option>
@@ -137,8 +141,12 @@ function delete_check() {
   						<option value="울산광역시">울산광역시</option>
   						<option value="제주특별자치도">제주특별자치도</option>
 					</select>
+					</div> -->
+					
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
+						<input class="input100" type="email" name="email" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
+						<span class="focus-input100"></span>
 					</div>
-
 
 					<div class="container-login100-form-btn">
 						<input type="submit" class="login100-form-btn" value="수정">
@@ -150,11 +158,15 @@ function delete_check() {
 						<input type="button" class="login100-form-btn" value="탈퇴" onclick="delete_check()">
 					</div>
 					</form>
+					
+					<div>
+					<button onclick="mylike()">나의좋아요!</button>
+					</div>
 				
 			</div>
 		</div>
 	</div>
-	
+	</div>
 
 	<div id="dropDownSelect1"></div>
 	

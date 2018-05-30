@@ -10,6 +10,7 @@
    if(pList == null){
       pList = new ArrayList();
    }
+   
 %>
 
 <!DOCTYPE html>
@@ -21,85 +22,21 @@
 </head>
 <script>
 function doDetail(n){
-    var user_no = n;
+    var admin_no = n;
     location.href="/park_detail.do?admin_no="+admin_no;
  }
  
  
- function doSearch() {
- 	
- 	var contents = "";
- 	var cnt = 10;
- 	var search = $('.searchbox').val();
- 	
- 	if (search == "") {
- 		location.href="/park.do";
- 		
- 	} else {
- 		
- 		$.ajax({
- 			
- 			url : "/getSearch.do",
- 			method : "post",
- 			data : {'search' : search},
- 			datatype : "json", 
- 			success : function(data) {
- 					var contents = "";
- 					var content = "";
-					
-					contents += "<div class='divTable blueTable'>";
-					contents += "<div class='divTableHeading'>";
-					contents += "<div class='divTableRow'>";
-					contents += "<div class='divTableHead'>공원명</div>";
-					contents += "<div class='divTableHead'>공원구분</div>";
-					contents += "<div class='divTableHead'>도로명주소</div>";
-					contents += "<div class='divTableHead'>관리기관명</div>";
-					contents += "<div class='divTableHead'>전화번호</div></div></div>";
- 					
-				$.each(data, function (key, value) {
+function parkIn(){
 
-					content += "<div class='divTable blueTable'>";
-					content += "<div class='divTableHeading'>";
-					content += "<div class='divTableRow'>";
-					content += "<div class='divTableHead'>"+value.park_name+"</div>";
-					content += "<div class='divTableHead'>"+value.park_div+"</div>";
-					content += "<div class='divTableHead'>"+value.addr1+"</div>";
-					content += "<div class='divTableHead'>"+value.admin_name+"</div>";
-					content += "<div class='divTableHead'>"+value.number+"</div></div></div>";
-		 			
- 				});
-				
-				
-				if(content == ""){
-					
-					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
-					
-		 			$('.divTable blueTable').html(content);
-		 			/* $('#delete').remove(); */
-		 			
-				}else{
-					
- 				$('.divTable blueTable').html(contents+content);				
-				}
-				
- 				if ((data).length<10) {
- 					/* $('#addview').remove(); */
- 					
- 				}
- 			}
- 			
- 		});
- 		
- 	}
- 	
-}
-
+    location.href="/park_insert.do"
+ }
 </script>
 
 <style>
 div.blueTable {
   background-color: #FFFFFF;
-  width: 80%;
+  width: 75%;
   text-align: center;
 }
 .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
@@ -169,15 +106,18 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style>
 <body>
-
-<input type="text" onchange="doSearch()" class="searchbox">
-<input type="submit" value="검색">
+<br>
+<div align="center">
+<div>
+<input type="text" onchange="doSearch()" class="searchbox" style="width:30%; height:50px;" />
+<input type="submit" value="검색" style="background-color:#52896F; color:white; width:70px; height:50px">
+</div>
+<br>
 
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
 <div class="divTableHead">공원명</div>
-<div class="divTableHead">공원구분</div>
 <div class="divTableHead">도로명주소</div>
 <div class="divTableHead">관리기관명</div>
 <div class="divTableHead">전화번호</div>
@@ -186,8 +126,8 @@ div.blueTable {
 <div class="divTableBody">
 <%for (parkDTO pDTO : pList) { %>
 <div class="divTableRow">
-<div class="divTableCell"onclick="doDetail(<%=pDTO.getPark_name()%>);"><%=pDTO.getPark_name()%></div>
-<div class="divTableCell"><%=pDTO.getPark_div() %></div>
+<div class="divTableCell" onclick="doDetail('<%=pDTO.getAdmin_no()%>');"><%=pDTO.getPark_name()%></div>
+<%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %>
 <div class="divTableCell"><%=pDTO.getAddr1() %></div>
 <div class="divTableCell"><%=pDTO.getAdmin_name() %></div>
 <div class="divTableCell"><%=pDTO.getNumber() %></div>
@@ -198,10 +138,14 @@ div.blueTable {
 
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
+<div align="right">
+<input type="button" value="글쓰기" onclick="parkIn()" style="background-color:#52896F; color:white; width:70px; height:45px" />
+</div>
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
 </div>
 </div>
-
+</div>
+<br>
 </body>
 
 <jsp:include page="footer.jsp" flush="false"></jsp:include>

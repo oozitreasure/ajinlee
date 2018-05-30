@@ -13,6 +13,8 @@ public interface IMainService {
 	mainDTO getUserInfo(mainDTO gDTO);
 
 	mainDTO getUserid(mainDTO uDTO);
+	
+	mainDTO getPassword(mainDTO kDTO);
 
 	mainDTO getUserInfoOne(String user_no);
 
@@ -26,9 +28,16 @@ public interface IMainService {
 
 	List<freeDTO> getFreeList();
 
-	mainDTO getPassword(mainDTO kDTO);
 
-	List<parkDTO> getSearch(parkDTO fDTO);
+	freeDTO getFree(String fr_no);
+
+	parkDTO getPark(String admin_no);
+
+	int free_insert_proc(freeDTO fDTO);
+
+	String park_insert_proc(parkDTO pDTO);
+
+	int updatePassword(mainDTO uDTO);
 
 	
 }

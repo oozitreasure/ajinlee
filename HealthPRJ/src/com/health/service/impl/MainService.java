@@ -78,11 +78,33 @@ public class MainService implements IMainService {
 	}
 
 	@Override
-	public List<parkDTO> getSearch(parkDTO fDTO) {
+	public freeDTO getFree(String fr_no) {
 		
-		return mainMapper.getSearch(fDTO);
+		return mainMapper.getFree(fr_no);
 	}
 
+	@Override
+	public parkDTO getPark(String admin_no) {
+		
+		return mainMapper.getPark(admin_no);
+	}
 
+	@Override
+	public int free_insert_proc(freeDTO fDTO) {
+		
+		return mainMapper.free_insert_proc(fDTO);
+	}
+
+	@Override
+	public String park_insert_proc(parkDTO pDTO) {
+		
+		return mainMapper.park_insert_proc(pDTO);
+	}
+
+	@Override
+	public int updatePassword(mainDTO uDTO) {
+
+		return mainMapper.updatePassword(uDTO);
+	}
 		
 }

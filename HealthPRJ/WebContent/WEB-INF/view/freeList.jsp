@@ -23,7 +23,12 @@
 
 function doDetail(n){
 	var fr_no = n;
-	   location.href="/free_detail.do?fr_no="+ fr_no;
+	   location.href="free_detail.do?fr_no="+ fr_no;
+	}
+	
+function freeIn(){
+	
+	   location.href="free_insert.do";
 	}
  
 </script>
@@ -101,10 +106,12 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style>
 <body>
+<br>
+
+<div align="center">
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">번호</div>
 <div class="divTableHead">제목</div>
 <div class="divTableHead">작성자</div>
 <div class="divTableHead">작성일</div>
@@ -114,8 +121,7 @@ div.blueTable {
 <div class="divTableBody">
 <%for (freeDTO fDTO : fList) { %>
 <div class="divTableRow">
-<div class="divTableCell"><%=fDTO.getFr_no() %></div>
-<div class="divTableCell" onclick="doDetail(<%=fDTO.getTitle()%>)"><%=fDTO.getTitle() %></div>
+<div class="divTableCell" onclick="doDetail(<%=fDTO.getFr_no()%>)"><%=fDTO.getTitle() %></div>
 <div class="divTableCell"><%=fDTO.getUser_id() %></div>
 <div class="divTableCell"><%=fDTO.getReg_dt() %></div>
 <div class="divTableCell"><%=fDTO.getCnt() %></div>
@@ -125,10 +131,14 @@ div.blueTable {
 </div>
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
+<div align="right">
+<input type="button" value="글쓰기 " onclick="freeIn()" style="background-color:#52896F; color:white; width:75px; height:40px"/>
+</div>
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
 </div>
 </div>
-
+</div>
+<br>
 </body>
 
 <jsp:include page="footer.jsp" flush="false"></jsp:include>

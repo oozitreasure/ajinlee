@@ -31,7 +31,15 @@ public interface MainMapper {
 
 	mainDTO getPassword(mainDTO kDTO);
 
-	List<parkDTO> getSearch(parkDTO fDTO);
+	freeDTO getFree(String fr_no);
+
+	parkDTO getPark(String admin_no);
+
+	int free_insert_proc(freeDTO fDTO);
+
+	String park_insert_proc(parkDTO pDTO);
+
+	int updatePassword(mainDTO uDTO);
 	
 
 }

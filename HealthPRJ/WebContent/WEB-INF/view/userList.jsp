@@ -22,7 +22,7 @@
 <script>
 function doDetail(n){
     var user_no = n;
-    location.href="/mypage2.do?user_no="+user_no;
+    location.href="/user_detail.do?user_no=" + user_no;
  }
 </script>
 <style>
@@ -98,6 +98,8 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style>
 <body>
+<br>
+<div align="center">
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
@@ -125,7 +127,8 @@ div.blueTable {
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
 </div>
 </div>
-
+</div>
+<br>
 </body>
 
 <jsp:include page="footer.jsp" flush="false"></jsp:include>

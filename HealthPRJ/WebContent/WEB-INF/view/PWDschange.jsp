@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<%@ page import="com.health.DTO.mainDTO" %>
+<%@ page import="com.health.util.CmmUtil" %>
+
+
+<%
+ String user_no = CmmUtil.nvl(request.getParameter("user_no"));
+
+mainDTO uDTO = (mainDTO)request.getAttribute("uDTO");
+if(uDTO == null) uDTO = new mainDTO();
+
+%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,27 +47,21 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-90">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/password_proc.do">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/password_update.do">
 					<span class="login100-form-title p-b-51">
 						비밀번호 찾기
 					</span>
 
-				    <div class="wrap-input100 validate-input m-b-16" data-validate = "이름을 입력해주세요">
-						<input class="input100" type="text" name="user_name" placeholder="이름">
+				    <div class="wrap-input100 validate-input m-b-16" data-validate = "비밀번호를 입력해주세요.">
+						<input class="input100" type="password" name="password" placeholder="비밀번호를 입력해주세요.">
+						<input type="hidden" name="user_no" id="user_no" value="<%= CmmUtil.nvl(uDTO.getUser_no()) %>" >
 						<span class="focus-input100"></span>
 					</div>
 					
-										
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "아이디를 입력해주세요">
-						<input class="input100" type="text" name="user_id" placeholder="아이디">
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "비밀번호를 다시한번 입력해주세요.">
+						<input class="input100" type="password" name="password1" placeholder="비밀번호를 다시한번 입력해주세요.">
 						<span class="focus-input100"></span>
 					</div>
-					
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "이메일을 입력해주세요">
-						<input class="input100" type="email" name="email" placeholder="이메일">
-						<span class="focus-input100"></span>
-					</div>
-					
 
 					
 					<div class="flex-sb-m w-full p-t-3 p-b-24">
@@ -74,7 +80,7 @@
 
 					<div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							찾기
+							변경
 						</button>
 					</div>
 

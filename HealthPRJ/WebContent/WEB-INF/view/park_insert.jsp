@@ -41,53 +41,59 @@ display: inline-block;
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/park_insert_proc.do">
 					<div class="login100-form-title p-b-45">
 					 
 					</div>
 					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름">
+					
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "공원이름을 입력해주세요.">
+						<input class="input100" type="text" name="park_name" id="park_name" style="background-color:white; width:1000px" placeholder="공원이름">
 						<span class="focus-input100"></span>
 					</div>
 					
 					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "내용을 입력해주세요.">
-						<textarea class="input100" name="content" style="background-color:white; width:1000px; height:500px" placeholder="이미지"></textarea>
+<!-- 					<div class="wrap-input100 validate-input m-b-20" data-validate = "이미지 입력해주세요.">
+						<textarea class="input100" name="img" style="background-color:white; width:1000px; height:500px" placeholder="이미지"></textarea>
+						<span class="focus-input100"></span>
+					</div> -->
+					
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "공원구분을 입력해주세요.">
+						<input class="input100" type="text" name="park_div" id="park_div" style="background-color:white; width:1000px" placeholder="공원구분을 입력해주세요.">
 						<span class="focus-input100"></span>
 					</div>
 					
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름1">
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "주소를 입력해주세요.">
+						<input class="input100" type="text" name="addr1" id="addr1" style="background-color:white; width:1000px" placeholder="주소를 입력해주세요.">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름2">
+										<div class="wrap-input100 validate-input m-b-20" data-validate = "공원보유시설운동시설">
+						<input class="input100" type="text" name="park_est1" id="park_est1" style="background-color:white; width:1000px" placeholder="공원보유시설운동시설">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름3">
+										<div class="wrap-input100 validate-input m-b-20" data-validate = "공원보유시설운동시설">
+						<input class="input100" type="text" name="park_est2" id="park_est2" style="background-color:white; width:1000px" placeholder="공원보유시설운동시설">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름4">
+										<div class="wrap-input100 validate-input m-b-20" data-validate = "공원보유시설편익시설">
+						<input class="input100" type="text" name="park_est3" id="park_est3" style="background-color:white; width:1000px" placeholder="공원보유시설편익시설">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름5">
+										<div class="wrap-input100 validate-input m-b-20" data-validate = "공원보유시설교양시설">
+						<input class="input100" type="text" name="park_est4" id="park_est4" style="background-color:white; width:1000px" placeholder="공원보유시설교양시설">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름6">
+										<div class="wrap-input100 validate-input m-b-20" data-validate = "공원보유시설기타시설">
+						<input class="input100" type="text" name="park_est5" id="park_est5" style="background-color:white; width:1000px" placeholder="공원보유시설기타시설">
 						<span class="focus-input100"></span>
 					</div>
-										<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="공원이름7">
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "관리기관명">
+						<input class="input100" type="text" name="admin_name" id="admin_name" style="background-color:white; width:1000px" placeholder="관리기관명">
 						<span class="focus-input100"></span>
 					</div>
 					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "제목을 입력해주세요.">
-						<input class="input100" type="text" name="title" style="background-color:white; width:1000px" placeholder="지도 api">
+					<div class="wrap-input100 validate-input m-b-20" data-validate = "전화번호">
+						<input class="input100" type="text" name="number" id="number" style="background-color:white; width:1000px" placeholder="전화번호">
 						<span class="focus-input100"></span>
 					</div>
 					

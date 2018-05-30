@@ -1,18 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ page import="com.health.DTO.freeDTO" %>
-<%@ page import="com.health.util.CmmUtil" %>
-
-<%
-freeDTO rDTO = (freeDTO)request.getAttribute("rDTO");
-if(rDTO == null) rDTO = new freeDTO();
-
-%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>디테일</title>
+	<title>좋아요</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -37,68 +27,110 @@ if(rDTO == null) rDTO = new freeDTO();
 	<link rel="stylesheet" type="text/css" href="/resources/register/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/resources/register/css/main.css">
 <!--===============================================================================================-->
-
 </head>
-<script>
-function freeUp(){
-	
-	   location.href="free_E.do";
-	}
-</script>
 
 <jsp:include page="top.jsp" flush="false"></jsp:include>
 <style>
-.container-login100-form-btn{
-display: inline;
+div.blueTable {
+  background-color: #FFFFFF;
+  width: 80%;
+  text-align: center;
 }
-.container-login100-form-btn{
-display: inline;
+.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+  border: 1px solid #D1D1D1;
+  padding: 3px 2px;
 }
+.divTable.blueTable .divTableBody .divTableCell {
+  font-size: 15px;
+  color: #000000;
+}
+.divTable.blueTable .divTableHeading {
+  background: #52896F;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #52896F 100%);
+  border-bottom: 1px solid #000000;
+}
+.divTable.blueTable .divTableHeading .divTableHead {
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 1px solid #FFFFFF;
+}
+.divTable.blueTable .divTableHeading .divTableHead:first-child {
+  border-left: none;
+}
+
+.blueTable .tableFootStyle {
+  font-size: 15px;
+  font-weight: normal;
+  color: #FFFFFF;
+/*   background: #FFFFFF;
+  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 66%, #FFFFFF 100%); */
+  border-top: 1px solid #FFFFFF;
+  background-color: #FFF4E3;
+}
+.blueTable .tableFootStyle {
+  font-size: 15px;
+}
+.blueTable .tableFootStyle .links {
+	 text-align: center;
+	 background-color: #FFF4E3;
+}
+.blueTable .tableFootStyle .links a{
+  display: inline-block;
+  background: #52896F;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+.blueTable.outerTableFooter {
+  border-top: none;
+}
+.blueTable.outerTableFooter .tableFootStyle {
+  padding: 3px 5px; 
+}
+/* DivTable.com */
+.divTable{ display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
 </style>
-<script>
-
-<%-- function delete_check() {
-    if(confirm("삭제하시겠습니까?")){
-       location.href="/free_delete.do?fr_no=<%=rDTO.getFr_no()%>";
-       return true;
-    }else{
-       return false;
-    }
-  } --%>
-  
-</script>
-
 <body>
-	<div style="width:60%">
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/free_update_proc.do">
-				
-					<input class="input100" type="hidden" id="user_no" name="fr_no" value="<%=CmmUtil.nvl(rDTO.getFr_no()) %>">
-					<div class="wrap-input100 validate-input m-b-20">
-                		<input class="input100" type="text" id="title" name="title" style="background-color:white;" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" readonly />
-					</div>
-					
-					<div class="wrap-input100 validate-input m-b-20">
-					<br>
-						<textarea class="input100" name="cont" id="cont" style="background-color:white; height:500px" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
-					</div>
-					
- 					<div class="container-login100-form-btn">
-						<input type="submit" class="login100-form-btn" value="수정">
-					</div> 
-					
-					</form>
-					
-
-			</div>
-		</div>
-	</div>
-	</div>
-
-	<div id="dropDownSelect1"></div>
-	
+<br>
+<div align="center">
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">제목</div>
+<div class="divTableHead">작성자</div>
+<div class="divTableHead">작성일</div>
+<div class="divTableHead">조회수</div>
+</div>
+</div>
+<div class="divTableBody">
+<div class="divTableRow">
+<div class="divTableHead">제목</div>
+<div class="divTableHead">작성자</div>
+<div class="divTableHead">작성일</div>
+<div class="divTableHead">조회수</div>
+</div>
+</div>
+</div>
+<div class="blueTable outerTableFooter">
+<div class="tableFootStyle">
+<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
+</div>
+</div>
+</div>
+<br>
+</body>
 <!--===============================================================================================-->
 	<script src="/resources/register/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->

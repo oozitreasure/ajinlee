@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="com.health.DTO.mainDTO" %>
+<%@ page import="com.health.DTO.freeDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
 
 <%
-mainDTO gDTO = (mainDTO)request.getAttribute("gDTO");
-if(gDTO == null) gDTO = new mainDTO();
-
-mainDTO pDTO = (mainDTO)request.getAttribute("pDTO");
-if(pDTO == null) pDTO = new mainDTO();
+freeDTO rDTO = (freeDTO)request.getAttribute("rDTO");
+if(rDTO == null) rDTO = new freeDTO();
 
 %>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>상세보기</title>
+	<title>디테일</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -47,23 +44,6 @@ if(pDTO == null) pDTO = new mainDTO();
 display: inline-block;
 }
 </style>
-<%-- <script>
-
-function delete_check() {
-	
-    if(confirm("삭제하시겠습니까?")){
-    	
-       location.href="/user_delete.do?user_no=<%=gDTO.getUser_no()%>";
-       
-       return true;
-       
-    }else{
-    	
-       return false;
-    }
-  }
-  
-</script> --%>
 <jsp:include page="top.jsp" flush="false"></jsp:include>
 <style>
 .container-login100-form-btn{
@@ -75,68 +55,51 @@ display: inline;
 </style>
 <script>
 
-function delete_check() {
+<%-- function delete_check() {
     if(confirm("삭제하시겠습니까?")){
-       location.href="/user_delete.do?user_no=<%=gDTO.getUser_no()%>";
+       location.href="/free_delete.do?fr_no=<%=rDTO.getFr_no()%>";
        return true;
     }else{
        return false;
     }
-  }
+  } --%>
   
 </script>
 
 <body>
-	
+	<div style="width:60%;">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/user_update.do">
-					<div class="login100-form-title p-b-45">
-					 상세보기
-					</div>
-					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "Userid is required">
-						<!-- <input class="input100" type="text" name="user_id" placeholder="아이디"> -->
-						<input class="input100" type="hidden" id="user_no" name="user_no" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
-                		<input class="input100" type="text" id="user_id" name="user_id" value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly />
-						<span class="focus-input100"></span>
-					</div>
-					
-					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "Username is required">
-						<input class="input100" type="text" name="user_name" value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly />
-						<span class="focus-input100"></span>
-					</div>
-					
-					
-					<div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
-						<input class="input100" type="email" name="email" value="<%= CmmUtil.nvl(gDTO.getEmail()) %>" />
-						<span class="focus-input100"></span>
-					</div>
-					
-					
-					<div class="wrap-input100 validate-input m-b-45" data-validate = "addr is required">
-						<input class="input100" type="text" name="addr" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
-						<span class="focus-input100"></span>
-					</div>
-
-
-					<div class="container-login100-form-btn">
-						<input type="submit" class="login100-form-btn" value="수정">
-					</div>
-
-					
-					<!-- <form class="login100-form validate-form flex-sb flex-w" method="post" action="/user_delete.do"> -->
-					<div class="container-login100-form-btn">
-						<input type="button" class="login100-form-btn" value="탈퇴" onclick="delete_check()">
-					</div>
-					</form>
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/free_delete_proc.do">
 				
+					<input class="input100" type="hidden" id="user_no" name="fr_no" value="<%=CmmUtil.nvl(rDTO.getFr_no()) %>">
+					<div class="wrap-input100 validate-input m-b-20">
+                		<input class="input100" type="text" id="title" name="title" style="background-color:white;" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" />
+					<span class="focus-input100"></span>
+					</div>
+					
+					<div class="wrap-input100 validate-input m-b-20">
+					<br>
+						<textarea class="input100" name="cont" id="cont" style="background-color:white; height:500px"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>
+					<span class="focus-input100"></span>
+					</div>
+					
+ 					<div class="container-login100-form-btn">
+						<input type="submit" class="login100-form-btn" value="수정" >
+					</div>
+
+					<div class="container-login100-form-btn">
+						<input type="reset" class="login100-form-btn" value="삭제">
+					</div>
+					
+					</form>
+					
+
 			</div>
 		</div>
 	</div>
-	
+	</div>
 
 	<div id="dropDownSelect1"></div>
 	

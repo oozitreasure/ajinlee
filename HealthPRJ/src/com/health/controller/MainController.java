@@ -22,6 +22,7 @@ import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
 import com.health.service.IMainService;
 import com.health.util.CmmUtil;
+import com.health.util.TextUtil;
 	
 @Controller
 public class MainController {
@@ -59,33 +60,210 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="free_detail", method=RequestMethod.GET)
-	public String free_detail(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
-		return "free_detail";
+	@RequestMapping(value = "/free_detail")
+	public String free_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
 		
+		log.info(this.getClass() + "   free_detail start!!!");
+		
+		String fr_no = CmmUtil.nvl(re.getParameter("fr_no"));
+		
+		log.info("fr_no : " + fr_no);
+		
+		freeDTO rDTO = mainService.getFree(fr_no);
+		
+		if (rDTO == null) {
+			rDTO = new freeDTO();
+		}
+		model.addAttribute("rDTO", rDTO);
+		
+		log.info(this.getClass() + "   free_detail end!!!");
+		
+		return "/free_detail";
 	}
+	   
+	   
 	
 	@RequestMapping(value="free_insert", method=RequestMethod.GET)
 	public String free_insert(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
 		return "free_insert";
 		
-	}
-	
-	@RequestMapping(value="mypage3", method=RequestMethod.GET)
-	public String mypage3(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
-		return "mypage3";
+		
 		
 	}
 	
-	@RequestMapping(value="park_detail", method=RequestMethod.GET)
-	public String park_detail(HttpServletRequest request, HttpServletResponse response, 
+	@RequestMapping(value="free_E", method=RequestMethod.GET)
+	public String free_E(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
-		return "park_detail";
+		return "free_E";
+		
+		
 		
 	}
+	
+	@RequestMapping(value="PWDschange", method=RequestMethod.GET)
+	public String PWDschange(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "PWDschange";
+		
+		
+		
+	}
+	
+	
+	@RequestMapping(value = "/park_E")
+	public String park_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   park_E start!!!");
+		
+		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
+		
+		log.info("admin_no : " + admin_no);
+		
+		parkDTO aDTO = mainService.getPark(admin_no);
+		
+		if (aDTO == null) {
+			aDTO = new parkDTO();
+		}
+		model.addAttribute("aDTO", aDTO);
+		
+		log.info(this.getClass() + "   park_E end!!!");
+		
+		return "/park_E";
+	}
+	
+	
+	@RequestMapping(value = "/free_insert_proc")
+	   public String free_insert_proc(HttpSession session, HttpServletRequest re, HttpServletResponse response,
+	         ModelMap model) throws Exception {
+
+	      log.info(this.getClass() + "   free_insert_proc start!!");
+
+	      String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
+	      String reg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+	      String titled = CmmUtil.nvl((String) re.getParameter("title"));
+	      String title = TextUtil.exchangeEscapeNvl(titled);
+/*	      String notice_check = CmmUtil.nvl((String) re.getParameter("notice_check"));*/
+	      String contentd = CmmUtil.nvl((String) re.getParameter("content"));
+	      String content = TextUtil.exchangeEscapeNvl(contentd);
+	      String user_id = CmmUtil.nvl((String) session.getAttribute("session_user_id"));
+
+	      log.info("user_name: " + user_name);
+	      log.info("reg_no: " + reg_no);
+	      log.info("title : " + title);
+/*	      log.info("notice_check: " + notice_check);*/
+	      log.info("content: " + content);
+	      log.info("user_id: " + user_id);
+
+	      freeDTO fDTO = new freeDTO();
+
+	      fDTO.setUser_name(user_name);
+	      fDTO.setReg_no(reg_no);
+	      fDTO.setTitle(title);
+/*	      fDTO.setNotice_check(notice_check);*/
+	      fDTO.setContent(content);
+	      fDTO.setUser_id(user_id);
+
+	      int req = mainService.free_insert_proc(fDTO);
+	      
+	      if (req != 0) {
+	         model.addAttribute("msg", "등록되었습니다.");
+	         model.addAttribute("url", "/freeList.do");
+	      } else {
+	         model.addAttribute("msg", "실패하였습니다.");
+	         model.addAttribute("url", "/free_insert.do");
+	      }
+	      
+	      log.info(this.getClass() + "   free_insert_proc end!!");
+	      
+	      return "/alert";
+	   }
+	
+	
+	@RequestMapping(value = "/park_insert_proc")
+	   public String park_insert_proc(HttpSession session, HttpServletRequest re, HttpServletResponse response,
+	         ModelMap model) throws Exception {
+
+	      log.info(this.getClass() + "   park_insert_proc start!!");
+
+	      String admin_no = CmmUtil.nvl((String) re.getParameter("admin_no"));
+	      String park_name = CmmUtil.nvl((String) re.getParameter("park_name"));
+	      String park_div = CmmUtil.nvl((String) re.getParameter("park_div"));
+	      String addr1 = CmmUtil.nvl((String) re.getParameter("addr1"));
+	      String park_est1 = CmmUtil.nvl((String) re.getParameter("park_est1"));
+	      String park_est2 = CmmUtil.nvl((String) re.getParameter("park_est2"));
+	      String park_est3 = CmmUtil.nvl((String) re.getParameter("park_est3"));
+	      String park_est4 = CmmUtil.nvl((String) re.getParameter("park_est4"));
+	      String park_est5 = CmmUtil.nvl((String) re.getParameter("park_est5"));
+	      String admin_name = CmmUtil.nvl((String) re.getParameter("admin_name"));
+	      String number = CmmUtil.nvl((String) re.getParameter("number"));
+	      
+	      log.info("admin_no: " + admin_no);
+	      log.info("park_name: " + park_name);
+	      log.info("park_div : " + park_div);
+	      log.info("addr1: " + addr1);
+	      log.info("park_est1: " + park_est1);
+	      log.info("park_est2: " + park_est2);
+	      log.info("park_est3: " + park_est3);
+	      log.info("park_est4: " + park_est4);
+	      log.info("park_est5: " + park_est5);
+	      log.info("admin_name: " + admin_name);
+	      log.info("number: " + number);
+
+	      parkDTO pDTO = new parkDTO();
+
+	      pDTO.setAdmin_no(admin_no);
+	      pDTO.setPark_name(park_name);
+	      pDTO.setPark_div(park_div);
+	      pDTO.setAddr1(addr1);
+	      pDTO.setPark_est1(park_est1);
+	      pDTO.setPark_est2(park_est2);
+	      pDTO.setPark_est3(park_est3);
+	      pDTO.setPark_est4(park_est4);
+	      pDTO.setPark_est5(park_est5);
+	      pDTO.setAdmin_name(admin_name);
+	      pDTO.setNumber(number);
+
+	      String req = mainService.park_insert_proc(pDTO);
+	      
+	      if (req != null) {
+	         model.addAttribute("msg", "등록되었습니다.");
+	         model.addAttribute("url", "/freeList.do");
+	      } else {
+	         model.addAttribute("msg", "실패하였습니다.");
+	         model.addAttribute("url", "/free_insert.do");
+	      }
+	      
+	      log.info(this.getClass() + "   park_insert_proc end!!");
+	      
+	      return "/alert";
+	   }
+	
+	
+	@RequestMapping(value = "/park_detail")
+	public String park_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   park_detail start!!!");
+		
+		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
+		
+		log.info("admin_no : " + admin_no);
+		
+		parkDTO aDTO = mainService.getPark(admin_no);
+		
+		if (aDTO == null) {
+			aDTO = new parkDTO();
+		}
+		model.addAttribute("aDTO", aDTO);
+		
+		log.info(this.getClass() + "   park_detail end!!!");
+		
+		return "/park_detail";
+	}
+	
 	
 	@RequestMapping(value="park_insert", method=RequestMethod.GET)
 	public String park_insert(HttpServletRequest request, HttpServletResponse response, 
@@ -162,6 +340,15 @@ public class MainController {
 		
 	}
 	
+	@RequestMapping(value="mylike", method=RequestMethod.GET)
+	public String mylike(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		
+		
+		return "mylike";
+		
+	}
+	
 
 	
 	@RequestMapping(value="board2", method=RequestMethod.GET)
@@ -178,13 +365,13 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value = "/mypage2")
+	@RequestMapping(value = "/user_detail")
 	public String mypage2(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   user_detail start!!!");
 		
-		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		String user_no = re.getParameter("user_no");
 		
 		log.info("user_no : " + user_no);
 		
@@ -197,7 +384,7 @@ public class MainController {
 		
 		log.info(this.getClass() + "   user_detail end!!!");
 		
-		return "/mypage2";
+		return "/user_detail";
 	}
 
 
@@ -302,12 +489,11 @@ public class MainController {
 	
 	
 	@RequestMapping(value = "/password_proc")
-	public String PwSearchProc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+	public String password_proc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   pw_search_proc start!!!");
 
-		String user_no = re.getParameter("user_no");
 		String user_name = re.getParameter("user_name");
 		String user_id = re.getParameter("user_id");
 		String email = re.getParameter("email");
@@ -315,7 +501,6 @@ public class MainController {
 		log.info(this.getClass() + "user_name : " + user_name);
 		log.info(this.getClass() + "user_id : " + user_id);
 		log.info(this.getClass() + "email :" + email);
-		log.info(this.getClass() + "user_no : " + user_no);
 
 		mainDTO kDTO = new mainDTO();
 
@@ -327,7 +512,7 @@ public class MainController {
 
 		if (kDTO != null) {
 			model.addAttribute("msg", "비밀번호변경페이지로 이동합니다.");
-			model.addAttribute("url", "home.do");
+			model.addAttribute("url", "PWDschange.do");
 			session.setAttribute("session_user_no", kDTO.getUser_no());
 		} else {
 			model.addAttribute("msg", "일치하는 회원이 없습니다. 다시 확인해주세요");
@@ -336,6 +521,43 @@ public class MainController {
 		kDTO = null;
 		
 		log.info(this.getClass() + "   pw_search_proc end!!!");
+		
+		return "/alert";
+	}
+	
+	
+	@RequestMapping(value = "/password_update.do")
+	public String password_update(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   pw_update start!!!");
+		
+		String user_no = req.getParameter("user_no");
+		String password = CmmUtil.nvl/*(SHA256.SHA256_encode*/(req.getParameter("password"));
+
+		log.info("user_no : " + user_no);
+		log.info("password : " + password);
+
+		mainDTO uDTO = new mainDTO();
+
+		uDTO.setUser_no(user_no);
+		uDTO.setPassword(password);
+
+		int result = mainService.updatePassword(uDTO);
+
+		if (result != 0) {
+			
+			model.addAttribute("msg", "비밀번호가 변경되었습니다.");
+			model.addAttribute("url", "/Login.do");
+			session.setAttribute("session_user_no", "");
+			
+		} else {
+			
+			model.addAttribute("msg", "비밀번호변경에 실패하였습니다.");
+			model.addAttribute("url", "/user_info/pw_change.do");
+		}
+		
+		log.info(this.getClass() + "  pw_update end!!!");
 		
 		return "/alert";
 	}
@@ -513,26 +735,7 @@ public class MainController {
 		
 		return "/freeList";
 	}
-	
-	
-	@RequestMapping(value="/getSearch")
-	public @ResponseBody List<parkDTO> getSearch(@RequestParam(value = "search") String search)throws Exception{
-		
-		log.info(this.getClass() + "   parksearch start!!!");
-		
-		parkDTO fDTO = new parkDTO();
-		
-		fDTO.setSearch("%"+search+"%");
-		
-		log.info("search : " + search);
-		
-		List<parkDTO> flist = mainService.getSearch(fDTO);
-		
-		
-		log.info(this.getClass() + "   parksearch end!!!");
-		
-		return flist;
-	}
+
 	
 
 	}

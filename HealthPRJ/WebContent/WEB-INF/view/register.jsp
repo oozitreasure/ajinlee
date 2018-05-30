@@ -36,7 +36,7 @@ display: inline-block;
 }
 </style>
 <body>
-	
+	<div style="width:40%">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
@@ -47,13 +47,13 @@ display: inline-block;
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "Userid is required">
-						<input class="input100" type="text" name="user_id" placeholder="아이디">
+						<input class="input100" type="text" name="user_id" placeholder="아이디" style="background-color:white;">
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "Username is required">
-						<input class="input100" type="text" name="user_name" placeholder="이름">
+						<input class="input100" type="text" name="user_name" placeholder="이름" style="background-color:white;">
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -62,7 +62,7 @@ display: inline-block;
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name="password" placeholder="비밀번호">
+						<input class="input100" type="password" name="password" placeholder="비밀번호" style="background-color:white;">
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -71,38 +71,37 @@ display: inline-block;
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-						<input class="input100" type="password" name="repassword" placeholder="비밀번호확인">
+						<input class="input100" type="password" name="repassword" placeholder="비밀번호확인" style="background-color:white;">
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-20" data-validate = "email is required">
-						<input class="input100" type="email" name="email" placeholder="이메일">
+						<input class="input100" type="email" name="email" placeholder="이메일" style="background-color:white;">
 						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-45" data-validate = "addr is required">
-						<select class="input100" name="addr" name="지역">
-  						<option value="seoul" selected="selected">서울특별시</option>
- 						<option value="gygg">경기도</option>
-  						<option value="incheon">인천광역시</option>
-  						<option value="gangwon">강원도</option>
-  						<option value="chungbuk">충청북도</option>
-  						<option value="chungnam">충청남도</option>
-  						<option value="daejeon">대전광역시</option>
-  						<option value="sejong">세종특별자치시</option>
-  						<option value="gwangju">광주광역시</option>
-  						<option value="jeonbuk">전라북도</option>
-  						<option value="jeonnam">전라남도</option>
-  						<option value="gyeongbuk">경상북도</option>
-  						<option value="gyeongnam">경상남도</option>
-  						<option value="daegu">대구광역시</option>
-  						<option value="busan">부산광역시</option>
-  						<option value="ulsan">울산광역시</option>
-  						<option value="jeju">제주특별자치도</option>
+						<select class="input100" name="addr" name="지역" style="background-color:white; width:100%" >
+  						<option value="서울특별시" selected="selected">서울특별시</option>
+ 						<option value="경기도">경기도</option>
+  						<option value="인천광역시">인천광역시</option>
+  						<option value="강원도">강원도</option>
+  						<option value="충청북도">충청북도</option>
+  						<option value="충청남도">충청남도</option>
+  						<option value="대전광역시">대전광역시</option>
+  						<option value="세종특별자차시">세종특별자치시</option>
+  						<option value="광주광역시">광주광역시</option>
+  						<option value="전라북도">전라북도</option>
+  						<option value="전라남도">전라남도</option>
+  						<option value="경상북도">경상북도</option>
+  						<option value="경상남도">경상남도</option>
+  						<option value="대구광역시">대구광역시</option>
+  						<option value="부산광역시">부산광역시</option>
+  						<option value="울산광역시">울산광역시</option>
+  						<option value="제주특별자치도">제주특별자치도</option>
 					</select>
-						
 						<span class="focus-input100"></span>
 					</div>
 
@@ -121,9 +120,7 @@ display: inline-block;
 			</div>
 		</div>
 	</div>
-	
-
-	<div id="dropDownSelect1"></div>
+</div>	
 	
 <!--===============================================================================================-->
 	<script src="/resources/register/vendor/jquery/jquery-3.2.1.min.js"></script>
