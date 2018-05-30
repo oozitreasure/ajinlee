@@ -60,37 +60,37 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
           <ul class="navbar-nav ml-auto">
             <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
             <li class="nav-item">
-              <a class="nav-link" onclick="openLogin()" style="font-size:20px; color:black;">Login</a>
+              <a class="nav-link" onclick="openLogin()" style="font-size:17px; color:#173B0B;">로그인</a>
             </li>
            <li class="nav-item">
-              <a class="nav-link" href="register.do" style="font-size:20px; color:black;">Join</a>
+              <a class="nav-link" href="register.do" style="font-size:17px; color:#173B0B;">회원가입</a>
             </li>
             <%} else {%>
             <li class="nav-item">
-              <a class="nav-link" href="mypage.do" style="font-size:20px; color:black;"><%=SESSION_USER_NAME %>님!</a>
+              <a class="nav-link" href="mypage.do" style="font-size:17px; color:black;"><%=SESSION_USER_NAME %>님!</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/logout_proc.do" style="font-size:20px; color:black;">Logout</a>
+              <a class="nav-link" href="/logout_proc.do" style="font-size:17px; color:#173B0B;">로그아웃</a>
             </li>
             <%if (SESSION_USER_ID.equals("admin")){ %>
 			<li class="nav-item">
-              <a class="nav-link" href="userList.do" style="font-size:20px; color:black;">회원정보</a>
+              <a class="nav-link" href="userList.do" style="font-size:17px; color:#173B0B;">회원정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="park.do" style="font-size:20px; color:black;">Park</a>
+              <a class="nav-link" href="park.do" style="font-size:17px; color:#173B0B;">공원정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="freeList.do" style="font-size:20px; color:black;">Board</a>
+              <a class="nav-link" href="freeList.do" style="font-size:17px; color:#173B0B;">자유게시판</a>
             </li>
             <%}else{ %>      
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("admin")&&!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li class="nav-item">
-              <a class="nav-link" href="park.do" style="font-size:20px; color:black;">Park</a>
+              <a class="nav-link" href="park.do" style="font-size:17px; color:#173B0B;">공원정보</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="freeList.do" style="font-size:20px; color:black;">Board</a>
+              <a class="nav-link" href="freeList.do" style="font-size:17px; color:#173B0B;">자유게시판</a>
             </li>
             <%} %>
           </ul>

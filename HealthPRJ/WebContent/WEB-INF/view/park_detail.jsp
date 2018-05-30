@@ -50,7 +50,7 @@ function freeUp(){
 <jsp:include page="top.jsp" flush="false"></jsp:include>
 <body>
 
-	<div style="width:60%;">
+	<div style="width:60%; align:center">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
@@ -59,10 +59,10 @@ function freeUp(){
 					 
 					</div>
 					<button>좋아요!</button>
-					<input class="input100" type="hidden" id="ad_no" name="ad_no" value="<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>">
+					<input class="input100" type="hidden" id="admin_no" name="admin_no" value="<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>">
 					<span>공원명 : </span> 
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="title" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>" readonly />
+						<input type="text" name="park_name" id="park_name" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>" readonly />
 					</div>
 					
 					
@@ -72,48 +72,48 @@ function freeUp(){
 					
 					<span>공원구분 : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_div" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>" readonly />
+						<input type="text" name="park_div" id="park_div" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>" readonly />
 
 					</div>
 					
 					<span>주소 : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="addr1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>" readonly />
+						<input type="text" name="addr1" id="addr1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>" readonly />
 
 					</div>
 					<span>공원보유시설(운동시설) : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="est1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>" readonly />
+						<input type="text"name="park_est1" id="park_est1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>" readonly />
 
 					</div>
 					<span>공원보유시설(유희시설) : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="est2" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>" readonly />
+						<input type="text" name="park_est2" id="park_est2" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>" readonly />
 
 					</div>
 					<span>공원보유시설(편익시설) : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="est3" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>" readonly />
+						<input type="text" name="park_est3" id="park_est3" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>" readonly />
 
 					</div>
 					<span>공원보유시설(교양시설) : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="est4" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>" readonly />
+						<input type="text" name="park_est4" id="park_est4" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>" readonly />
 
 					</div>
 					<span>공원보유시설(기타시설) : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="est5" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>" readonly />
+						<input type="text" name="park_est5" id="park_est5" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>" readonly />
 
 					</div>
 					<span>관리기관명 : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="adname" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>" readonly />
+						<input type="text" name="admin_name" id="admin_name" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>" readonly />
 
 					</div>
 					<span>관리기관 전화번호 : </span>
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="number" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>" readonly />
+						<input type="text" name="number" id="number" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>" readonly />
 
 					</div>
 					

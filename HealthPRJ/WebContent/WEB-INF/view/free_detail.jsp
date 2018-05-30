@@ -47,14 +47,7 @@ function freeUp(){
 </script>
 
 <jsp:include page="top.jsp" flush="false"></jsp:include>
-<style>
-.container-login100-form-btn{
-display: inline;
-}
-.container-login100-form-btn{
-display: inline;
-}
-</style>
+
 <script>
 
 <%-- function delete_check() {
@@ -69,7 +62,7 @@ display: inline;
 </script>
 
 <body>
-	<div style="width:60%">
+	<div style="width:60%; align:center">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
@@ -79,7 +72,6 @@ display: inline;
 					<div class="wrap-input100 validate-input m-b-20">
                 		<input class="input100" type="text" id="title" name="title" style="background-color:white;" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" readonly />
 					</div>
-					
 					<div class="wrap-input100 validate-input m-b-20">
 					<br>
 						<textarea class="input100" name="content" id="content" style="background-color:white; height:500px" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea>

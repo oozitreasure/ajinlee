@@ -15,7 +15,7 @@ if(pDTO == null) pDTO = new mainDTO();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>상세보기</title>
+	<title>회원상세보기</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -92,7 +92,7 @@ function delete_check() {
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
 				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/user_update.do">
 					<div class="login100-form-title p-b-45">
-					 상세보기
+					 회원상세보기
 					</div>
 					<input class="input100" type="hidden" id="user_no" name="user_no" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
 					<div class="wrap-input100 validate-input m-b-20">

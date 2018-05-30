@@ -42,11 +42,6 @@ if(pDTO == null) pDTO = new mainDTO();
 <!--===============================================================================================-->
 
 </head>
-<style>
-.container-login100-form-btn{
-display: inline-block;
-}
-</style>
 <%-- <script>
 
 function delete_check() {
@@ -65,14 +60,6 @@ function delete_check() {
   
 </script> --%>
 <jsp:include page="top.jsp" flush="false"></jsp:include>
-<style>
-.container-login100-form-btn{
-display: inline;
-}
-.container-login100-form-btn{
-display: inline;
-}
-</style>
 
 <script>
 
@@ -92,7 +79,7 @@ function mylike(){
 </script>
 
 <body>
-	<div style="width:40%">
+	<div style="width:40%; align:center">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
