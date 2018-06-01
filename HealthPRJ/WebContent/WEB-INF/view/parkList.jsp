@@ -151,7 +151,7 @@ function doSearch() {
 				
 				if(content == ""){
 					
-					content += '<div>"<b>'+search+'" 에 해당하는 검색결과가 없습니다.</b></div>';
+					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
 					
 		 			$('#divTable').html(content);
 		 			$('#delete').remove();
@@ -178,35 +178,40 @@ function doSearch() {
 
 
 <style>
+
 div.blueTable {
   background-color: #FFFFFF;
-  width: 75%;
+  width: 60%;
   text-align: center;
 }
 .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
-  border: 1px solid #D1D1D1;
-  padding: 3px 2px;
+  border-bottom : 1px solid #D1D1D1;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 .divTable.blueTable .divTableBody .divTableCell {
   font-size: 15px;
-  color: #000000;
+  color: #1c1c1c;
 }
 .divTable.blueTable .divTableHeading {
-  background: #52896F;
-  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
-  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
-  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #52896F 100%);
+  background: #e8efe8;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #e8efe8 100%);
   border-bottom: 1px solid #000000;
 }
 .divTable.blueTable .divTableHeading .divTableHead {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #1c1c1c;
   text-align: center;
-  border-left: 1px solid #FFFFFF;
+  background-color: #e8efe8;
+
 }
 .divTable.blueTable .divTableHeading .divTableHead:first-child {
   border-left: none;
+  border-top : 1px solid #d1dee2;
+  boerder-button :1px solid #d1dee2;
 }
 
 .blueTable .tableFootStyle {
@@ -218,19 +223,22 @@ div.blueTable {
   background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
   background: linear-gradient(to bottom, #ffffff 0%, #ffffff 66%, #FFFFFF 100%); */
   border-top: 1px solid #FFFFFF;
+
 }
 .blueTable .tableFootStyle {
   font-size: 15px;
 }
 .blueTable .tableFootStyle .links {
 	 text-align: center;
+
 }
 .blueTable .tableFootStyle .links a{
   display: inline-block;
-  background: #52896F;
-  color: #FFFFFF;
+  background: #e8efe8;
+  color: #1c1c1c;
   padding: 2px 8px;
-  border-radius: 5px;
+  border-radius: 3px;
+  
 }
 .blueTable.outerTableFooter {
   border-top: none;
@@ -246,7 +254,7 @@ div.blueTable {
 .divTableHeading { display: table-header-group;}
 .divTableFoot { display: table-footer-group;}
 .divTableBody { display: table-row-group;}
-</style>
+</style> 
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
 
@@ -289,11 +297,18 @@ div.blueTable {
     </div>
 </div>
 
-<br><br><br><br>
+<br><br><br><br><br>
+<div align="center">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<h2 align="center">공원정보</h2>
+<h5 align="center">찾고싶은 공원을 검색 해보세요.</h5>
+</div>
+</div>
+<br>
 <div align="center">
 <div>
-<input type="text" onchange="doSearch()" id="searchbox" style="width:30%; height:50px;" />
-<input type="submit" value="검색" style="background-color:#52896F; color:white; width:70px; height:50px">
+<input type="text" onchange="doSearch()" id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
+<input type="submit" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;">
 </div>
 <br>
 <div class="divTable blueTable" id="divTable">
@@ -321,16 +336,17 @@ div.blueTable {
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
 <div align="right">
-<input type="button" value="글쓰기" onclick="parkIn()" style="background-color:#52896F; color:white; width:70px; height:45px" />
+<input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
 </div>
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
+</div>
 </div>
 </div>
 </div>
 <br>
 
 
-<footer id="footer">
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">
         <div class="container">

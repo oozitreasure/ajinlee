@@ -128,7 +128,7 @@ function imsi_open(){
   window.location='./nation.htm';
 }
 </script>
-  
+
 <body>
 <div align="center">
 <table style="width:1177px; border:0px; align:center; cellpadding:0px; cellspacing:0px">
@@ -624,7 +624,7 @@ function Ok_sub(){
   <tbody><tr>
     <td><img src="/resources/img/s_seoul.gif" alt="서울지도" border="0" usemap="#Gis_seoul">
       <map name="Gis_seoul">
-        <area shape="poly" coords="438,388,426,365,394,376,365,357,330,280,295,303,291,362,301,385,360,397,382,438,416,420" href="#서초구" onclick="Select_seoul('서초구')">
+        <area shape="poly" coords="438,388,426,365,394,376,365,357,330,280,295,303,291,362,301,385,360,397,382,438,416,420" href="#서초구" onclick="Select_seoul('서초구')" >
         <area shape="poly" coords="440,387,426,362,395,372,366,355,331,279,351,261,402,288,405,316,453,341,469,373,464,388" href="#강남구" onclick="Select_seoul('강남구')">
         <area shape="poly" coords="473,373,455,339,408,315,405,288,441,281,453,260,469,259,466,277,495,295,496,317,525,322,504,361" href="#송파구" onclick="Select_seoul('송파구')">
         <area shape="poly" coords="301,388,290,364,274,362,267,337,237,339,226,330,219,342,190,351,198,365,209,391,223,407,261,420" href="#관악구" onclick="Select_seoul('관악구')">

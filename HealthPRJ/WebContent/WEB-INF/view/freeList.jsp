@@ -135,8 +135,8 @@ function doSearch() {
  		
  		$.ajax({
  			
- 			url : "/freeSearch.do",
- 			method : "post",
+ 			url : "/freeSearch.do" ,
+ 			method : "get",
  			data : {'search' : search},
  			datatype : "json", 
  			success : function(data) {
@@ -153,8 +153,9 @@ function doSearch() {
 					contents += "<div class='divTableHead'>작성일</div>";
 					contents += "<div class='divTableHead'>조회수</div></div></div>";
 
+
 					contents += "<div class='divTableBody'>";
-				$.each(data, function (key, value) {
+					$.each(data, function (key, value) {
 					content += "<div class='divTableRow'>";
 					content += "<div class='divTableCell'>"+value.fr_no+"</div>";
 		 			content += "<div class='divTableCell' onclick='doDetail("+value.fr_no+");'>"+value.title+"</div>";
@@ -168,7 +169,7 @@ function doSearch() {
 				
 				if(content == ""){
 					
-					content += '<div>"<b>'+search+'" 에 해당하는 검색결과가 없습니다.</b></div>';
+					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
 					
 		 			$('#divTable').html(content);
 		 			$('#delete').remove();
@@ -196,35 +197,40 @@ function doSearch() {
 
 
 <style>
+
 div.blueTable {
   background-color: #FFFFFF;
-  width: 80%;
+  width: 60%;
   text-align: center;
 }
 .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
-  border: 1px solid #D1D1D1;
-  padding: 3px 2px;
+  border-bottom : 1px solid #D1D1D1;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 .divTable.blueTable .divTableBody .divTableCell {
   font-size: 15px;
-  color: #000000;
+  color: #1c1c1c;
 }
 .divTable.blueTable .divTableHeading {
-  background: #52896F;
-  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
-  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #52896F 100%);
-  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #52896F 100%);
+  background: #e8efe8;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #e8efe8 100%);
   border-bottom: 1px solid #000000;
 }
 .divTable.blueTable .divTableHeading .divTableHead {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #1c1c1c;
   text-align: center;
-  border-left: 1px solid #FFFFFF;
+  background-color: #e8efe8;
+
 }
 .divTable.blueTable .divTableHeading .divTableHead:first-child {
   border-left: none;
+  border-top : 1px solid #d1dee2;
+  boerder-button :1px solid #d1dee2;
 }
 
 .blueTable .tableFootStyle {
@@ -247,10 +253,11 @@ div.blueTable {
 }
 .blueTable .tableFootStyle .links a{
   display: inline-block;
-  background: #52896F;
-  color: #FFFFFF;
+  background: #e8efe8;
+  color: #1c1c1c;
   padding: 2px 8px;
-  border-radius: 5px;
+  border-radius: 3px;
+  
 }
 .blueTable.outerTableFooter {
   border-top: none;
@@ -308,9 +315,14 @@ div.blueTable {
     </div>
 </div>
 
-<br><br><br><br>
+<br><br><br><br><br>
+<div align="center">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<h2 align="center">자유게시판</h2>
+<h5 align="center">자유로운 의견과 생각을 공유하는 공간입니다. 상호간의 예의를 지켜 주세요.</h5>
+</div>
+</div>
 <br>
-
 <div align="center">
 <div class="divTable blueTable" id="divTable">
 <div class="divTableHeading">
@@ -338,21 +350,21 @@ div.blueTable {
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
 <div align="right" id="divss">
-<input type="button" value="글쓰기 " onclick="freeIn()" style="background-color:#52896F; color:white; width:75px; height:40px"/>
+<input type="button" value="글쓰기 " onclick="freeIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;"/>
 </div>
 <div>
-<input type="text" onchange="doSearch()" id="searchbox" style="width:30%; height:40px; display: inline-block;" />
-<input type="submit" value="검색" style="background-color:#52896F; color:white; width:60px; height:40px">
+<input type="text" onchange="doSearch()" id="searchbox" style="width:30%; height:40px; display: inline-block;" placeholder="제목 or 작성자"/>
+<input type="submit" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
 </div>
 <br>
 <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
 </div>
 </div>
 </div>
-<br>
+<br><br>
 
 
-<footer id="footer">
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">
         <div class="container">

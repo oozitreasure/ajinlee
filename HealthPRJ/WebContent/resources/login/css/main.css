@@ -108,7 +108,7 @@ button {
 }
 
 button:hover {
-	background-color:#246d00;
+	background-color: #52896F;
 	cursor: pointer;
 }
 
@@ -219,7 +219,7 @@ iframe {
   top: -1px;
   left: -1px;
   pointer-events: none;
-  border: 1px solid #246d00;
+  border: 1px solid #52896F;
   border-radius: 3px;
 
   visibility: hidden;

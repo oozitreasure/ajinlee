@@ -838,7 +838,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 </section> -->
 
-<footer id="footer">
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">
         <div class="container">
