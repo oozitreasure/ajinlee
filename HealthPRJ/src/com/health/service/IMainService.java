@@ -40,5 +40,9 @@ public interface IMainService {
 
 	void updateFree(freeDTO rDTO);
 
+	List<parkDTO> getparkSearch(parkDTO pDTO);
+
+	List<freeDTO> getfreeSearch(freeDTO fDTO);
+
 	
 }

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login</title>
+	<title>로그인</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -31,14 +31,6 @@
 <!--===============================================================================================-->
 </head>
 
-<script>
-function Sub(){
-	
-	window.opener.top.location.href="/home.do"
-	window.opener.top.location.reload(); //새로고침
-	window.close()
-}
-</script>
 
 <body>
 	

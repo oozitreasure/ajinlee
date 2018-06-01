@@ -14,6 +14,7 @@ public class freeDTO {
 	private String reg_dt;
 	private String chg_no;
 	private String chg_dt;
+	private String Search;
 	
 
 	
@@ -90,6 +91,13 @@ public class freeDTO {
 	public void setChg_dt(String chg_dt) {
 		this.chg_dt = chg_dt;
 	}
+	public String getSearch() {
+		return Search;
+	}
+	public void setSearch(String search) {
+		Search = search;
+	}
+
 
 	
 

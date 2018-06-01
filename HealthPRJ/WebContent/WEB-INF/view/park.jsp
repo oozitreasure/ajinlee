@@ -33,6 +33,71 @@ function parkIn(){
  }
 </script>
 
+<script>
+
+function doSearch() {
+ 	
+ 	var contents = "";
+ 	var cnt = 10;
+ 	var search = $('#searchbox').val();
+ 	
+ 	if (search == "") {
+ 		location.href="/parkList.do";
+ 	} else {
+ 		
+ 		$.ajax({
+ 			
+ 			url : "/parkSearch.do",
+ 			method : "post",
+ 			data : {'search' : search},
+ 			datatype : "json", 
+ 			success : function(data) {
+ 					var contents = "";
+ 					var content = "";
+ 					
+					contents += "<div class='divTable blueTable'>";
+					contents += "<div class='divTableHeading'>";
+					contents += "<div class='divTableHead'>공원명</div>";
+					contents += "<div class='divTableHead'>이름</div>";
+					contents += "<div class='divTableHead'>아이디</div>";
+					contents += "<div class='divTableHead'>이메일</div>";
+					contents += "<div class='divTableHead'>전화번호</div></div></div>";
+					
+ 					
+				$.each(data, function (key, value) {
+					content += "<div class='divTableBody'>";
+					content += "<div class='divTableRow'>";
+		 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
+		 			content += "<div class='divTableCell'>"+value.user_no+"</div>";
+		 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
+		 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
+		 			content += "<div class='divTableCell'>"+value.number+"</div></div></div>";
+
+		 			
+		 			
+		 			
+ 				});
+				if(content == ""){
+					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
+		 			$('#divTable').html(content);
+		 			$('#delete').remove();
+				}else{
+ 				$('#divTable').html(contents+content);
+				}
+ 				if ((data).length<10) {
+ 					$('#addview').remove();
+ 				}
+ 			}
+ 			
+ 		});
+ 		
+ 	}
+ 	
+}
+
+</script>
+
+
 <style>
 div.blueTable {
   background-color: #FFFFFF;
@@ -109,7 +174,7 @@ div.blueTable {
 <br>
 <div align="center">
 <div>
-<input type="text" onchange="doSearch()" class="searchbox" style="width:30%; height:50px;" />
+<input type="text" onchange="doSearch()" id="searchbox" style="width:30%; height:50px;" />
 <input type="submit" value="검색" style="background-color:#52896F; color:white; width:70px; height:50px">
 </div>
 <br>

@@ -34,15 +34,15 @@ DELETE FROM USER_INFO WHERE USER_NO = #{user_no}
 </delete>
 
 <select id="getUserList" resultType="mainDTO">
-SELECT * FROM USER_INFO
+SELECT * FROM USER_INFO ORDER BY USER_NO ASC
 </select>
 
 <select id="getParkList" resultType="parkDTO">
-SELECT * FROM APARK_INFO
+SELECT * FROM APARK_INFO ORDER BY ADMIN_NO ASC 
 </select>
 
 <select id="getFreeList" resultType="freeDTO">
-SELECT * FROM FREE_INFO
+SELECT * FROM FREE_INFO ORDER BY FR_NO ASC
 </select>
 
 <select parameterType="mainDTO" id="getPassword" resultType="mainDTO">
@@ -77,5 +77,15 @@ UPDATE USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
 <update parameterType="freeDTO" id="updateFree">
 UPDATE FREE_INFO SET NOTICE_CHECK = #{notice_check}, TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
 </update>
+
+<select parameterType="parkDTO" id="getparkSearch" resultType="parkDTO">
+SELECT ADMIN_NO, PARK_NAME, ADDR1, ADMIN_NAME, NUMBER FROM APARK_INFO WHERE (PARK_NAME LIKE #{search} OR ADDR1 LIKE #{search}) ORDER BY ADMIN_NO ASC
+</select>
+
+<select parameterType="freeDTO" id="getfreeSearch" resultType="freeDTO">
+SELECT FR_NO, TITLE, USER_NAME, REG_DT, CNT FROM FREE_INFO WHERE (TITLE LIKE #{search} OR USER_NAME LIKE #{search}) ORDER BY FR_NO ASC
+</select>
+
+
 
 </mapper>

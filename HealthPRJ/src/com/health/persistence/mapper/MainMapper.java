@@ -40,6 +40,10 @@ public interface MainMapper {
 	String park_insert_proc(parkDTO pDTO);
 
 	int updatePassword(mainDTO rDTO);
+
+	List<parkDTO> getparkSearch(parkDTO pDTO);
+
+	List<freeDTO> getfreeSearch(freeDTO fDTO);
 	
 
 }

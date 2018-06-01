@@ -113,5 +113,17 @@ public class MainService implements IMainService {
 		
 	}
 
+	@Override
+	public List<parkDTO> getparkSearch(parkDTO pDTO) {
+		
+		return mainMapper.getparkSearch(pDTO);
+	}
+
+	@Override
+	public List<freeDTO> getfreeSearch(freeDTO fDTO) {
+
+		return mainMapper.getfreeSearch(fDTO);
+	}
+
 		
 }

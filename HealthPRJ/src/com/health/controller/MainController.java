@@ -314,23 +314,27 @@ public class MainController {
 		mDTO.setPassword(password);
 		mDTO.setAddr(addr);
 		
+		
 		int r = mainService.insertJoin(mDTO);
 		
 		if(r != 0) {
 			
 			model.addAttribute("msg", "회원가입에 성공하였습니다.");
-			model.addAttribute("url", "home.do");
+			model.addAttribute("url", "/home.do");
+			
+			return "/close";
 			
 		}else {
 			
 			model.addAttribute("msg", "회원가입에 실패하였습니다.");
 			model.addAttribute("url", "register.do");
+			
+			log.info(getClass() + "     join end!!!");
+			
+			return "/alert";
 		}
 		
-		
-		log.info(getClass() + "     join end!!!");
-		
-		return "alert";
+
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.GET)
@@ -363,6 +367,23 @@ public class MainController {
 		return "mylike";
 		
 	}
+	@RequestMapping(value="main", method=RequestMethod.GET)
+	public String main(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		
+		
+		return "main";
+		
+	}
+	
+	@RequestMapping(value="top", method=RequestMethod.GET)
+	public String top(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		
+		
+		return "top";
+		
+	}
 	
 
 	
@@ -373,13 +394,14 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="park_1", method=RequestMethod.GET)
-	public String park_1(HttpServletRequest request, HttpServletResponse response, 
+	@RequestMapping(value="map", method=RequestMethod.GET)
+	public String map(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
-		return "park_1";
+		return "map";
 		
 	}
 	
+
 	@RequestMapping(value = "/user_detail")
 	public String mypage2(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
@@ -428,7 +450,7 @@ public class MainController {
 			session.setAttribute("session_user_no", gDTO.getUser_no());
 			session.setAttribute("session_user_id", gDTO.getUser_id());
 			session.setAttribute("session_user_name", gDTO.getUser_name());
-			returnURL = "/close";
+			returnURL = "/close2";
 			
 		} else {
 			
@@ -709,9 +731,9 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/park")
+	@RequestMapping(value = "/parkList")
 	
-	public String park(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+	public String parkList(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   getParkList start!!!");
@@ -727,7 +749,7 @@ public class MainController {
 		
 		log.info(this.getClass() + "   getParkList end!!!");
 		
-		return "/park";
+		return "/parkList";
 	}
 	
 	
@@ -819,6 +841,42 @@ public class MainController {
 	      // return "/alert";
 	      return "/alert";
 	   }
+	   
+		@RequestMapping(value="/parkSearch")
+		public @ResponseBody List<parkDTO> parkSearch(@RequestParam(value = "search") String search)throws Exception{
+			
+			log.info(this.getClass().getName() + "   ParkSearch start!!!");
+			
+			parkDTO pDTO = new parkDTO();
+			
+			pDTO.setSearch("%"+search+"%");
+			
+			log.info("search : " + search);
+			
+			List<parkDTO> plist = mainService.getparkSearch(pDTO);
+			
+			log.info(this.getClass().getName() + "   ParkSearch end!!!");
+			
+			return plist;
+		}
+		
+		@RequestMapping(value="/freeSearch")
+		public @ResponseBody List<freeDTO> freeSearch(@RequestParam(value = "search") String search)throws Exception{
+			
+			log.info(this.getClass().getName() + "   ParkSearch start!!!");
+			
+			freeDTO fDTO = new freeDTO();
+			
+			fDTO.setSearch("%"+search+"%");
+			
+			log.info("search : " + search);
+			
+			List<freeDTO> flist = mainService.getfreeSearch(fDTO);
+			
+			log.info(this.getClass().getName() + "   ParkSearch end!!!");
+			
+			return flist;
+		}
 
 	
 
