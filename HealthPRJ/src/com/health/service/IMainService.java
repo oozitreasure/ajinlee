@@ -34,7 +34,7 @@ public interface IMainService {
 
 	int free_insert_proc(freeDTO fDTO);
 
-	String park_insert_proc(parkDTO pDTO);
+	int park_insert_proc(parkDTO pDTO);
 
 	int updatePassword(mainDTO uDTO);
 
@@ -43,6 +43,10 @@ public interface IMainService {
 	List<parkDTO> getparkSearch(parkDTO pDTO);
 
 	List<freeDTO> getfreeSearch(freeDTO fDTO);
+
+	List<mainDTO> getuserSearch(mainDTO uDTO);
+
+	void delete_user(mainDTO uDTO);
 
 	
 }

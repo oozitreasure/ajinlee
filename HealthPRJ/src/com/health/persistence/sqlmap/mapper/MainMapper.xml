@@ -65,8 +65,8 @@ VALUES( (SELECT IFNULL(MAX(CAST(FI.FR_NO AS UNSIGNED)),0)+1 FROM FREE_INFO FI), 
 
 
 <insert parameterType="parkDTO" id="park_insert_proc">
-INSERT INTO APARK_INFO ( ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, PARK_EST1, PARK_EST2, PARK_EST3, PARK_EST4, PARK_EST5, ADMIN_NAME, NUMBER )
-VALUES( (SELECT IFNULL(MAX(CAST(PI.ADMIN_NO AS UNSIGNED)),0)+1 FROM APARK_INFO PI), #{park_name}, #{park_div}, #{addr1}, #{park_est1}, #{park_est2}, #{park_est3}, #{park_est4}, #{park_est5}, #{admin_name}, #{number})
+INSERT INTO APARK_INFO ( ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, ADDR2, LAT, HAR, PARK_AREA, PARK_EST1, PARK_EST2, PARK_EST3, PARK_EST4, PARK_EST5, ADMIN_NAME, NUMBER )
+VALUES( #{admin_no}, #{park_name}, #{park_div}, #{addr1}, #{addr2}, #{lat}, #{har}, #{park_area}, #{park_est1}, #{park_est2}, #{park_est3}, #{park_est4}, #{park_est5}, #{admin_name}, #{number})
 </insert>
 
 
@@ -85,6 +85,14 @@ SELECT ADMIN_NO, PARK_NAME, ADDR1, ADMIN_NAME, NUMBER FROM APARK_INFO WHERE (PAR
 <select parameterType="freeDTO" id="getfreeSearch" resultType="freeDTO">
 SELECT FR_NO, TITLE, USER_NAME, REG_DT, CNT FROM FREE_INFO WHERE (TITLE LIKE #{search} OR USER_NAME LIKE #{search}) ORDER BY FR_NO ASC
 </select>
+
+<select parameterType="mainDTO" id="getuserSearch" resultType="mainDTO">
+SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM USER_INFO WHERE (USER_NAME LIKE #{search} OR USER_ID LIKE #{search}) ORDER BY USER_NO ASC
+</select>
+
+<update parameterType="mainDTO" id="delete_user">
+DELETE FROM USER_INFO WHERE USER_NO =#{user_no}
+</update>
 
 
 

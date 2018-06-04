@@ -13,6 +13,7 @@ public class mainDTO {
 	private String chg_no;
 	private String chg_dt;
 	private String auth;
+	private String Search;
 	
 	public String getUser_no() {
 		return user_no;
@@ -80,6 +81,11 @@ public class mainDTO {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
-
+	public String getSearch() {
+		return Search;
+	}
+	public void setSearch(String search) {
+		Search = search;
+	}
 	
 }

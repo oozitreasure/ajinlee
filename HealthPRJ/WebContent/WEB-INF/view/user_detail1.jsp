@@ -1,20 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ page import="com.health.DTO.parkDTO" %>
+<%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
 
 <%
+mainDTO gDTO = (mainDTO)request.getAttribute("gDTO");
+if(gDTO == null) gDTO = new mainDTO();
 
-parkDTO aDTO = (parkDTO)request.getAttribute("aDTO");
-if(aDTO == null) aDTO = new parkDTO();
+mainDTO pDTO = (mainDTO)request.getAttribute("pDTO");
+if(pDTO == null) pDTO = new mainDTO();
 
 %>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>park_detail</title>
+	<title>회원상세보기</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,120 +40,100 @@ if(aDTO == null) aDTO = new parkDTO();
 	<link rel="stylesheet" type="text/css" href="/resources/register/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/resources/register/css/main.css">
 <!--===============================================================================================-->
+
 </head>
-<script>
-function freeUp(){
+<style>
+.container-login100-form-btn{
+display: inline-block;
+}
+</style>
+<%-- <script>
+
+function delete_check() {
 	
-	   location.href="park_E.do";
-	}
-</script>
-
+    if(confirm("삭제하시겠습니까?")){
+    	
+       location.href="/user_delete.do?user_no=<%=gDTO.getUser_no()%>";
+       
+       return true;
+       
+    }else{
+    	
+       return false;
+    }
+  }
+  
+</script> --%>
 <jsp:include page="top.jsp" flush="false"></jsp:include>
-<body>
+<style>
+.container-login100-form-btn{
+display: inline;
+}
+.container-login100-form-btn{
+display: inline;
+}
+</style>
+<script>
 
-	<div style="width:60%; align:center">
+function delete_check() {
+    if(confirm("삭제하시겠습니까?")){
+       location.href="/user_delete.do?user_no=<%=gDTO.getUser_no()%>";
+       return true;
+    }else{
+       return false;
+    }
+  }
+  
+</script>
+<body>
+	<div style="width:40%">
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/park_E.do">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/user_update.do">
 					<div class="login100-form-title p-b-45">
-					 
+					 회원상세보기
 					</div>
-					<button>좋아요!</button>
-					<input class="input100" type="hidden" id="admin_no" name="admin_no" value="<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>">
-					<span>공원명 : </span> 
+					<input class="input100" type="hidden" id="user_no" name="user_no" value="<%=CmmUtil.nvl(gDTO.getUser_no()) %>">
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_name" id="park_name" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>" readonly />
+                		<input class="input100" type="text" id="user_id" name="user_id" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly />
+						<span class="focus-input100"></span>
 					</div>
 					
 					
 					<div class="wrap-input100 validate-input m-b-20">
-						<img name="img" style="background-color:white; height:500px">
+						<input class="input100" type="text" name="user_name" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly />
+						<span class="focus-input100"></span>
 					</div>
 					
-					<span>공원구분 : </span>
+					
 					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_div" id="park_div" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>" readonly />
-
+						<input class="input100" type="email" name="email" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getEmail()) %>" />
+						<span class="focus-input100"></span>
 					</div>
 					
-					<span>주소 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="addr1" id="addr1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>" readonly />
-
-					</div>
-					<span>공원보유시설(운동시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text"name="park_est1" id="park_est1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>" readonly />
-
-					</div>
-					<span>공원보유시설(유희시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est2" id="park_est2" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>" readonly />
-
-					</div>
-					<span>공원보유시설(편익시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est3" id="park_est3" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>" readonly />
-
-					</div>
-					<span>공원보유시설(교양시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est4" id="park_est4" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>" readonly />
-
-					</div>
-					<span>공원보유시설(기타시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est5" id="park_est5" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>" readonly />
-
-					</div>
-					<span>관리기관명 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="admin_name" id="admin_name" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>" readonly />
-
-					</div>
-					<span>관리기관 전화번호 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="number" id="number" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>" readonly />
-
-					</div>
 					
-					<div id="map" style="width:1000px;height:450px;"></div>
-					
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17b5ba3030d9adc17aaca19e920d2631"></script>
-					<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					<div class="wrap-input100 validate-input m-b-45">
+						<input class="input100" type="text" name="addr" style="background-color:white;" value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" />
+						<span class="focus-input100"></span>
+					</div>
 
-					mapOption = { 
-    				center: new daum.maps.LatLng(37.615353, 126.97464), // 지도의 중심좌표
-    				level: 3 // 지도의 확대 레벨
-					};
 
-					//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new daum.maps.Map(mapContainer, mapOption); 
-
-					
-					var markerPosition  = new daum.maps.LatLng(37.615353, 126.97464); 
-
-					// 마커를 생성합니다
-					var marker = new daum.maps.Marker({
-					    position: markerPosition
-					});
-
-					// 마커가 지도 위에 표시되도록 설정합니다
-					marker.setMap(map);
-					
-					</script>
-													
-				 	<div class="container-login100-form-btn">
+					<div class="container-login100-form-btn">
 						<input type="submit" class="login100-form-btn" value="수정">
-					</div> 
-				</form>
+					</div>
 
+					
+					<!-- <form class="login100-form validate-form flex-sb flex-w" method="post" action="/user_delete.do"> -->
+					<div class="container-login100-form-btn">
+						<input type="button" class="login100-form-btn" value="탈퇴" onclick="delete_check()">
+					</div>
+					</form>
+				
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 
 	<div id="dropDownSelect1"></div>
 	

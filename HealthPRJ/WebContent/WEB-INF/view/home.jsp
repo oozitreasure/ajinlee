@@ -230,7 +230,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                         Helpful
                     </div>
                 </div>
-
             </div>
 
         </div>

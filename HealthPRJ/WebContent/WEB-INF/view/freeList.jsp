@@ -135,7 +135,7 @@ function doSearch() {
  		
  		$.ajax({
  			
- 			url : "/freeSearch.do" ,
+ 			url : "/freeSearch.do",
  			method : "get",
  			data : {'search' : search},
  			datatype : "json", 
@@ -304,7 +304,7 @@ div.blueTable {
                 <%}else{ %> 
                <%} %>
             <%} %>
-            <% if (!SESSION_USER_ID.equals("admin")&&!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>

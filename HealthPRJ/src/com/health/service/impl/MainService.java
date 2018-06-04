@@ -96,7 +96,7 @@ public class MainService implements IMainService {
 	}
 
 	@Override
-	public String park_insert_proc(parkDTO pDTO) {
+	public int park_insert_proc(parkDTO pDTO) {
 		
 		return mainMapper.park_insert_proc(pDTO);
 	}
@@ -105,12 +105,6 @@ public class MainService implements IMainService {
 	public int updatePassword(mainDTO uDTO) {
 
 		return mainMapper.updatePassword(uDTO);
-	}
-
-	@Override
-	public void updateFree(freeDTO rDTO) {
-
-		
 	}
 
 	@Override
@@ -125,5 +119,20 @@ public class MainService implements IMainService {
 		return mainMapper.getfreeSearch(fDTO);
 	}
 
+	@Override
+	public List<mainDTO> getuserSearch(mainDTO uDTO) {
+		
+		return mainMapper.getuserSearch(uDTO);
+	}
+
+	@Override
+	public void delete_user(mainDTO uDTO) {
+		
+	}
+
+	@Override
+	public void updateFree(freeDTO rDTO) {
+	
+	}
 		
 }

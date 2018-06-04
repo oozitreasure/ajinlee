@@ -286,7 +286,7 @@ div.blueTable {
                 <%}else{ %> 
                <%} %>
             <%} %>
-            <% if (!SESSION_USER_ID.equals("admin")&&!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -346,7 +346,7 @@ div.blueTable {
 <br>
 
 
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;" -->
 
     <div class="footer-copyright">
         <div class="container">

@@ -32,7 +32,7 @@ if(aDTO == null) aDTO = new parkDTO();
     <meta name="author" content="">
     <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
 
-    <title>PkMn</title>
+    <title>공원정보상세</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -93,6 +93,11 @@ function freeUp(){
 		
 	   location.href="freeList.do";
 	}
+ 
+ function parkinsert(){
+		
+	   location.href="park_insert.do";
+	}
 
  
 
@@ -100,52 +105,89 @@ function freeUp(){
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
  
- <script>
-	
-	$(function(){
 
-	
- 	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=9387cf9977f607739cd8bcf11b24d319";
-        $.ajax({
-            url: apiURI,
-            dataType: "json",
-            type: "GET",
-            async: "false",
-            success: function(resp) {
-            	
-                 console.log(resp);
-                 console.log("도시이름  : "+ resp.name );
-                 console.log("현재온도 : "+ (resp.main.temp- 273.15));
-                 console.log("날씨 : "+ resp.weather[0].main );
-                 
-                var tableStr ="<table>";
-                tableStr += "<tr><th><b>"+ resp.name +"</b></th></tr>";
-                tableStr += "<tr><th>"+ (resp.main.temp- 273.15) +"</th></tr>";
-                tableStr += "<tr><th>"+ resp.weather[0].main +"</th></tr>";
+<style>
 
-                
-                    
-               tableStr += "</table>";
+div.blueTable {
+  background-color: #FFFFFF;
+  width: 60%;
+  text-align: center;
+}
+.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+  border-bottom : 1px solid #D1D1D1;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  border : 1px solid #D1D1D1;
 
-   			$(".divs").append(tableStr);
+}
+.divTable.blueTable .divTableBody .divTableCell {
+  font-size: 15px;
+  color: #1c1c1c;
+}
+.divTable.blueTable .divTableHeading {
+  background: #e8efe8;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  border-bottom: 1px solid #000000;
+}
+.divTable.blueTable .divTableHeading .divTableHead {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1c1c1c;
+  text-align: center;
+  background-color: #e8efe8;
 
-                    
-    		},
-    		
-    		error : function(error) {
-    			
-    			alert("error!");
-    			
-    		},
-        
+}
+.divTable.blueTable .divTableHeading .divTableHead:first-child {
+  border-left: none;
+  border-top : 1px solid #d1dee2;
+  boerder-button :1px solid #d1dee2;
+}
 
-       
-        });
+.blueTable .tableFootStyle {
+  font-size: 15px;
+  font-weight: normal;
+  color: #FFFFFF;
+/*   background: #FFFFFF;
+  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 66%, #FFFFFF 100%); */
+  border-top: 1px solid #FFFFFF;
+
+}
+.blueTable .tableFootStyle {
+  font-size: 15px;
+}
+.blueTable .tableFootStyle .links {
+	 text-align: center;
+
+}
+.blueTable .tableFootStyle .links a{
+  display: inline-block;
+  background: #e8efe8;
+  color: #1c1c1c;
+  padding: 2px 8px;
+  border-radius: 3px;
+  
+}
+.blueTable.outerTableFooter {
+  border-top: none;
+}
+.blueTable.outerTableFooter .tableFootStyle {
+  padding: 3px 5px; 
+}
+/* DivTable.com */
+.divTable{ display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+</style> 
 
 
-	});
-
-</script>
 
 <body data-spy="scroll" data-target="#topnav">
 
@@ -169,83 +211,81 @@ function freeUp(){
                 <li><a href="/logout_proc.do">로그아웃</a></li>
                  <%if (SESSION_USER_ID.equals("admin")){ %>
                 <li><a href="userList.do">회원정보</a></li>
-                <%}else{ %>      
+                <%}else{ %> 
                <%} %>
             <%} %>
+            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="freeList.do">자유게시판</a></li>
+              <%} %>
             </ul>
 
         </div>
         <!--/.navbar-collapse -->
     </div>
 </div>
-<br><br><br>
-<div style="width:60%; align:center">
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w" method="post" action="/park_E.do">
-					<div class="login100-form-title p-b-45">
-					 
-					</div>
-					<button>좋아요!</button>
-					<input class="input100" type="hidden" id="admin_no" name="admin_no" value="<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>">
-					<span>공원명 : </span> 
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_name" id="park_name" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>" readonly />
-					</div>
-					
-<!-- 					<div class="wrap-input100 validate-input m-b-20">
-						<img name="img" style="background-color:white; height:500px">
-					</div> -->
-					
-					<span>공원구분 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_div" id="park_div" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>" readonly />
 
-					</div>
-					
-					<span>주소 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="addr1" id="addr1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>" readonly />
 
-					</div>
-					<span>공원보유시설(운동시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text"name="park_est1" id="park_est1" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>" readonly />
 
-					</div>
-					<span>공원보유시설(유희시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est2" id="park_est2" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>" readonly />
+<br><br><br><br><br>
+<div align="center">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<h2 align="center">공원상세정보</h2>
+<br>
+</div>
 
-					</div>
-					<span>공원보유시설(편익시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est3" id="park_est3" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>" readonly />
+<div>
+<button style="background-color:white; border:0px;">좋아요<img style="width:40px; height:40px; align:right;" src="/resources/img/like.png"></button>
+</div>
 
-					</div>
-					<span>공원보유시설(교양시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est4" id="park_est4" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>" readonly />
+<br><br>
+<img style="width:50%; height:600px; align:center;" src="/resources/img/park.GIF">
+<br><br>
 
-					</div>
-					<span>공원보유시설(기타시설) : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="park_est5" id="park_est5" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>" readonly />
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">NO.</div>
+<div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
+</div>
+</div>
+<div class="divTableBody">
+<div class="divTableRow">
+<div class="divTableCell">공원명</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_name()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원구분</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_div()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">주소</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAddr1()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(운동시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est1()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(유희시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est2()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(편익시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est3()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(교양시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est4()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(기타시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est5()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">관리기관명</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAdmin_name()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">전화번호</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getNumber()) %></div></div>
 
-					</div>
-					<span>관리기관명 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="admin_name" id="admin_name" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>" readonly />
-
-					</div>
-					<span>관리기관 전화번호 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input type="text" name="number" id="number" style="background-color:white; width:100%" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>" readonly />
-
-					</div>
-					
-					<div id="map" style="width:1000px;height:450px;"></div>
+</div>
+</div>
+<br>
+	
+					<div id="map" style="width:60%;height:500px;"></div>
 					
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17b5ba3030d9adc17aaca19e920d2631"></script>
 					<script>
@@ -270,19 +310,32 @@ function freeUp(){
 					// 마커가 지도 위에 표시되도록 설정합니다
 					marker.setMap(map);
 					
-					</script>
-													
-				 	<div class="container-login100-form-btn">
-						<input type="submit" class="login100-form-btn" value="수정">
-					</div> 
-				</form>
+					var iwContent = '<div style="padding:5px;"><참샘골공원><br><a href="http://map.daum.net/link/map/참샘골공원,37.615353, 126.97464" style="color:green" target="_blank">큰지도보기</a> <a href="http://map.daum.net/link/to/참샘골공원,37.615353, 126.97464" style="color:orange" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = new daum.maps.LatLng(37.615353, 126.97464); //인포윈도우 표시 위치입니다
 
-			</div>
-		</div>
-	</div>
+					// 인포윈도우를 생성합니다
+					var infowindow = new daum.maps.InfoWindow({
+				    position : iwPosition, 
+				    content : iwContent 
+					});
+				  
+					// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+					infowindow.open(map, marker); 
+					
+					</script>
+					<br>
+					
+					<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkinsert()">
+
 </div>
 
+
+<br>
+
+
 	<div id="dropDownSelect1"></div>
+	
+	
 <footer id="footer">
 
     <div class="footer-copyright">

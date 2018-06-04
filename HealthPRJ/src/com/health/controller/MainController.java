@@ -197,64 +197,7 @@ public class MainController {
 	   }
 	
 	
-	@RequestMapping(value = "/park_insert_proc")
-	   public String park_insert_proc(HttpSession session, HttpServletRequest re, HttpServletResponse response,
-	         ModelMap model) throws Exception {
 
-	      log.info(this.getClass() + "   park_insert_proc start!!");
-
-	      String admin_no = CmmUtil.nvl((String) re.getParameter("admin_no"));
-	      String park_name = CmmUtil.nvl((String) re.getParameter("park_name"));
-	      String park_div = CmmUtil.nvl((String) re.getParameter("park_div"));
-	      String addr1 = CmmUtil.nvl((String) re.getParameter("addr1"));
-	      String park_est1 = CmmUtil.nvl((String) re.getParameter("park_est1"));
-	      String park_est2 = CmmUtil.nvl((String) re.getParameter("park_est2"));
-	      String park_est3 = CmmUtil.nvl((String) re.getParameter("park_est3"));
-	      String park_est4 = CmmUtil.nvl((String) re.getParameter("park_est4"));
-	      String park_est5 = CmmUtil.nvl((String) re.getParameter("park_est5"));
-	      String admin_name = CmmUtil.nvl((String) re.getParameter("admin_name"));
-	      String number = CmmUtil.nvl((String) re.getParameter("number"));
-	      
-	      log.info("admin_no: " + admin_no);
-	      log.info("park_name: " + park_name);
-	      log.info("park_div : " + park_div);
-	      log.info("addr1: " + addr1);
-	      log.info("park_est1: " + park_est1);
-	      log.info("park_est2: " + park_est2);
-	      log.info("park_est3: " + park_est3);
-	      log.info("park_est4: " + park_est4);
-	      log.info("park_est5: " + park_est5);
-	      log.info("admin_name: " + admin_name);
-	      log.info("number: " + number);
-
-	      parkDTO pDTO = new parkDTO();
-
-	      pDTO.setAdmin_no(admin_no);
-	      pDTO.setPark_name(park_name);
-	      pDTO.setPark_div(park_div);
-	      pDTO.setAddr1(addr1);
-	      pDTO.setPark_est1(park_est1);
-	      pDTO.setPark_est2(park_est2);
-	      pDTO.setPark_est3(park_est3);
-	      pDTO.setPark_est4(park_est4);
-	      pDTO.setPark_est5(park_est5);
-	      pDTO.setAdmin_name(admin_name);
-	      pDTO.setNumber(number);
-
-	      String req = mainService.park_insert_proc(pDTO);
-	      
-	      if (req != null) {
-	         model.addAttribute("msg", "등록되었습니다.");
-	         model.addAttribute("url", "/freeList.do");
-	      } else {
-	         model.addAttribute("msg", "실패하였습니다.");
-	         model.addAttribute("url", "/free_insert.do");
-	      }
-	      
-	      log.info(this.getClass() + "   park_insert_proc end!!");
-	      
-	      return "/alert";
-	   }
 	
 	
 	@RequestMapping(value = "/park_detail")
@@ -632,12 +575,14 @@ public class MainController {
 		
 		log.info(this.getClass() + "   user_update start!!!");
 		
-		String user_no = CmmUtil.nvl(re.getParameter("user_no"));
+		/*String user_no = CmmUtil.nvl(re.getParameter("user_no"));*/
 		String email = CmmUtil.nvl(re.getParameter("email"));
 		String addr = CmmUtil.nvl(re.getParameter("addr"));
 		
+		String user_no = (String)session.getAttribute("session_user_no");
 		String chg_no = (String)session.getAttribute("session_user_no");
-		
+		/*String addr = (String)session.getAttribute("session_addr");*/
+		/*String email = (String)session.getAttribute("session_email");*/
 
 		log.info("email :" + email);
 		log.info("addr : " + addr);
@@ -701,13 +646,50 @@ public class MainController {
 		} else {
 			
 			model.addAttribute("msg", "회원탈퇴에 실패하였습니다.");
-			model.addAttribute("url", "/mypage.do?user_no=" + user_no);
+			model.addAttribute("url", "/user_detail.do?user_no=" + user_no);
 		}
 		
 		log.info(this.getClass() + "   user_delete end!!!");
 		
 		return "/alert";
 	}
+	
+	
+	@RequestMapping(value = "/delete_user")
+	public String delete_user(HttpServletRequest req, HttpServletResponse res, ModelMap model) throws Exception {
+		
+		log.info(this.getClass() + "   delete_user start!!!");
+
+		String user_no = CmmUtil.nvl(req.getParameter("user_no"));
+		
+		log.info("user_no : " + user_no);
+		
+		mainDTO uDTO = new mainDTO();
+
+		uDTO.setUser_no(user_no);
+
+		mainService.delete_user(uDTO);
+		
+		int result = mainService.deleteUserInfo(uDTO);
+		
+		if (result != 0) {
+
+			model.addAttribute("msg", "회원이 탈퇴되었습니다.");
+			model.addAttribute("url", "/home.do");
+			
+		} else {
+			
+			model.addAttribute("msg", "회원탈퇴에 실패하였습니다.");
+			model.addAttribute("url", "/user_detail.do?user_no=" + user_no);
+		}
+		
+		log.info(this.getClass() + "   user_delete end!!!");
+		
+		return "/alert";
+	}
+
+	
+	
 	
 	@RequestMapping(value = "/userList")
 	
@@ -752,27 +734,7 @@ public class MainController {
 		return "/parkList";
 	}
 	
-	
-	@RequestMapping(value = "/freeList")
-	
-	public String freeList(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
-			throws Exception {
-		
-		log.info(this.getClass() + "   userList start!!!");
-		
-		List<freeDTO> fList = mainService.getFreeList();
-		
-		if (fList == null) {
-			
-			fList = new ArrayList<>();
-		}
-		
-		model.addAttribute("fList", fList);
-		
-		log.info(this.getClass() + "   userList end!!!");
-		
-		return "/freeList";
-	}
+
 	
 	
 	
@@ -861,10 +823,10 @@ public class MainController {
 		}
 		
 		@RequestMapping(value="/freeSearch")
-		public @ResponseBody List<freeDTO> freeSearch(@RequestParam(value = "search") String search)throws Exception{
+		public @ResponseBody List<freeDTO> freeSearch(@RequestParam(value = "search") String search) throws Exception{
 			
 			log.info(this.getClass().getName() + "   ParkSearch start!!!");
-			
+						
 			freeDTO fDTO = new freeDTO();
 			
 			fDTO.setSearch("%"+search+"%");
@@ -877,7 +839,122 @@ public class MainController {
 			
 			return flist;
 		}
+		
+		
+		@RequestMapping(value="/userSearch")
+		public @ResponseBody List<mainDTO> userSearch(@RequestParam(value = "search") String search) throws Exception{
+			
+			log.info(this.getClass().getName() + "   UserSearch start!!!");
+						
+			mainDTO uDTO = new mainDTO();
+			
+			uDTO.setSearch("%"+search+"%");
+			
+			log.info("search : " + search);
+			
+			List<mainDTO> ulist = mainService.getuserSearch(uDTO);
+			
+			log.info(this.getClass().getName() + "   UserSearch end!!!");
+			
+			return ulist;
+		}
 
+
+		
+		@RequestMapping(value = "/freeList")
+		
+		public String freeList(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+		
+				throws Exception {
+			
+			log.info(this.getClass() + "   userList start!!!");
+			
+			List<freeDTO> fList = mainService.getFreeList();
+			
+			if (fList == null) {
+				
+				fList = new ArrayList<>();
+			}
+			
+			model.addAttribute("fList", fList);
+			
+			log.info(this.getClass() + "   userList end!!!");
+			
+			return "/freeList";
+		}
+		
+		@RequestMapping(value = "/park_insert_proc")
+		   public String park_insert_proc(HttpSession session, HttpServletRequest re, HttpServletResponse response,
+		         ModelMap model) throws Exception {
+
+		      log.info(this.getClass() + "   park_insert_proc start!!");
+
+		      String admin_no = CmmUtil.nvl((String) re.getParameter("admin_no"));
+		      String park_name = CmmUtil.nvl((String) re.getParameter("park_name"));
+		      String park_div = CmmUtil.nvl((String) re.getParameter("park_div"));
+		      String addr1 = CmmUtil.nvl((String) re.getParameter("addr1"));
+		      String addr2 = CmmUtil.nvl((String) re.getParameter("addr2"));
+		      String lat = CmmUtil.nvl((String) re.getParameter("lat"));
+		      String har = CmmUtil.nvl((String) re.getParameter("har"));
+		      String park_area = CmmUtil.nvl((String) re.getParameter("park_area"));
+		      String park_est1 = CmmUtil.nvl((String) re.getParameter("park_est1"));
+		      String park_est2 = CmmUtil.nvl((String) re.getParameter("park_est2"));
+		      String park_est3 = CmmUtil.nvl((String) re.getParameter("park_est3"));
+		      String park_est4 = CmmUtil.nvl((String) re.getParameter("park_est4"));
+		      String park_est5 = CmmUtil.nvl((String) re.getParameter("park_est5"));
+		      String admin_name = CmmUtil.nvl((String) re.getParameter("admin_name"));
+		      String number = CmmUtil.nvl((String) re.getParameter("number"));
+		      
+		      log.info("admin_no: " + admin_no);
+		      log.info("park_name: " + park_name);
+		      log.info("park_div : " + park_div);
+		      log.info("addr1: " + addr1);
+		      log.info("addr2: " + addr2);
+		      log.info("lat: " + lat);
+		      log.info("har: " + har);
+		      log.info("park_area: " + park_area);
+		      log.info("park_est1: " + park_est1);
+		      log.info("park_est2: " + park_est2);
+		      log.info("park_est3: " + park_est3);
+		      log.info("park_est4: " + park_est4);
+		      log.info("park_est5: " + park_est5);
+		      log.info("admin_name: " + admin_name);
+		      log.info("number: " + number);
+
+		      parkDTO pDTO = new parkDTO();
+
+		      pDTO.setAdmin_no(admin_no);
+		      pDTO.setPark_name(park_name);
+		      pDTO.setPark_div(park_div);
+		      pDTO.setAddr1(addr1);
+		      pDTO.setAddr2(addr2);
+		      pDTO.setLat(lat);
+		      pDTO.setHar(har);
+		      pDTO.setPark_area(park_area);
+		      pDTO.setPark_est1(park_est1);
+		      pDTO.setPark_est2(park_est2);
+		      pDTO.setPark_est3(park_est3);
+		      pDTO.setPark_est4(park_est4);
+		      pDTO.setPark_est5(park_est5);
+		      pDTO.setAdmin_name(admin_name);
+		      pDTO.setNumber(number);
+
+		      int req = mainService.park_insert_proc(pDTO);
+		      
+		      if (req != 0) {
+		         model.addAttribute("msg", "등록되었습니다.");
+		         model.addAttribute("url", "/parkList.do");
+		      } else {
+		         model.addAttribute("msg", "실패하였습니다.");
+		         model.addAttribute("url", "/park_insert.do");
+		      }
+		      
+		      log.info(this.getClass() + "   park_insert_proc end!!");
+		      
+		      return "/alert";
+		   }
+		
+		
 	
 
 	}
