@@ -96,6 +96,11 @@ function freeUp(){
 		
 	   location.href="park_insert.do";
 	}
+ 
+ function freeE(){
+	 
+	 location.href="free_E.do"
+ }
 
  
 
@@ -109,11 +114,9 @@ function freeUp(){
 div.blueTable {
   background-color: #FFFFFF;
   width: 60%;
-  text-align: center;
 }
 .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
 /*   border-bottom : 1px solid #D1D1D1; */
-  padding-top: 9px;
   padding-bottom: 9px;
 /*   border : 1px solid #D1D1D1; */
 
@@ -133,7 +136,6 @@ div.blueTable {
   font-size: 17px;
   font-weight: bold;
   color: #1c1c1c;
-  text-align: center;
   background-color: #FFFFFF;
 
 }
@@ -221,36 +223,41 @@ div.blueTable {
     </div>
 </div>
 
-
+<form method="post" action="free_E.do">
 <br><br><br><br><br>
 <div align="center">
-<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9; align:center;">
 <h2 align="center">자유게시판상세</h2>
 </div>
 <hr style="width:60%">
 <br>
-</div>
-<div align="left">
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead"><h3><%= CmmUtil.nvl(rDTO.getTitle()) %></h3></div>
+<div class="divTableHead"><h3 style="display:inline-block; width:60%; text-align:left;"><%= CmmUtil.nvl(rDTO.getTitle()) %></h3>
+<div style="display: inline-block; align:right;"><%= CmmUtil.nvl(rDTO.getUser_name()) %>&nbsp;|&nbsp;<%= CmmUtil.nvl(rDTO.getReg_dt()) %></div>
 </div>
 </div>
-<div class="divTableBody">
+</div>
+<br><br><br>
+<div class="divTableBody" >
 <div class="divTableRow">
-<div class="divTableCell"><textarea style="width:60%; height:500px;"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
+<div class="divTableCell">
+<textarea style="width:77%; height:500px; border:0px;"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
 </div>
 </div>
 <br>
+<hr>
 </div>
 
 
+
 <div align="center">	
-<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkinsert()">
-<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>		
 <br><br>
+</form>
 
 	<div id="dropDownSelect1"></div>
 	

@@ -48,5 +48,7 @@ public interface IMainService {
 
 	void delete_user(mainDTO uDTO);
 
+	void apark_update(parkDTO fDTO);
+
 	
 }

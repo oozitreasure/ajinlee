@@ -94,6 +94,10 @@ SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM USER_INFO WHERE (USER_NAME 
 DELETE FROM USER_INFO WHERE USER_NO =#{user_no}
 </update>
 
+<update id="apark_update">
+UPDATE APARK_INFO SET PARK_NAME = #{park_name}, PARK_DIV = #{park_div}, ADDR1 = #{addr1}, ADDR2 = #{addr2}, LAT = #{lat}, HAR = #{har}, PARK_AREA = #{park_area}, PARK_EST1 = #{park_est1}, PARK_EST2 = #{park_est2}, PARK_EST3 = #{park_est3}, PARK_EST4 = #{park_est4}, PARK_EST5 = #{park_est5},  ADMIN_NAME = #{admin_name}, NUMBER = #{number} WHERE ADMIN_NO = #{admin_no}
+</update>
+
 
 
 </mapper>

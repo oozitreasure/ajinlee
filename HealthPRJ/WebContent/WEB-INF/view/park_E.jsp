@@ -1,197 +1,292 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.DTO.parkDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
+
+
+ <%
+
+request.setCharacterEncoding("euc-kr");
+
+String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_id"));
+String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
+
+%>
 
 <%
 
 parkDTO aDTO = (parkDTO)request.getAttribute("aDTO");
 if(aDTO == null) aDTO = new parkDTO();
 
-
-System.out.println("admin_no : " +  aDTO.getAdmin_no());
 %>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>park_detail</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="/resources/img/tree.png"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/resources/register/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/resources/register/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/resources/register/css/main.css">
-<!--===============================================================================================-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
+
+    <title>공원정보상세</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/resources/cupid/skins/eden.css" rel="stylesheet">
+    <link href="/resources/cupid/css/animate.min.css" rel="stylesheet">
+    <link href="/resources/cupid/css/icons/icons.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/resources/cupid/style.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="bootstrap/js/html5shiv.js"></script>
+    <script src="bootstrap/js/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 
 <script>
-
-<%-- function Hinsert() {
-    var like = document.getElementById('like'); 
-    var unlike = document.getElementById('unlike');
-    
-       $.ajax({
-          type : 'post',
-          url : '/my_page/Hinsert.do',
-          data : {
-             'user_no' : '${sessionScope.SESSION_USER_NO}',
-             'license_no' : '<%=lDTO.getLi_no() %>',
-             'reg_no' : '${sessionScope.SESSION_USER_NO}',
-             'license_name' : '<%=lDTO.getLi_name() %>'
-          },
-          success : function(data) {
-              alert("즐겨찾기에 추가되었습니다.");
-              console.log("즐찾추가");
-              console.log(data);
-
-              
-             $('#like').hide();
-              $('#unlike').show();
-              
-          },
-          error : function(data) {
-             alert("다시 시도해주세요.");
-            
-          }
-    });
- }
-  --%>
- //즐겨찾기 취소
-<%--  function Hdelete(){
-	 
-	 var like = document.getElementById('like'); 
-	 var unlike = document.getElementById('unlike');
-	 
-	 
-        $.ajax({
-           type : 'post',
-           url : '/my_page/Hdelete.do',
-           data : {
-              'license_no' : '<%=lDTO.getLi_no() %>'
-           },
-           success : function(data) {
-        
-                 alert("즐겨찾기 삭제되었습니다.");
-                 console.log("즐찾삭제");
-                 
-                $('#unlike').hide();
-                 $('#like').show();
-                 
-           },
-           error : function(data) {
-              alert("다시 시도해주시기 바랍니다.");
-           }
-     });
- } --%>
- 
+function freeUp(){
+	
+	   location.href="park_E.do";
+	}
 </script>
-<jsp:include page="top.jsp" flush="false"></jsp:include>
+
+
+<script type="text/javascript">
+
+ 
+  function openLogin()
+ {
+     window.name = "LoginForm";
+     window.open("login.do", "childForm", "width=450, height=600, left=730, top=200, resizable = no, scrollbars = no"); 
+   
+ }
+ 
+ function openJoin()
+ {
+     window.name = "JoinForm";
+     window.open("register.do", "childForm", "width=450, height=700, left=730, top=120, resizable = no, scrollbars = no"); 
+   
+ }	 
+ 
+ function openMap()
+ {
+     window.name = "MapForm";
+     window.open("map.do", "childForm", "width=1220, height=730, left=350, top=120, resizable = no, scrollbars = no"); 
+   
+ }	
+ 
+ function parkIn(){
+		
+	   location.href="parkList.do";
+	}
+ 
+ function freeIn(){
+		
+	   location.href="freeList.do";
+	}
+ 
+ function parkinsert(){
+		
+	   location.href="park_insert.do";
+	}
+
+ 
+
+ </script>
+ 
+ <script src="/resources/js/jquery-3.3.1.min.js"></script>
+ 
+
 <style>
-.container-login100-form-btn{
-display: inline-block;
+
+div.blueTable {
+  background-color: #FFFFFF;
+  width: 60%;
+  text-align: center;
 }
-.wrap-input100 validate-input m-b-20{
-display: inline-block;
+.divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
+  border-bottom : 1px solid #D1D1D1;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  border : 1px solid #D1D1D1;
+  width:50%;
+
 }
-.input100{
-display: inline-block;
+.divTable.blueTable .divTableBody .divTableCell {
+  font-size: 15px;
+  color: #1c1c1c;
 }
-</style>
-<body>
+.divTable.blueTable .divTableHeading {
+  background: #e8efe8;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  border-bottom: 1px solid #000000;
+}
+.divTable.blueTable .divTableHeading .divTableHead {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1c1c1c;
+  text-align: center;
+  background-color: #e8efe8;
 
-	<div style="width:60%;">
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w">
-					<div class="login100-form-title p-b-45">
-					 
-					</div>
-					<button>좋아요!</button>
-					<input class="input100" type="hidden" id="ad_no" name="ad_no" value="<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>">
-					<span>공원명 : </span> 
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="title" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>" readonly />
-					</div>
+}
+.divTable.blueTable .divTableHeading .divTableHead:first-child {
+  border-left: none;
+  border-top : 1px solid #d1dee2;
+  boerder-button :1px solid #d1dee2;
+}
+
+.blueTable .tableFootStyle {
+  font-size: 15px;
+  font-weight: normal;
+  color: #FFFFFF;
+/*   background: #FFFFFF;
+  background: -moz-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #ffffff 66%, #FFFFFF 100%); */
+  border-top: 1px solid #FFFFFF;
+
+}
+.blueTable .tableFootStyle {
+  font-size: 15px;
+}
+.blueTable .tableFootStyle .links {
+	 text-align: center;
+
+}
+.blueTable .tableFootStyle .links a{
+  display: inline-block;
+  background: #e8efe8;
+  color: #1c1c1c;
+  padding: 2px 8px;
+  border-radius: 3px;
+  
+}
+.blueTable.outerTableFooter {
+  border-top: none;
+}
+.blueTable.outerTableFooter .tableFootStyle {
+  padding: 3px 5px; 
+}
+/* DivTable.com */
+.divTable{ display: table; }
+.divTableRow { display: table-row; }
+.divTableHeading { display: table-header-group;}
+.divTableCell, .divTableHead { display: table-cell;}
+.divTableHeading { display: table-header-group;}
+.divTableFoot { display: table-footer-group;}
+.divTableBody { display: table-row-group;}
+</style> 
+
+
+
+<body data-spy="scroll" data-target="#topnav">
+
+<div class="navbar navbar-color navbar-fixed-top" id="topnav">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-reorder"></span>
+
+            </button>
+            <!-- <a class="navbar-brand" href="#">ParkMation</a> -->
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="home.do">홈</a></li>
+                <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
+                <li><a onclick="openLogin()">로그인</a></li>
+                <li><a onclick="openJoin()">회원가입</a></li>
+                <%} else {%>
+                <li><a href="mypage.do"><b><%=SESSION_USER_NAME %>님!</b></a></li>
+                <li><a href="/logout_proc.do">로그아웃</a></li>
+                 <%if (SESSION_USER_ID.equals("admin")){ %>
+                <li><a href="userList.do">회원정보</a></li>
+                <%}else{ %> 
+               <%} %>
+            <%} %>
+            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="freeList.do">자유게시판</a></li>
+              <%} %>
+            </ul>
+
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+
+<br><br><br><br><br>
+<div align="center">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<h2 align="center">공원상세정보</h2>
+<br>
+</div>
+
+<br><br>
+<img style="width:50%; height:600px; align:center;">
+<br><br>
+
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">NO.</div>
+<div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
+</div>
+</div>
+<div class="divTableBody">
+<div class="divTableRow">
+<div class="divTableCell">공원명</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_name()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원구분</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_div()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">주소</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAddr1()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(운동시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est1()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(유희시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est2()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(편익시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est3()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(교양시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est4()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">공원보유시설(기타시설)</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est5()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">관리기관명</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAdmin_name()) %></div></div>
+<div class="divTableRow">
+<div class="divTableCell">전화번호</div>
+<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getNumber()) %></div></div>
+
+</div>
+</div>
+<br>
+					<div id="map" style="width:60%;height:500px;"></div>
 					
-					
-					<div class="wrap-input100 validate-input m-b-20">
-						<img class="input100" name="img" style="background-color:white; height:500px">
-					</div>
-					
-					<span>공원구분 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="park_div" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>" readonly />
-
-					</div>
-					
-					<span>주소 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="addr1" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>" readonly />
-
-					</div>
-					<span> : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="est1" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>" readonly />
-
-					</div>
-					<span> : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="est2" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>" readonly />
-
-					</div>
-					<span> : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="est3" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>" readonly />
-
-					</div>
-					<span> : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="est4" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>" readonly />
-
-					</div>
-					<span> : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="est5" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>" readonly />
-
-					</div>
-					<span>관리기관명 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="adname" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>" readonly />
-
-					</div>
-					<span>관리기관 전화번호 : </span>
-					<div class="wrap-input100 validate-input m-b-20">
-						<input class="input100" type="text" name="number" style="background-color:white;" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>" readonly />
-
-					</div>
-					
-					<div id="map" style="width:1000px;height:450px;"></div>
-					
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2f2063167dd1ac6264460d6ca6ababba"></script>
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17b5ba3030d9adc17aaca19e920d2631"></script>
 					<script>
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
 					mapOption = { 
-    				center: new daum.maps.LatLng(37.615353, 126.97464), // 지도의 중심좌표
+    				center: new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>), // 지도의 중심좌표
     				level: 3 // 지도의 확대 레벨
 					};
 
@@ -199,7 +294,7 @@ display: inline-block;
 					var map = new daum.maps.Map(mapContainer, mapOption); 
 
 					
-					var markerPosition  = new daum.maps.LatLng(37.615353, 126.97464); 
+					var markerPosition  = new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>); 
 
 					// 마커를 생성합니다
 					var marker = new daum.maps.Marker({
@@ -209,40 +304,98 @@ display: inline-block;
 					// 마커가 지도 위에 표시되도록 설정합니다
 					marker.setMap(map);
 					
-					</script>
+					var iwContent = '<div style="padding:5px;"><<%= CmmUtil.nvl(aDTO.getPark_name()) %>><br><a href="http://map.daum.net/link/map/<%= CmmUtil.nvl(aDTO.getPark_name()) %>,<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>" style="color:green" target="_blank">큰지도보기</a> <a href="http://map.daum.net/link/to/<%= CmmUtil.nvl(aDTO.getPark_name()) %>,<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>" style="color:orange" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>); //인포윈도우 표시 위치입니다
+
+					// 인포윈도우를 생성합니다
+					var infowindow = new daum.maps.InfoWindow({
+				    position : iwPosition, 
+				    content : iwContent 
+					});
+				  
+					// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+					infowindow.open(map, marker); 
 					
-
-				</form>
-				
-				 	<div class="container-login100-form-btn">
-						<input type="submit" class="login100-form-btn" value="수정" onclick="freeUp()">
-					</div> 
-			</div>
-		</div>
-	</div>
+					</script>
+					<br>
+					</div>
+<div align="center">
+<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
-
+<br><br>
 	<div id="dropDownSelect1"></div>
 	
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/bootstrap/js/popper.js"></script>
-	<script src="/resources/register/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/daterangepicker/moment.min.js"></script>
-	<script src="/resources/register/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="/resources/register/js/main.js"></script>
+	
+<footer id="footer">
 
+    <div class="footer-copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <a class="logo" href="/resources/cupid/index.html">
+                        <img src="/resources/cupid/images/logo.png" alt="Template Eden">
+                    </a>
+                </div>
+                <div class="col-md-5">
+                    <p>&copy; Copyright 2013 by Template Eden. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-5">
+                    <nav id="footer-menu">
+                        <ul>
+                            <li><a href="#">FAQ's</a></li>
+                            <li><a href="#">Sitemap</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/resources/cupid/js/jquery.js"></script>
+<script src="/resources/cupid/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        if($(window).width()>960){
+        var tw = $('.triangles').width()/7+32;
+        var ta = tw/2+22;
+        $('.down-triangle').css('border-top',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
+        $('.up-triangle').css('border-bottom',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
+        }
+        $('#wd-wrapper').sinusoid({
+            minImgW: 80,
+            maxImgW: 130,
+            minImgAngle: -20,
+            maxImgAngle: 20,
+            leftFactor: 60,
+            sinusoidFunction: {
+                A: 70,
+                T: 1700,
+                P: 0
+            }
+        });
+
+
+        $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+
+    });
+</script>
 </body>
-
-<jsp:include page="footer.jsp" flush="false"></jsp:include>
-
 </html>

@@ -118,6 +118,7 @@ div.blueTable {
   padding-top: 9px;
   padding-bottom: 9px;
   border : 1px solid #D1D1D1;
+  width:50%;
 
 }
 .divTable.blueTable .divTableBody .divTableCell {
@@ -226,7 +227,7 @@ div.blueTable {
 </div>
 
 
-
+<form method="post" action="park_E.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
@@ -234,14 +235,9 @@ div.blueTable {
 <br>
 </div>
 
-<div>
-<button style="background-color:white; border:0px;">좋아요<img style="width:40px; height:40px; align:right;" src="/resources/img/like.png"></button>
-</div>
-
 <br><br>
 <img style="width:50%; height:600px; align:center;" src="/resources/img/park.GIF">
 <br><br>
-
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
@@ -292,7 +288,7 @@ div.blueTable {
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 
 					mapOption = { 
-    				center: new daum.maps.LatLng(37.615353, 126.97464), // 지도의 중심좌표
+    				center: new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>), // 지도의 중심좌표
     				level: 3 // 지도의 확대 레벨
 					};
 
@@ -300,7 +296,7 @@ div.blueTable {
 					var map = new daum.maps.Map(mapContainer, mapOption); 
 
 					
-					var markerPosition  = new daum.maps.LatLng(37.615353, 126.97464); 
+					var markerPosition  = new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>); 
 
 					// 마커를 생성합니다
 					var marker = new daum.maps.Marker({
@@ -310,8 +306,8 @@ div.blueTable {
 					// 마커가 지도 위에 표시되도록 설정합니다
 					marker.setMap(map);
 					
-					var iwContent = '<div style="padding:5px;"><참샘골공원><br><a href="http://map.daum.net/link/map/참샘골공원,37.615353, 126.97464" style="color:green" target="_blank">큰지도보기</a> <a href="http://map.daum.net/link/to/참샘골공원,37.615353, 126.97464" style="color:orange" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-				    iwPosition = new daum.maps.LatLng(37.615353, 126.97464); //인포윈도우 표시 위치입니다
+					var iwContent = '<div style="padding:5px;"><<%= CmmUtil.nvl(aDTO.getPark_name()) %>><br><a href="http://map.daum.net/link/map/<%= CmmUtil.nvl(aDTO.getPark_name()) %>,<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>" style="color:green" target="_blank">큰지도보기</a> <a href="http://map.daum.net/link/to/<%= CmmUtil.nvl(aDTO.getPark_name()) %>,<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>" style="color:orange" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+				    iwPosition = new daum.maps.LatLng(<%= CmmUtil.nvl(aDTO.getLat()) %>, <%= CmmUtil.nvl(aDTO.getHar()) %>); //인포윈도우 표시 위치입니다
 
 					// 인포윈도우를 생성합니다
 					var infowindow = new daum.maps.InfoWindow({
@@ -325,9 +321,13 @@ div.blueTable {
 					</script>
 					<br>
 					
-					<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkinsert()">
-
+	<div align="right" style="width:60%;">
+	<button style="background-color:white; border:0px;">좋아요<img style="width:40px; height:40px;" src="/resources/img/like.png"></button>
+	</div>
+	<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
+</form>
+
 
 
 <br>

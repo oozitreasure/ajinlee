@@ -127,7 +127,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/park_E")
+	@RequestMapping(value = "park_E")
 	public String park_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
@@ -146,7 +146,7 @@ public class MainController {
 		
 		log.info(this.getClass() + "   park_E end!!!");
 		
-		return "/park_E";
+		return "park_E";
 	}
 	
 	
@@ -437,6 +437,8 @@ public class MainController {
 	@RequestMapping(value = "/idsearch_proc")
 	public String idsearch_proc(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
+		re.setCharacterEncoding("UTF-8");
+
 		
 		log.info(this.getClass() + "   idsearch_proc start!!!");
 
@@ -477,16 +479,19 @@ public class MainController {
 		String user_name = re.getParameter("user_name");
 		String user_id = re.getParameter("user_id");
 		String email = re.getParameter("email");
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 
 		log.info(this.getClass() + "user_name : " + user_name);
 		log.info(this.getClass() + "user_id : " + user_id);
 		log.info(this.getClass() + "email :" + email);
+		log.info(this.getClass() + "user_no :" + user_no);
 
 		mainDTO kDTO = new mainDTO();
 
 		kDTO.setUser_name(user_name);
 		kDTO.setUser_id(user_id);
 		kDTO.setEmail(email);
+		kDTO.setUser_no(user_no);
 
 		kDTO = mainService.getPassword(kDTO);
 
@@ -512,9 +517,10 @@ public class MainController {
 		
 		log.info(this.getClass() + "   pw_update start!!!");
 		
+		
 		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 		
-		String password = CmmUtil.nvl/*(SHA256.SHA256_encode*/(re.getParameter("password"));
+		String password = CmmUtil.nvl(/*(SHA256.SHA256_encode(*/re.getParameter("password"));
 
 		log.info("user_no : " + user_no);
 		log.info("password : " + password);
@@ -535,7 +541,7 @@ public class MainController {
 		} else {
 			
 			model.addAttribute("msg", "비밀번호변경에 실패하였습니다.");
-			model.addAttribute("url", "/user_info/pw_change.do");
+			model.addAttribute("url", "/PWDschange.do");
 		}
 		
 		log.info(this.getClass() + "  pw_update end!!!");
@@ -951,6 +957,96 @@ public class MainController {
 		      
 		      log.info(this.getClass() + "   park_insert_proc end!!");
 		      
+		      return "/alert";
+		   }
+		
+		
+		@RequestMapping(value = "/parkUpdate")
+		   public String parkUpdate(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		         ModelMap model) throws Exception {
+
+		      log.info(this.getClass().getName() + "   parkUpdate start!");
+
+		      String msg = "";
+		      String url = "";
+
+		      try {
+
+		         String park_name = CmmUtil.nvl((String) session.getAttribute("session_park_name")); // 아이디
+		         String park_div = CmmUtil.nvl((String) session.getAttribute("session_park_div"));
+		         String addr1 = CmmUtil.nvl((String) session.getAttribute("session_addr1"));
+		         String addr2 = CmmUtil.nvl((String) session.getAttribute("session_addr2"));
+		         String lat = CmmUtil.nvl((String) session.getAttribute("session_lat"));
+		         String har = CmmUtil.nvl((String) session.getAttribute("session_har"));
+		         String park_area = CmmUtil.nvl((String) session.getAttribute("session_park_area"));
+		         String park_est1 = CmmUtil.nvl((String) session.getAttribute("session_park_est1"));
+		         String park_est2 = CmmUtil.nvl((String) session.getAttribute("session_park_est2"));
+		         String park_est3 = CmmUtil.nvl((String) session.getAttribute("session_park_est3"));
+		         String park_est4 = CmmUtil.nvl((String) session.getAttribute("session_park_est4"));
+		         String park_est5 = CmmUtil.nvl((String) session.getAttribute("session_park_est5"));
+		         String admin_name = CmmUtil.nvl((String) session.getAttribute("session_admin_name"));	
+		         String number = CmmUtil.nvl((String) session.getAttribute("session_number"));
+					
+		         log.info("admin_no : " + admin_no);
+		         log.info("park_name : " + park_name);
+		         log.info("park_div : " + park_div);
+		         log.info("addr1 : " + addr1);
+		         log.info("addr2 : " + addr2);
+		         log.info("lat : " + lat);
+		         log.info("har : " + har);
+		         log.info("park_area : " + park_area);
+		         log.info("park_est1 : " + park_est1);
+		         log.info("park_est2 : " + park_est2);
+		         log.info("park_est3 : " + park_est3);
+		         log.info("park_est4 : " + park_est4);
+		         log.info("park_est5 : " + park_est5);
+		         log.info("admin_name : " + admin_name);
+		         log.info("number : " + number);
+		         
+
+		         parkDTO fDTO = new parkDTO();
+
+		         fDTO.setAdmin_no(admin_no);
+		         fDTO.setPark_name(park_name);
+		         fDTO.setPark_div(park_div);
+		         fDTO.setAddr1(addr1);
+		         fDTO.setAddr2(addr2);
+		         fDTO.setLat(lat);
+		         fDTO.setHar(har);
+		         fDTO.setPark_area(park_area);
+		         fDTO.setPark_est1(park_est1);
+		         fDTO.setPark_est2(park_est2);
+		         fDTO.setPark_est3(park_est3);
+		         fDTO.setPark_est4(park_est4);
+		         fDTO.setPark_est5(park_est5);
+		         fDTO.setAdmin_name(admin_name);
+		         fDTO.setNumber(number);
+
+		         mainService.apark_update(fDTO);
+		         
+		         msg = "수정되었습니다.";
+
+		         url = "/park_detail.do?admin_no=" + admin_no;
+
+		         fDTO = null;
+
+		      } catch (Exception e) {
+
+		         msg = "실패하였습니다. : " + e.toString();
+		         url = "/park_E.do?admin_no=" + admin_no;
+
+		         log.info(e.toString());
+		         e.printStackTrace();
+
+		      } finally {
+		         log.info(this.getClass().getName() + "   parkUpdate end!");
+
+		         // 결과 메시지 전달하기
+		         model.addAttribute("msg", msg);
+		         model.addAttribute("url", url);
+
+		      }
+		      // return "/alert";
 		      return "/alert";
 		   }
 		

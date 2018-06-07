@@ -134,5 +134,10 @@ public class MainService implements IMainService {
 	public void updateFree(freeDTO rDTO) {
 	
 	}
+
+	@Override
+	public void apark_update(parkDTO fDTO) {
+		
+	}
 		
 }

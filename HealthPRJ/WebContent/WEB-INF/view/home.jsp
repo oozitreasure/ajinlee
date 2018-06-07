@@ -181,7 +181,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                 </div>
                 <div class="down-triangle animated fadeInDown">
                     <div class="info">
-                   	<div class="divs"> </div><br/>
+                   	<div style="text-align:center;" class="divs"> </div><br/>
                    <!-- <i class="icon icon-envelope-alt"></i> -->
                         
                     </div>
