@@ -186,7 +186,6 @@ function imsi_open(){
 <area shape="poly" coords="99,125,100,107,82,108,91,88,71,80,48,99,67,128,89,128" href="#인천" onclick="Show_map('인천');">
 <area shape="poly" coords="125,129,134,116,120,90,97,103,89,103,96,88,90,75,102,51,123,46,153,80,153,109,163,112,166,148,135,170,107,172,88,159,89,132,102,127" href="#경기" onclick="Show_map('경기');">
 <area shape="poly" coords="139,210,132,200,135,176,103,176,79,154,52,188,78,238,86,255,92,260,108,244,121,254,137,249,146,256,156,251,151,241,142,246,128,238,123,229" href="#충남" onclick="Show_map('충남');">
-<area shape="rect" coords="218,422,329,471" href="#외국" onclick="Show_map('외국');" onfocus="this.blur();">
 </map>
 
                         </div></td>
@@ -202,41 +201,6 @@ function imsi_open(){
   </tr>
 </tbody></table></div>
 
-<!-- ------------------- 외국용 레이어 선언 ---------------------------- visible/hidden -->
-<div id="div_nation" style="position: absolute; overflow:hidden; border:0px; z-index:2; top:10; left:20; width:570; height:450; filter:alpha(opacity=100); visibility: hidden;">
-<script language="javascript">
-function Ok_sub(){
-  var Frm = document.form_Show;
-
-  if(Frm.view_area1.value == ""){
-    alert('외국 관찰지역을 입력해 주세요.');
-	Frm.view_area1.focus();
-  }else{
-    Frm.submit();
-//    top.opener.document.Band.view_area1.value=Frm.view1.value;
-//    top.opener.window.close();
-//	top.window.close();
-  }
-}
-</script>
-
-
-<table style="border:0px; align:center; cellpadding:0px; cellspacing:0px">
-  <tbody><tr>
-    <td height="450" align="center" background="/resoureces/img/nation.gif"><!---->
-	  <table style="border:0px; align:center; cellpadding:0px; cellspacing:0px; bgcolor:#DDDDDD;">
-	    <tbody><tr>
-		  <td width="100" bgcolor="#FFFFFF" align="center"><font size="-1">외국 관찰지역</font></td>
-		  <td bgcolor="#FFFFFF"><input type="text" name="view_area1" size="20" maxlength="100" class="form"></td>
-		</tr>
-		<tr><td height="40" valign="middle" align="center" colspan="2" bgcolor="#FFFFFF"><a href="javascript:Ok_sub();"><img src="/resoureces/bbs/img/ok_btn.gif" border="0"></a></td></tr>
-	  </tbody></table>
-	
-	</td>
-  </tr>
-</tbody></table>
-
-</div>
 
 <!-- ------------------- 충남지도용 레이어 선언 ---------------------------- visible/hidden -->
 <div id="div_chungnam" style="position: absolute; overflow:hidden; border:0px; z-index:3; top:10; left:20; width:570; height:450; filter:alpha(opacity=100); visibility: hidden;">
@@ -246,7 +210,7 @@ function Ok_sub(){
   </tr>
 </tbody></table>
 <map name="Gis_chungnam">
-<area shape="poly" coords="163,23,174,23,180,13,199,22,228,32,227,43,181,47" href="#대호지" onclick="Select_chungnam('대호지')">
+<area shape="poly" coords="163,23,174,23,180,13,199,22,228,32,227,43,181,47" href="dae.do" onclick="Select_chungnam('대호지')">
 <area shape="poly" coords="157,189,176,141,183,147,186,172,227,182,230,191" href="#천수만A" onclick="Select_chungnam('천수만A')">
 <area shape="poly" coords="114,183,156,179,155,136,132,135,117,156,93,170" href="#천수만B" onclick="Select_chungnam('천수만B')">
 <area shape="poly" coords="304,54,305,77,363,78,365,55" href="#아산호" onclick="Select_chungnam('아산호')">

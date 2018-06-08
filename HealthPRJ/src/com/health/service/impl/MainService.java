@@ -48,12 +48,6 @@ public class MainService implements IMainService {
 	}
 
 	@Override
-	public int deleteUserInfo(mainDTO dDTO) {
-	
-		return mainMapper.deleteUserInfo(dDTO);
-	}
-
-	@Override
 	public List<mainDTO> getUserList() {
 		
 		return mainMapper.getUserList();
@@ -77,17 +71,8 @@ public class MainService implements IMainService {
 		return mainMapper.getPassword(kDTO);
 	}
 
-	@Override
-	public freeDTO getFree(String fr_no) {
-		
-		return mainMapper.getFree(fr_no);
-	}
 
-	@Override
-	public parkDTO getPark(String admin_no) {
-		
-		return mainMapper.getPark(admin_no);
-	}
+
 
 	@Override
 	public int free_insert_proc(freeDTO fDTO) {
@@ -99,12 +84,6 @@ public class MainService implements IMainService {
 	public int park_insert_proc(parkDTO pDTO) {
 		
 		return mainMapper.park_insert_proc(pDTO);
-	}
-
-	@Override
-	public int updatePassword(mainDTO uDTO) {
-
-		return mainMapper.updatePassword(uDTO);
 	}
 
 	@Override
@@ -125,19 +104,65 @@ public class MainService implements IMainService {
 		return mainMapper.getuserSearch(uDTO);
 	}
 
-	@Override
-	public void delete_user(mainDTO uDTO) {
-		
-	}
 
 	@Override
 	public void updateFree(freeDTO rDTO) {
-	
+		mainMapper.updateFree(rDTO);
+	}
+
+
+	@Override
+	public int parkDelete(parkDTO pDTO) {
+		return mainMapper.getparkDelete(pDTO);
+	}
+
+
+	@Override
+	public int deleteUserInfo(mainDTO uDTO) {
+		
+		return mainMapper.deleteUserInfo(uDTO);
 	}
 
 	@Override
-	public void apark_update(parkDTO fDTO) {
+	public int updatePassword(mainDTO uDTO) {
+
+		return mainMapper.updatePassword(uDTO);
+	}
+
+	@Override
+	public parkDTO getPark(String admin_no) {
+		
+		return mainMapper.getPark(admin_no);
+	}
+
+	@Override
+	public freeDTO getFree(String fr_no) {
+		
+		return mainMapper.getFree(fr_no);
+	}
+
+	@Override
+	public void getfreeDelete(String fr_no) {
+		mainMapper.getfreeDelete(fr_no);
 		
 	}
+
+	@Override
+	public int getfreeDelete(freeDTO pDTO) {
+
+		return mainMapper.getfreeDelete(pDTO);
+	}
+
+	@Override
+	public void getparkDelete(String admin_no) {
+		mainMapper.getparkDelete(admin_no);
 		
+	}
+
+	@Override
+	public int getparkDelete(parkDTO pDTO) {
+
+		return mainMapper.getparkDelete(pDTO);
+	}
+
 }

@@ -17,13 +17,7 @@ public class freeDTO {
 	private String Search;
 	
 
-	
-	public String getFr_no() {
-		return fr_no;
-	}
-	public void setFr_no(String fr_no) {
-		this.fr_no = fr_no;
-	}
+
 	
 	public String getUser_id() {
 		return user_id;
@@ -97,7 +91,12 @@ public class freeDTO {
 	public void setSearch(String search) {
 		Search = search;
 	}
-
+	public String getFr_no() {
+		return fr_no;
+	}
+	public void setFr_no(String fr_no) {
+		this.fr_no = fr_no;
+	}
 
 	
 

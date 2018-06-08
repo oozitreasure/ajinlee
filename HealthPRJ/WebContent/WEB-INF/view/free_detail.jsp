@@ -53,7 +53,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 <script>
 function freeUp(){
 	
-	   location.href="park_E.do";
+	   location.href="park_E.do?fr_no";
 	}
 </script>
 
@@ -99,15 +99,14 @@ function freeUp(){
  
  function freeE(){
 	 
-	 location.href="free_E.do"
+	 location.href="free_E.do";
  }
-
  
+
 
  </script>
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
- 
 
 <style>
 
@@ -223,7 +222,7 @@ div.blueTable {
     </div>
 </div>
 
-<form method="post" action="free_E.do">
+<form method="post" action="/freeDelete.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9; align:center;">
@@ -249,12 +248,12 @@ div.blueTable {
 <br>
 <hr>
 </div>
-
+<input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(rDTO.getFr_no()) %>" />
 
 
 <div align="center">	
-<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
-<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;"  onclick="freeE()">
 </div>		
 <br><br>
 </form>

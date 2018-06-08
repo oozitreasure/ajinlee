@@ -96,7 +96,6 @@ function freeUp(){
 		
 	   location.href="park_insert.do";
 	}
-
  
 
  </script>
@@ -219,6 +218,8 @@ div.blueTable {
 </div>
 
 <br><br><br><br><br>
+<form method="post" action="/freeUpdate.do">
+
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9; align:center;">
 <h2 align="center">자유게시판수정</h2>
@@ -228,34 +229,34 @@ div.blueTable {
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<input type="hidden" name="fr_no" value="<%=rDTO.getFr_no() %>" />
-<div class="divTableHead"><h3 style="display:inline-block; width:60%; text-align:left;"><%= CmmUtil.nvl(rDTO.getTitle()) %></h3>
-<div style="display: inline-block; align:right;"><%= CmmUtil.nvl(rDTO.getUser_name()) %>&nbsp;|&nbsp;<%= CmmUtil.nvl(rDTO.getReg_dt()) %></div>
+
+<div class="divTableHead"><h3 style="display:inline-block; width:72%; text-align:left;">
+<input type="text" name="title" value="<%= CmmUtil.nvl(rDTO.getTitle()) %>"></h3>
+<div style="display: inline-block; align:right;"><%= CmmUtil.nvl(rDTO.getUser_name()) %></div>
 </div>
 </div>
 </div>
-<br><br><br>
 <div class="divTableBody" >
 <div class="divTableRow">
 <div class="divTableCell">
-<textarea style="width:77%; height:500px; border:0px;"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
+<textarea style="width:77%; height:500px;" name="content"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
 </div>
 </div>
 <br>
 <hr>
 </div>
-
+<input type="hidden" name="fr_no" value="<%=rDTO.getFr_no() %>" />
 
 
 
 <div align="center">	
-<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkinsert()">
-<input type="reset" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="reset" value="초기화" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" >
 </div>		
 <br><br>
 
 	<div id="dropDownSelect1"></div>
-	
+	</form>
 <footer id="footer">
 
     <div class="footer-copyright">

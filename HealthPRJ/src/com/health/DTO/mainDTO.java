@@ -14,6 +14,7 @@ public class mainDTO {
 	private String chg_dt;
 	private String auth;
 	private String Search;
+	private String contents;
 	
 	public String getUser_no() {
 		return user_no;
@@ -86,6 +87,12 @@ public class mainDTO {
 	}
 	public void setSearch(String search) {
 		Search = search;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	
 }

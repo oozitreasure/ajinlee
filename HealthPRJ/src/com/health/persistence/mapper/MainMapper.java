@@ -21,8 +21,6 @@ public interface MainMapper {
 
 	int getupdateUserInfo(mainDTO pDTO);
 
-	int deleteUserInfo(mainDTO dDTO);
-
 	List<mainDTO> getUserList();
 
 	List<parkDTO> getParkList();
@@ -39,13 +37,26 @@ public interface MainMapper {
 
 	int park_insert_proc(parkDTO pDTO);
 
-	int updatePassword(mainDTO rDTO);
-
 	List<parkDTO> getparkSearch(parkDTO pDTO);
 
 	List<freeDTO> getfreeSearch(freeDTO fDTO);
 
 	List<mainDTO> getuserSearch(mainDTO uDTO);
+
+	void updateFree(freeDTO rDTO);
+
+	int deleteUserInfo(mainDTO uDTO);
+
+	int updatePassword(mainDTO uDTO);
+
+	void getfreeDelete(String fr_no);
+
+	int getfreeDelete(freeDTO pDTO);
+
+	void getparkDelete(String admin_no);
+
+	int getparkDelete(parkDTO pDTO);
+
 
 
 }

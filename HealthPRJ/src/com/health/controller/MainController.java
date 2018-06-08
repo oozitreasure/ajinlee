@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -60,6 +62,34 @@ public class MainController {
 		
 	}
 	
+	
+	@RequestMapping(value = "dae")
+	
+	public String dae(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+			throws Exception {
+		
+		log.info(this.getClass() + "   getParkList start!!!");
+		
+		List<parkDTO> pList = mainService.getParkList();
+		
+		if (pList == null) {
+			
+			pList = new ArrayList<>();
+		}
+		
+		model.addAttribute("pList", pList);
+		
+		log.info(this.getClass() + "   getParkList end!!!");
+		
+		return "dae";
+	}
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/free_detail")
 	public String free_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
@@ -93,7 +123,8 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value = "free_E")
+	@RequestMapping(value = "free_E", method=RequestMethod.POST)
+	
 	public String free_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
@@ -135,6 +166,7 @@ public class MainController {
 		
 		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
 		
+		
 		log.info("admin_no : " + admin_no);
 		
 		parkDTO aDTO = mainService.getPark(admin_no);
@@ -148,6 +180,8 @@ public class MainController {
 		
 		return "park_E";
 	}
+	
+	
 	
 	
 	@RequestMapping(value = "/free_insert_proc")
@@ -479,19 +513,16 @@ public class MainController {
 		String user_name = re.getParameter("user_name");
 		String user_id = re.getParameter("user_id");
 		String email = re.getParameter("email");
-		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 
 		log.info(this.getClass() + "user_name : " + user_name);
 		log.info(this.getClass() + "user_id : " + user_id);
 		log.info(this.getClass() + "email :" + email);
-		log.info(this.getClass() + "user_no :" + user_no);
 
 		mainDTO kDTO = new mainDTO();
 
 		kDTO.setUser_name(user_name);
 		kDTO.setUser_id(user_id);
 		kDTO.setEmail(email);
-		kDTO.setUser_no(user_no);
 
 		kDTO = mainService.getPassword(kDTO);
 
@@ -511,7 +542,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/password_update.do")
+	@RequestMapping(value = "/password_update")
 	public String password_update(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
@@ -535,7 +566,7 @@ public class MainController {
 		if (result != 0) {
 			
 			model.addAttribute("msg", "비밀번호가 변경되었습니다.");
-			model.addAttribute("url", "/Login.do");
+			model.addAttribute("url", "/login.do");
 			session.setAttribute("session_user_no", "");
 			
 		} else {
@@ -674,7 +705,7 @@ public class MainController {
 
 		uDTO.setUser_no(user_no);
 
-		mainService.delete_user(uDTO);
+		/*mainService.deleteUserInfo(uDTO);*/
 		
 		int result = mainService.deleteUserInfo(uDTO);
 		
@@ -754,13 +785,12 @@ public class MainController {
 	      String url = "";
 
 	      try {
-
+	    	  
 	         String user_id = CmmUtil.nvl((String) session.getAttribute("session_user_id")); // 아이디
 	         String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
 	         String chg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
 	         String titled = CmmUtil.nvl((String) request.getParameter("title"));
 	         String title = TextUtil.exchangeEscapeNvl(titled);
-				String notice_check = CmmUtil.nvl(request.getParameter("notice_check")); // 공지글 여부
 				String contentd = CmmUtil.nvl((String) request.getParameter("content"));
 				String content = TextUtil.exchangeEscapeNvl(contentd);
 				content = content.replace("\r\n", "<br>");
@@ -769,7 +799,6 @@ public class MainController {
 	         log.info("user_name : " + user_name);
 	         log.info("fr_no : " + fr_no);
 	         log.info("title : " + title);
-	         log.info("notice_check : " + notice_check);
 	         log.info("content : " + content);
 	         log.info("user_no : " + chg_no);
 
@@ -779,11 +808,11 @@ public class MainController {
 	         rDTO.setUser_name(user_name);
 	         rDTO.setFr_no(fr_no);
 	         rDTO.setTitle(title);
-	         rDTO.setNotice_check(notice_check);
 	         rDTO.setContent(content);
 	         rDTO.setChg_no(chg_no);
 
 	         mainService.updateFree(rDTO);
+	         
 	         msg = "수정되었습니다.";
 
 	         url = "/free_detail.do?fr_no=" + fr_no;
@@ -961,7 +990,7 @@ public class MainController {
 		   }
 		
 		
-		@RequestMapping(value = "/parkUpdate")
+/*		@RequestMapping(value = "/parkUpdate")
 		   public String parkUpdate(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
 		         ModelMap model) throws Exception {
 
@@ -1049,7 +1078,102 @@ public class MainController {
 		      // return "/alert";
 		      return "/alert";
 		   }
+
 		
+		 @RequestMapping(value = "parkDelete")
+		   public String parkDelete(@RequestParam String admin_no,HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		         ModelMap model) throws Exception {
+		      log.info(this.getClass().getName() + "   FreeDelete start!");
+
+		      log.info("admin_no : " + admin_no);
+
+		      parkDTO pDTO = new parkDTO();
+
+		      pDTO.setAdmin_no(admin_no);
+
+		      int re = mainService.parkDelete(pDTO);
+		      if (re != 0) {
+		    	  
+		    	 mainService.parkdelete(admin_no);
+		         model.addAttribute("msg", "삭제되었습니다.");
+		         model.addAttribute("url", "park_list.do");
+		      } else {
+		         model.addAttribute("msg", "실패하였습니다.");
+		         model.addAttribute("url", "park_detail.do?admin_no=" + admin_no);
+		      }
+		      log.info(this.getClass() + "    FreeDelete end!!");
+
+		      return "/alert";
+		   }*/
+		 
+		 
+		 
+		 @RequestMapping(value = "/freeDelete")
+		 
+		   public String freeDelete(@RequestParam String fr_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		         ModelMap model) throws Exception {
+			 
+		      log.info(this.getClass().getName() + "   FreeDelete start!");
+
+		      log.info("fr_no : " + fr_no);
+
+		      freeDTO pDTO = new freeDTO();
+
+		      pDTO.setFr_no(fr_no);
+
+		      int re = mainService.getfreeDelete(pDTO);
+		      
+		      if (re != 0) {
+		    	  
+		    	 mainService.getfreeDelete(fr_no);
+		    	  
+		         model.addAttribute("msg", "삭제되었습니다.");
+		         model.addAttribute("url", "freeList.do");
+		         
+		      } else {
+		    	  
+		         model.addAttribute("msg", "실패하였습니다.");
+		         model.addAttribute("url", "free_detail.do?fr_no=" + fr_no);
+		      }
+		      
+		      log.info(this.getClass() + "    FreeDelete end!!");
+
+		      return "/alert";
+		   }
+		 
+		 @RequestMapping(value = "/parkDelete")
+		 
+		   public String parkDelete(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		         ModelMap model) throws Exception {
+			 
+		      log.info(this.getClass().getName() + "   parkDelete start!");
+
+		      log.info("admin_no : " + admin_no);
+
+		      parkDTO pDTO = new parkDTO();
+
+		      pDTO.setAdmin_no(admin_no);
+
+		      int re = mainService.getparkDelete(pDTO);
+		      
+		      if (re != 0) {
+		    	  
+		    	 mainService.getparkDelete(admin_no);
+		    	  
+		         model.addAttribute("msg", "삭제되었습니다.");
+		         model.addAttribute("url", "parkList.do");
+		         
+		      } else {
+		    	  
+		         model.addAttribute("msg", "실패하였습니다.");
+		         model.addAttribute("url", "park_detail.do?admin_no=" + admin_no);
+		      }
+		      
+		      log.info(this.getClass() + "    FreeDelete end!!");
+
+		      return "/alert";
+		   }
+		 
 		
 	
 

@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+
 <%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
 
-
 <%
- String user_no = CmmUtil.nvl(request.getParameter("user_no"));
-
-System.out.println("user_no : " + user_no);
-
-mainDTO uDTO = (mainDTO)request.getAttribute("uDTO");
-if(uDTO == null) uDTO = new mainDTO();
+mainDTO gDTO = (mainDTO)request.getAttribute("gDTO");
+if(gDTO == null) gDTO = new mainDTO();
 
 %>
+ <%
 
+request.setCharacterEncoding("euc-kr");
+
+
+String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,12 +58,11 @@ if(uDTO == null) uDTO = new mainDTO();
 
 				    <div class="wrap-input100 validate-input m-b-16" data-validate = "비밀번호를 입력해주세요.">
 						<input class="input100" type="password" name="password" placeholder="비밀번호를 입력해주세요.">
-						<input type="hidden" name="user_no" id="user_no" value="<%= CmmUtil.nvl(uDTO.getUser_no()) %>" >
 						<span class="focus-input100"></span>
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "비밀번호를 다시한번 입력해주세요.">
-						<input class="input100" type="password" name="password1" placeholder="비밀번호를 다시한번 입력해주세요.">
+						<input class="input100" type="password" name="password" placeholder="비밀번호를 다시한번 입력해주세요.">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -85,13 +86,11 @@ if(uDTO == null) uDTO = new mainDTO();
 							변경
 						</button>
 					</div>
-
 				</form>
 			</div>
 		</div>
 	</div>
 	
-
 	<div id="dropDownSelect1"></div>
 	
 <!--===============================================================================================-->

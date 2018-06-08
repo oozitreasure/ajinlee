@@ -19,9 +19,7 @@ public interface IMainService {
 	mainDTO getUserInfoOne(String user_no);
 
 	int updateUserInfo(mainDTO pDTO);
-
-	int deleteUserInfo(mainDTO dDTO);
-
+	
 	List<mainDTO> getUserList();
 
 	List<parkDTO> getParkList();
@@ -30,13 +28,9 @@ public interface IMainService {
 
 	freeDTO getFree(String fr_no);
 
-	parkDTO getPark(String admin_no);
-
 	int free_insert_proc(freeDTO fDTO);
 
 	int park_insert_proc(parkDTO pDTO);
-
-	int updatePassword(mainDTO uDTO);
 
 	void updateFree(freeDTO rDTO);
 
@@ -46,9 +40,23 @@ public interface IMainService {
 
 	List<mainDTO> getuserSearch(mainDTO uDTO);
 
-	void delete_user(mainDTO uDTO);
+	int parkDelete(parkDTO pDTO);
 
-	void apark_update(parkDTO fDTO);
+	int deleteUserInfo(mainDTO uDTO);
+
+	int updatePassword(mainDTO uDTO);
+
+	parkDTO getPark(String admin_no);
+
+	void getfreeDelete(String fr_no);
+
+	int getfreeDelete(freeDTO pDTO);
+
+	void getparkDelete(String admin_no);
+
+	int getparkDelete(parkDTO pDTO);
+
+
 
 	
 }

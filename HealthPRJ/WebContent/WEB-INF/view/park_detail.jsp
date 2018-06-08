@@ -98,6 +98,11 @@ function freeUp(){
 		
 	   location.href="park_insert.do";
 	}
+ 
+ function parkE(){
+		
+	   location.href="park_E.do";
+	}
 
  
 
@@ -227,7 +232,7 @@ div.blueTable {
 </div>
 
 
-<form method="post" action="park_E.do">
+<form method="post" action="/parkDelete.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
@@ -243,6 +248,7 @@ div.blueTable {
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
 <div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
+<input type="hidden" name="admin_no" value="<%= CmmUtil.nvl(aDTO.getAdmin_no()) %>">
 </div>
 </div>
 <div class="divTableBody">
@@ -324,7 +330,8 @@ div.blueTable {
 	<div align="right" style="width:60%;">
 	<button style="background-color:white; border:0px;">좋아요<img style="width:40px; height:40px;" src="/resources/img/like.png"></button>
 	</div>
-	<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+	<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkE()">
+	<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
 </form>
 

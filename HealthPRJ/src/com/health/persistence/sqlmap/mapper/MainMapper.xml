@@ -46,7 +46,8 @@ SELECT * FROM FREE_INFO ORDER BY CAST(FR_NO AS UNSIGNED) DESC
 </select>
 
 <select parameterType="mainDTO" id="getPassword" resultType="mainDTO">
-SELECT USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
+
+SELECT USER_NO, USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
 </select>
 
 <select parameterType="String" id="getFree" resultType="freeDTO">
@@ -75,7 +76,7 @@ UPDATE USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
 </update>
 
 <update parameterType="freeDTO" id="updateFree">
-UPDATE FREE_INFO SET NOTICE_CHECK = #{notice_check}, TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
+UPDATE FREE_INFO SET TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
 </update>
 
 <select parameterType="parkDTO" id="getparkSearch" resultType="parkDTO">
@@ -95,9 +96,20 @@ DELETE FROM USER_INFO WHERE USER_NO =#{user_no}
 </update>
 
 <update id="apark_update">
-UPDATE APARK_INFO SET PARK_NAME = #{park_name}, PARK_DIV = #{park_div}, ADDR1 = #{addr1}, ADDR2 = #{addr2}, LAT = #{lat}, HAR = #{har}, PARK_AREA = #{park_area}, PARK_EST1 = #{park_est1}, PARK_EST2 = #{park_est2}, PARK_EST3 = #{park_est3}, PARK_EST4 = #{park_est4}, PARK_EST5 = #{park_est5},  ADMIN_NAME = #{admin_name}, NUMBER = #{number} WHERE ADMIN_NO = #{admin_no}
+UPDATE APARK_INFO SET PARK_NAME = #{park_name}, PARK_DIV = #{park_div}, ADDR1 = #{addr1}, ADDR2 = #{addr2}, LAT = #{lat}, HAR = #{har}, PARK_AREA = #{park_area}, PARK_EST1 = #{park_est1}, PARK_EST2 = #{park_est2}, PARK_EST3 = #{park_est3}, PARK_EST4 = #{park_est4}, PARK_EST5 = #{park_est5}, ADMIN_NAME = #{admin_name}, NUMBER = #{number} WHERE ADMIN_NO = #{admin_no}
 </update>
 
+<delete parameterType="parkDTO" id="parkDelete">
+DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
+</delete>
+
+<delete parameterType="freeDTO" id="getfreeDelete">
+DELETE FROM FREE_INFO WHERE FR_NO = #{fr_no}
+</delete>
+
+<delete parameterType="parkDTO" id="getparkDelete">
+DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
+</delete>
 
 
 </mapper>

@@ -1,16 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
+<%@ page import="com.health.DTO.parkDTO" %>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
+
 
 <%
-mainDTO gDTO = (mainDTO)request.getAttribute("gDTO");
-if(gDTO == null) gDTO = new mainDTO();
-
-mainDTO pDTO = (mainDTO)request.getAttribute("pDTO");
-if(pDTO == null) pDTO = new mainDTO();
-
+   List<parkDTO> pList = (List<parkDTO>)request.getAttribute("pList");
+   if(pList == null){
+      pList = new ArrayList();
+   }
+   
 %>
+
  <%
 
 request.setCharacterEncoding("euc-kr");
@@ -21,6 +25,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +35,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <meta name="author" content="">
     <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
 
-    <title>회원정보디테일</title>
+    <title>공원정보리스트</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -49,7 +54,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <![endif]-->
 
 </head>
-
 <script type="text/javascript">
 
  
@@ -88,27 +92,96 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
  </script>
  
- <script src="/resources/js/jquery-3.3.1.min.js"></script>
+ <script>
+function doDetail(n){
+    var admin_no = n;
+    location.href="/park_detail.do?admin_no="+admin_no;
+ }
  
+ 
+function parkIn(){
+
+    location.href="/park_insert.do"
+ }
+</script>
+
+
 <script>
 
-function delete_check() {
-    if(confirm("삭제하시겠습니까?")){
-       location.href="/user_delete.do?user_no=<%=gDTO.getUser_no()%>";
-       return true;
-    }else{
-       return false;
-    }
-  }
-  
+function doSearch() {
+ 	
+ 	var contents = "";
+ 	var cnt = 10;
+ 	var search = $('#searchbox').val();
+ 	
+ 	if (search == "") {
+ 		location.href="/parkSearch.do";
+ 		
+ 	} else {
+ 		
+ 		$.ajax({
+ 			
+ 			url : "/parkSearch.do",
+ 			method : "post",
+ 			data : {'search' : search},
+ 			datatype : "json", 
+ 			success : function(data) {
+ 				
+ 					var contents = "";
+ 					var content = "";
+ 					
+					contents += "<div class='divTable blueTable' style='width:100%'>";
+					contents += "<div class='divTableHeading'>";
+					contents += "<div class='divTableRow'>";
+					contents += "<div class='divTableHead'>공원명</div>";
+					contents += "<div class='divTableHead'>공원주소</div>";
+					contents += "<div class='divTableHead'>관리기관명</div>";
+					contents += "<div class='divTableHead'>전화번호</div></div></div>";
+
+					contents += "<div class='divTableBody'>";
+				$.each(data, function (key, value) {
+					content += "<div class='divTableRow'>";
+		 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
+		 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
+		 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
+		 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
+
+ 				});
+				content += "</div></div>";
+				
+				if(content == ""){
+					
+					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
+					
+		 			$('#divTable').html(content);
+		 			$('#delete').remove();
+		 			
+				}else{
+					
+ 				$('#divTable').html(contents+content);
+ 				
+				}
+				
+ 				if ((data).length<10) {
+ 					$('#addview').remove();
+ 				}
+ 			}
+ 			
+ 		});
+ 		
+ 	}
+ 	
+}
+
 </script>
+
 
 
 <style>
 
 div.blueTable {
   background-color: #FFFFFF;
-  width: 40%;
+  width: 60%;
   text-align: center;
 }
 .divTable.blueTable .divTableCell, .divTable.blueTable .divTableHead {
@@ -121,10 +194,10 @@ div.blueTable {
   color: #1c1c1c;
 }
 .divTable.blueTable .divTableHeading {
-  background: #ede6da;
-  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #ede6da 100%);
-  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #ede6da 100%);
-  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #ede6da 100%);
+  background: #e8efe8;
+  background: -moz-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: -webkit-linear-gradient(top, #7da693 0%, #63947d 66%, #e8efe8 100%);
+  background: linear-gradient(to bottom, #7da693 0%, #63947d 66%, #e8efe8 100%);
   border-bottom: 1px solid #000000;
 }
 .divTable.blueTable .divTableHeading .divTableHead {
@@ -132,7 +205,7 @@ div.blueTable {
   font-weight: bold;
   color: #1c1c1c;
   text-align: center;
-  background-color: #ede6da;
+  background-color: #e8efe8;
 
 }
 .divTable.blueTable .divTableHeading .divTableHead:first-child {
@@ -161,7 +234,7 @@ div.blueTable {
 }
 .blueTable .tableFootStyle .links a{
   display: inline-block;
-  background: #ede6da;
+  background: #e8efe8;
   color: #1c1c1c;
   padding: 2px 8px;
   border-radius: 3px;
@@ -185,7 +258,8 @@ div.blueTable {
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
 
-<body>
+
+
 
 <body data-spy="scroll" data-target="#topnav">
 
@@ -212,7 +286,7 @@ div.blueTable {
                 <%}else{ %> 
                <%} %>
             <%} %>
-             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -223,50 +297,56 @@ div.blueTable {
     </div>
 </div>
 
-
-
 <br><br><br><br><br>
-<form method="post" action="/delete_user.do">
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
-<h2 align="center">회원상세보기</h2>
+<h2 align="center">공원정보</h2>
+<h5 align="center">찾고싶은 공원을 검색 해보세요.</h5>
 </div>
 </div>
 <br>
 <div align="center">
-<div class="divTable blueTable">
+<div>
+<input type="text" onchange="doSearch()" id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
+<input type="submit" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;">
+</div>
+<br>
+<div class="divTable blueTable" id="divTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">NO.</div>
-<div class="divTableHead"><%=CmmUtil.nvl(gDTO.getUser_no()) %></div>
+<div class="divTableHead">공원명</div>
+<div class="divTableHead">도로명주소</div>
+<div class="divTableHead">관리기관명</div>
+<div class="divTableHead">전화번호</div>
 </div>
 </div>
 <div class="divTableBody">
+<%for (parkDTO pDTO : pList) { %>
 <div class="divTableRow">
-<div class="divTableCell">아이디</div>
-<div class="divTableCell"><%=CmmUtil.nvl(gDTO.getUser_id()) %></div></div>
-<div class="divTableRow">
-<div class="divTableCell">이름</div>
-<div class="divTableCell"><%= CmmUtil.nvl(gDTO.getUser_name()) %></div></div>
-<div class="divTableRow">
-<div class="divTableCell">이메일</div>
-<div class="divTableCell"><%= CmmUtil.nvl(gDTO.getEmail()) %></div></div>
-<div class="divTableRow">
-<div class="divTableCell">주소</div>
-<div class="divTableCell"><%= CmmUtil.nvl(gDTO.getAddr()) %></div></div>
+<div class="divTableCell" onclick="doDetail('<%=pDTO.getAdmin_no()%>');"><%=pDTO.getPark_name()%></div>
+<%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %>
+<div class="divTableCell"><%=pDTO.getAddr1() %></div>
+<div class="divTableCell"><%=pDTO.getAdmin_name() %></div>
+<div class="divTableCell"><%=pDTO.getNumber() %></div>
+</div>
+<%} %>
+</div>
+</div>
+
+<div class="blueTable outerTableFooter">
+<div class="tableFootStyle">
+<div align="right">
+<input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
+</div>
+<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
 </div>
 </div>
 </div>
-<input type="hidden" name="user_no" value="<%=gDTO.getUser_no() %>" />
+</div>
 <br>
-<div align="center">
-<input type="submit" value="삭제" style="border:1px; background-color:#ede6da; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
-</div>
-</form>
-	<div id="dropDownSelect1"></div>
-	
-	
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+
+
+<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;" -->
 
     <div class="footer-copyright">
         <div class="container">

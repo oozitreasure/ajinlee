@@ -13,6 +13,7 @@ String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_
 String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
 
+
 %>
 
 <%
@@ -236,45 +237,44 @@ div.blueTable {
 <br><br>
 <img style="width:50%; height:600px; align:center;">
 <br><br>
-
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
-<div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
+<div class="divTableHead"><input type="text" name="admin_no" value="<%= CmmUtil.nvl(aDTO.getAdmin_no()) %>"></div>
 </div>
 </div>
 <div class="divTableBody">
 <div class="divTableRow">
 <div class="divTableCell">공원명</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_name()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_name" value="<%= CmmUtil.nvl(aDTO.getPark_name()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원구분</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_div()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_div" value="<%= CmmUtil.nvl(aDTO.getPark_div()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">주소</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAddr1()) %></div></div>
+<div class="divTableCell"><input type="text" name="addr1" value="<%= CmmUtil.nvl(aDTO.getAddr1()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원보유시설(운동시설)</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est1()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_est1" value="<%= CmmUtil.nvl(aDTO.getPark_est1()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원보유시설(유희시설)</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est2()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_est2" value="<%= CmmUtil.nvl(aDTO.getPark_est2()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원보유시설(편익시설)</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est3()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_est3" value="<%= CmmUtil.nvl(aDTO.getPark_est3()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원보유시설(교양시설)</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est4()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_est4" value="<%= CmmUtil.nvl(aDTO.getPark_est4()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">공원보유시설(기타시설)</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getPark_est5()) %></div></div>
+<div class="divTableCell"><input type="text" name="park_est5" value="<%= CmmUtil.nvl(aDTO.getPark_est5()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">관리기관명</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getAdmin_name()) %></div></div>
+<div class="divTableCell"><input type="text" name="admin_name" value="<%= CmmUtil.nvl(aDTO.getAdmin_name()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">전화번호</div>
-<div class="divTableCell"><%= CmmUtil.nvl(aDTO.getNumber()) %></div></div>
+<div class="divTableCell"><input type="text" name="number" value="<%= CmmUtil.nvl(aDTO.getNumber()) %>"></div></div>
 
 </div>
 </div>
@@ -321,12 +321,12 @@ div.blueTable {
 					</div>
 <div align="center">
 <input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
-<input type="button" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="reset" value="초기화" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
 <br><br>
 	<div id="dropDownSelect1"></div>
 	
-	
+
 <footer id="footer">
 
     <div class="footer-copyright">
