@@ -2,6 +2,9 @@
 
 <%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
+<%@ page import = "com.health.DTO.HoDTO" %>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 <%
 mainDTO gDTO = (mainDTO)request.getAttribute("gDTO");
@@ -18,8 +21,21 @@ request.setCharacterEncoding("euc-kr");
 String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_id"));
 String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
+String SESSION_EMAIL = CmmUtil.nvl((String)session.getAttribute("session_email"));
 
 %>
+
+<%
+   List<HoDTO> hList = (List<HoDTO>) request.getAttribute("hList");
+if (hList==null){
+   hList = new ArrayList();
+}
+   
+   System.out.println("list: " + hList);
+
+%>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -224,7 +240,7 @@ div.blueTable {
 <form method="post" action="/user_update.do">
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
-<h2 align="center">마이페이지</h2>
+<h2 align="center">정보상세</h2>
 </div>
 </div>
 <br>
@@ -278,6 +294,31 @@ div.blueTable {
 </div>
 </form>
 
+<br><br>
+
+<div align="center">
+<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
+<h2 align="center">좋아요!</h2>
+</div>
+</div>
+<br>
+<div align="center">
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">공원번호</div>
+<div class="divTableHead">공원이름</div>
+</div>
+</div>
+<div class="divTableBody">
+<%for (HoDTO hDTO : hList) {%>
+<div class="divTableRow">
+<div class="divTableCell"><%=CmmUtil.nvl(hDTO.getAdmin_no()) %></div>
+<div class="divTableCell"><%=CmmUtil.nvl(hDTO.getPark_name()) %></div></div>
+</div>
+<%} %>
+</div>
+</div>
 
 
 	<div id="dropDownSelect1"></div>

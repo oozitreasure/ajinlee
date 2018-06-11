@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.health.DTO.fiDTO;
+import com.health.DTO.HoDTO;
+
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -52,8 +53,8 @@ public class MainController {
 		log.info(this.getClass() + "   userList end!!!");
 		
 		return "home";
-		
 	}
+		
 	
 	@RequestMapping(value="register", method=RequestMethod.GET)
 	public String register(HttpServletRequest request, HttpServletResponse response, 
@@ -61,6 +62,14 @@ public class MainController {
 		return "register";
 		
 	}
+	
+	@RequestMapping(value="parkList2", method=RequestMethod.GET)
+	public String parkList2(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "parkList2";
+		
+	}
+	
 	
 	
 	@RequestMapping(value = "dae")
@@ -123,7 +132,7 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value = "free_E", method=RequestMethod.POST)
+	@RequestMapping(value = "free_E")
 	
 	public String free_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
@@ -158,14 +167,23 @@ public class MainController {
 	}
 	
 	
+	@RequestMapping(value="close3.do", method=RequestMethod.GET)
+	public String close3(HttpServletRequest request, HttpServletResponse response, 
+					ModelMap model) throws Exception {
+		return "close3.do";
+		
+		
+		
+	}
+	
+	
 	@RequestMapping(value = "park_E")
 	public String park_E(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   park_E start!!!");
 		
-		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
-		
+		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));	
 		
 		log.info("admin_no : " + admin_no);
 		
@@ -372,8 +390,10 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="map", method=RequestMethod.GET)
-	public String map(HttpServletRequest request, HttpServletResponse response, 
+	public String map(HttpServletRequest re, HttpServletResponse response, 
 					ModelMap model) throws Exception {
+		
+		
 		return "map";
 		
 	}
@@ -584,6 +604,7 @@ public class MainController {
 	
 	
 	@RequestMapping(value = "/mypage")
+	
 	public String user_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
@@ -599,6 +620,23 @@ public class MainController {
 			gDTO = new mainDTO();
 		}
 		model.addAttribute("gDTO", gDTO);
+		
+		  
+		  String park_name = CmmUtil.nvl(re.getParameter("park_name"));
+		  String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
+		  
+		  HoDTO hDTO = new HoDTO();
+		  
+		  hDTO.setPark_name(park_name);
+		  hDTO.setAdmin_no(admin_no);
+		  
+		  log.info("admin_no : " + admin_no);
+		  log.info("park_name : " + park_name);
+		  
+		  HoDTO favorites = mainService.favoriteSelectList(hDTO);
+
+		  log.info("List:" + favorites);
+		  
 		
 		log.info(this.getClass() + "   user_detail end!!!");
 		
@@ -990,7 +1028,7 @@ public class MainController {
 		   }
 		
 		
-/*		@RequestMapping(value = "/parkUpdate")
+		@RequestMapping(value = "/parkUpdate")
 		   public String parkUpdate(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
 		         ModelMap model) throws Exception {
 
@@ -1001,7 +1039,7 @@ public class MainController {
 
 		      try {
 
-		         String park_name = CmmUtil.nvl((String) session.getAttribute("session_park_name")); // 아이디
+		         String park_name = CmmUtil.nvl((String) session.getAttribute("session_park_name"));
 		         String park_div = CmmUtil.nvl((String) session.getAttribute("session_park_div"));
 		         String addr1 = CmmUtil.nvl((String) session.getAttribute("session_addr1"));
 		         String addr2 = CmmUtil.nvl((String) session.getAttribute("session_addr2"));
@@ -1055,14 +1093,14 @@ public class MainController {
 		         
 		         msg = "수정되었습니다.";
 
-		         url = "/park_detail.do?admin_no=" + admin_no;
+		         url = "park_detail.do?admin_no=" + admin_no;
 
 		         fDTO = null;
 
 		      } catch (Exception e) {
 
 		         msg = "실패하였습니다. : " + e.toString();
-		         url = "/park_E.do?admin_no=" + admin_no;
+		         url = "park_E.do?admin_no=" + admin_no;
 
 		         log.info(e.toString());
 		         e.printStackTrace();
@@ -1075,37 +1113,9 @@ public class MainController {
 		         model.addAttribute("url", url);
 
 		      }
-		      // return "/alert";
 		      return "/alert";
 		   }
 
-		
-		 @RequestMapping(value = "parkDelete")
-		   public String parkDelete(@RequestParam String admin_no,HttpSession session, HttpServletRequest request, HttpServletResponse response,
-		         ModelMap model) throws Exception {
-		      log.info(this.getClass().getName() + "   FreeDelete start!");
-
-		      log.info("admin_no : " + admin_no);
-
-		      parkDTO pDTO = new parkDTO();
-
-		      pDTO.setAdmin_no(admin_no);
-
-		      int re = mainService.parkDelete(pDTO);
-		      if (re != 0) {
-		    	  
-		    	 mainService.parkdelete(admin_no);
-		         model.addAttribute("msg", "삭제되었습니다.");
-		         model.addAttribute("url", "park_list.do");
-		      } else {
-		         model.addAttribute("msg", "실패하였습니다.");
-		         model.addAttribute("url", "park_detail.do?admin_no=" + admin_no);
-		      }
-		      log.info(this.getClass() + "    FreeDelete end!!");
-
-		      return "/alert";
-		   }*/
-		 
 		 
 		 
 		 @RequestMapping(value = "/freeDelete")
@@ -1174,6 +1184,9 @@ public class MainController {
 		      return "/alert";
 		   }
 		 
+		 
+		 
+ 
 		
 	
 

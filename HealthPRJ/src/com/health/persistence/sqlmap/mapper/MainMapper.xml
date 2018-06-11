@@ -111,5 +111,9 @@ DELETE FROM FREE_INFO WHERE FR_NO = #{fr_no}
 DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
 </delete>
 
+<select parameterType="HoDTO" id="favoriteSelectList" resultType="HoDTO">
+SELECT HO_NO, USER_NO, ADMIN_NO, PARK_NAME, REG_DT FROM HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no}
+</select>
+
 
 </mapper>

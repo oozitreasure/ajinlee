@@ -8,6 +8,7 @@
     	<typeAlias type="com.health.DTO.mainDTO" alias="mainDTO" />
     	<typeAlias type="com.health.DTO.parkDTO" alias="parkDTO" /> 
     	<typeAlias type="com.health.DTO.freeDTO" alias="freeDTO" />
+    	<typeAlias type="com.health.DTO.HoDTO" alias="HoDTO" />
     	<typeAlias type="com.health.DTO.fiDTO" alias="fiDTO" />
     </typeAliases>
 </configuration>

@@ -54,7 +54,8 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <![endif]-->
 
 </head>
-<script type="text/javascript">
+ <script src="/resources/js/jquery-3.3.1.min.js"></script>
+<script>
 
  
   function openLogin()
@@ -104,32 +105,22 @@ function parkIn(){
     location.href="/park_insert.do"
  }
 </script>
-
-
 <script>
-
-function doSearch() {
- 	
- 	var contents = "";
- 	var cnt = 10;
- 	var search = $('#searchbox').val();
- 	
- 	if (search == "") {
- 		location.href="/parkSearch.do";
- 		
- 	} else {
- 		
+var sta = 'http://localhost:8080/map.do#동두천시'
+	var stb = sta.substring( 29, 34);
+	
+function onSearch(){
+	var contents = "";
+	var cnt = 10;
+	var search = stb;
  		$.ajax({
- 			
  			url : "/parkSearch.do",
- 			method : "post",
+ 			method : "get",
  			data : {'search' : search},
  			datatype : "json", 
  			success : function(data) {
- 				
  					var contents = "";
  					var content = "";
- 					
 					contents += "<div class='divTable blueTable' style='width:100%'>";
 					contents += "<div class='divTableHeading'>";
 					contents += "<div class='divTableRow'>";
@@ -137,48 +128,101 @@ function doSearch() {
 					contents += "<div class='divTableHead'>공원주소</div>";
 					contents += "<div class='divTableHead'>관리기관명</div>";
 					contents += "<div class='divTableHead'>전화번호</div></div></div>";
-
 					contents += "<div class='divTableBody'>";
 				$.each(data, function (key, value) {
+					console.log(key);
+					console.log(value);
 					content += "<div class='divTableRow'>";
 		 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
 		 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
 		 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
 		 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
-
  				});
 				content += "</div></div>";
-				
 				if(content == ""){
-					
 					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
-					
 		 			$('#divTable').html(content);
 		 			$('#delete').remove();
-		 			
 				}else{
-					
- 				$('#divTable').html(contents+content);
- 				
+ 					$('#divTable').html(contents+content);
 				}
-				
  				if ((data).length<10) {
  					$('#addview').remove();
  				}
  			}
+
  			
  		});
- 		
- 	}
- 	
-}
+	};
 
+	
 </script>
 
 
 
-<style>
+<script>
 
+var str = 'http://localhost:8080/map.do#연천군';
+var sta = 'http://localhost:8080/map.do#동두천시'
+//document.write(str);
+var stq = str.substring( 29 , 33);
+var stb = sta.substring( 29, 34);
+//document.write(stq);
+
+
+
+		
+		function onSearch1(){
+			var contents = "";
+			var cnt = 10;
+			var search = str;
+				
+				
+				
+		 		$.ajax({
+		 			url : "/parkSearch.do",
+		 			method : "get",
+		 			data : {'search' : search},
+		 			datatype : "json", 
+		 			success : function(data) {
+		 					var contents = "";
+		 					var content = "";
+							contents += "<div class='divTable blueTable' style='width:100%'>";
+							contents += "<div class='divTableHeading'>";
+							contents += "<div class='divTableRow'>";
+							contents += "<div class='divTableHead'>공원명</div>";
+							contents += "<div class='divTableHead'>공원주소</div>";
+							contents += "<div class='divTableHead'>관리기관명</div>";
+							contents += "<div class='divTableHead'>전화번호</div></div></div>";
+							contents += "<div class='divTableBody'>";
+						$.each(data, function (key, value) {
+							console.log(key);
+							console.log(value);
+							content += "<div class='divTableRow'>";
+				 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
+				 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
+				 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
+				 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
+		 				});
+						content += "</div></div>";
+						if(content == ""){
+							content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
+				 			$('#divTable').html(content);
+				 			$('#delete').remove();
+						}else{
+		 					$('#divTable').html(contents+content);
+						}
+		 				if ((data).length<10) {
+		 					$('#addview').remove();
+		 				}
+		 			}
+
+		 			
+		 		});
+ 		};
+
+</script>
+<style>
 div.blueTable {
   background-color: #FFFFFF;
   width: 60%;
@@ -256,19 +300,13 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style> 
  
- <script src="/resources/js/jquery-3.3.1.min.js"></script>
-
-
-
-
-<body data-spy="scroll" data-target="#topnav">
+<body data-spy="scroll" data-target="#topnav" onload="onSearch()">
 
 <div class="navbar navbar-color navbar-fixed-top" id="topnav">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon icon-reorder"></span>
-
             </button>
             <!-- <a class="navbar-brand" href="#">ParkMation</a> -->
         </div>
@@ -307,8 +345,8 @@ div.blueTable {
 <br>
 <div align="center">
 <div>
-<input type="text" onchange="doSearch()" id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
-<input type="submit" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;">
+<input type="text"  id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
+<input type="button" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;">
 </div>
 <br>
 <div class="divTable blueTable" id="divTable">
@@ -324,7 +362,7 @@ div.blueTable {
 <%for (parkDTO pDTO : pList) { %>
 <div class="divTableRow">
 <div class="divTableCell" onclick="doDetail('<%=pDTO.getAdmin_no()%>');"><%=pDTO.getPark_name()%></div>
-<%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %>
+<%-- <%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %> --%>
 <div class="divTableCell"><%=pDTO.getAddr1() %></div>
 <div class="divTableCell"><%=pDTO.getAdmin_name() %></div>
 <div class="divTableCell"><%=pDTO.getNumber() %></div>
@@ -346,7 +384,7 @@ div.blueTable {
 <br>
 
 
-<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;" -->
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">
         <div class="container">

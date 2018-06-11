@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.health.DTO.mainDTO" %>
 <%@ page import="com.health.DTO.parkDTO" %>
+<%@ page import="com.health.DTO.HoDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
 
 
@@ -21,6 +22,19 @@ parkDTO aDTO = (parkDTO)request.getAttribute("aDTO");
 if(aDTO == null) aDTO = new parkDTO();
 
 %>
+
+
+<%
+HoDTO hDTO = (HoDTO)request.getAttribute("hDTO");
+
+if (hDTO == null) {
+	hDTO = new HoDTO();
+
+}
+
+%>
+
+
 
 
 <!DOCTYPE html>
@@ -100,11 +114,12 @@ function freeUp(){
 	}
  
  function parkE(){
-		
-	   location.href="park_E.do";
+	 
+		var no = '<%=aDTO.getAdmin_no()%>';
+	   location.href="park_E.do?admin_no="+no;
+	   
 	}
 
- 
 
  </script>
  
@@ -334,6 +349,15 @@ div.blueTable {
 	<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
 </form>
+
+
+				<%if(hDTO.getHo_no() == null) {%>
+              		 	<img id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png" style="width: 30px; height: 30px">
+              		 	<img id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/image/star.png" style="display:none;width:30px; height: 30px">
+              		 	<%}else{%>
+              		 	<img id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/image/star-sign.png" style="display:none; width: 30px; height: 30px">
+              		 	<img id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/image/star.png" style="width:30px; height: 30px">
+            		<%} %>
 
 
 

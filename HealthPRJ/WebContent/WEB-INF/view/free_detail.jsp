@@ -100,6 +100,11 @@ function freeUp(){
  function freeE(){
 	 
 	 location.href="free_E.do";
+	 
+	 
+		var no = <%=rDTO.getFr_no()%>;
+		   location.href="free_E.do?fr_no="+no;
+		   
  }
  
 
@@ -252,8 +257,8 @@ div.blueTable {
 
 
 <div align="center">	
-<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
-<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;"  onclick="freeE()">
+<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="freeE()">
+<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>		
 <br><br>
 </form>

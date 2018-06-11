@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.health.DTO.HoDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -163,6 +164,18 @@ public class MainService implements IMainService {
 	public int getparkDelete(parkDTO pDTO) {
 
 		return mainMapper.getparkDelete(pDTO);
+	}
+
+	@Override
+	public HoDTO favoriteSelectList(HoDTO hDTO) {
+		
+		return mainMapper.favoriteSelectList(hDTO);
+	}
+
+	@Override
+	public void apark_update(parkDTO fDTO) {
+		mainMapper.apark_update(fDTO);
+		
 	}
 
 }

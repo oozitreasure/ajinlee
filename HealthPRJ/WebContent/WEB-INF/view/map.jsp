@@ -6,6 +6,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>지도</title>
 </head>
+
+    <script>
+      var str = 'http://localhost:8080/map.do#연천군';
+      var sta = 'http://localhost:8080/map.do#동두천시'
+      //document.write(str);
+      var stq = str.substring( 29 , 33);
+      var stb = sta.substring( 29, 34);
+      //document.write(stq);
+      
+      
+      function parksearch(){
+  		
+    	  location.href="parkList.do?="+stq;
+   	}
+      
+      function parksearch1(){
+    		
+    	  location.href="parkList.do?="+stb;
+   	}
+      
+      
+    		  
+    </script>
+    
 <script language="javascript">
 
   function Show_map(area){
@@ -210,7 +234,7 @@ function imsi_open(){
   </tr>
 </tbody></table>
 <map name="Gis_chungnam">
-<area shape="poly" coords="163,23,174,23,180,13,199,22,228,32,227,43,181,47" href="dae.do" onclick="Select_chungnam('대호지')">
+<area shape="poly" coords="163,23,174,23,180,13,199,22,228,32,227,43,181,47" onclick="parksearch()" onclick="Select_chungnam('대호지')">
 <area shape="poly" coords="157,189,176,141,183,147,186,172,227,182,230,191" href="#천수만A" onclick="Select_chungnam('천수만A')">
 <area shape="poly" coords="114,183,156,179,155,136,132,135,117,156,93,170" href="#천수만B" onclick="Select_chungnam('천수만B')">
 <area shape="poly" coords="304,54,305,77,363,78,365,55" href="#아산호" onclick="Select_chungnam('아산호')">
@@ -243,8 +267,8 @@ function imsi_open(){
   <tbody><tr>
     <td><img src="/resources/img/s_kyonggi.gif" alt="경기지도" width="570" height="450" border="0" usemap="#Gis_gyeongki">
 	<map name="Gis_gyeongki">
-	  <area shape="poly" coords="241,114,227,113,237,96,228,93,223,101,215,102,183,104,177,98,258,0,291,36,280,51,288,65,269,73,275,94,265,102,247,99" href="#연천군" onclick="Select_kyonggi('연천군')">
-	<area shape="poly" coords="285,123,269,140,237,124,240,117,249,102,263,102" href="#동두천시" onclick="Select_kyonggi('동두천시')">
+	  <area shape="poly" coords="241,114,227,113,237,96,228,93,223,101,215,102,183,104,177,98,258,0,291,36,280,51,288,65,269,73,275,94,265,102,247,99" onclick="parksearch()" onclick="Select_kyonggi('연천군')">
+	<area shape="poly" coords="285,123,269,140,237,124,240,117,249,102,263,102" onclick="parksearch1()" onclick="Select_kyonggi('동두천시')">
 	<area shape="poly" coords="225,113,233,97,230,97,221,105,184,106,168,100,141,113,142,159,149,188,177,184,207,173,209,149,221,131" href="#파주시" onclick="Select_kyonggi('파주시')">
 	<area shape="poly" coords="213,196,241,189,240,166,275,154,268,142,236,127,238,114,227,115,221,132,212,150,218,168" href="#양주시" onclick="Select_kyonggi('양주시')">
 	<area shape="poly" coords="233,195,211,197,215,173,178,188,150,190,186,221,206,220,237,209" href="#고양시" onclick="Select_kyonggi('고양시')">

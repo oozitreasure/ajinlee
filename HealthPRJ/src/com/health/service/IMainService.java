@@ -2,6 +2,7 @@ package com.health.service;
 
 import java.util.List;
 
+import com.health.DTO.HoDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -55,6 +56,10 @@ public interface IMainService {
 	void getparkDelete(String admin_no);
 
 	int getparkDelete(parkDTO pDTO);
+
+	HoDTO favoriteSelectList(HoDTO hDTO);
+
+	void apark_update(parkDTO fDTO);
 
 
 

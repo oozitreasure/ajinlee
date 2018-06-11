@@ -226,7 +226,7 @@ div.blueTable {
         <!--/.navbar-collapse -->
     </div>
 </div>
-
+<form method="post" action="/parkUpdate.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
@@ -320,12 +320,13 @@ div.blueTable {
 					<br>
 					</div>
 <div align="center">
-<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
+<input type="submit" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 <input type="reset" value="초기화" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
 <br><br>
 	<div id="dropDownSelect1"></div>
 	
+</form>
 
 <footer id="footer">
 
