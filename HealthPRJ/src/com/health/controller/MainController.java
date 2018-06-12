@@ -723,7 +723,7 @@ public class MainController {
 		if (result != 0) {
 
 			model.addAttribute("msg", "회원이 탈퇴되었습니다.");
-			model.addAttribute("url", "/home.do");
+			model.addAttribute("url", "/userList.do");
 			
 		} else {
 			
@@ -1250,6 +1250,29 @@ public class MainController {
 		   
 		   return mainService.favoriteDelete(hDTO);
 		  }
+		  
+		  
+			@RequestMapping(value = "/user_info/idCheck")
+			public void idCheck(@RequestParam(value = "user_id") String user_id, HttpServletResponse response)
+					throws Exception {
+				
+				
+				log.info(this.getClass() + "idCheck start!!");
+				
+				mainDTO uDTO = new mainDTO();
+				uDTO.setUser_id(user_id);
+
+				int check = mainService.getUseridCheck(uDTO);
+
+				System.out.println("check : " + check);
+
+				response.getWriter().print(check);
+				response.getWriter().flush();
+				response.getWriter().close();
+
+				log.info(this.getClass() + "idCheck end!!");
+			}
+			
 		
 	}
 

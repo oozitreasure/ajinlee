@@ -64,6 +64,8 @@ public interface IMainService {
 
 	int favoriteDelete(HoDTO hDTO);
 
+	int getUseridCheck(mainDTO uDTO);
+
 
 
 	

@@ -31,6 +31,116 @@
 <!--===============================================================================================-->
 </head>
 
+
+
+<script>
+   
+var idCheck = false;
+
+function checkId() {
+
+    
+    if (idCheck == true){
+       alert("이미 중복체크가 되었습니다.");
+       return false;
+    }
+    
+    
+    var user_id = $('#user_id').val();
+     
+    $.ajax({
+       url : '/user_info/idCheck.do',
+       method : 'post',
+       data : {
+          'user_id' : user_id
+       },
+       success : function(data) {
+          if ($.trim(data) != 0) {
+             alert("이미 존재하는 아이디 입니다.");
+             $('#user_id').focus();
+             idCheck = false;
+          } else if (!$('#user_id').val()) {
+             alert("아이디를 입력 해주세요.");
+             $('#user_id').focus();
+             idCheck = false;
+          } else {
+             alert("가능한 아이디 입니다.");
+             idCheck = true;
+          }
+       }
+    })
+}
+
+
+function doSubmit(f) { //전송시 유효성 체크
+    
+    if (idCheck == false) {
+       alert("아이디 중복체크를 해주시기 바랍니다.");
+       f.user_id.focus();
+       return false;
+    }
+
+
+     if (f.password.value != f.passwordcheck.value) {
+
+        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        f.password.focus();
+        return false;
+
+     }
+
+  }
+  
+  
+
+
+
+
+ </script>
+ 
+ 
+ <script>
+
+ function eng(event) { //한글no
+
+     event = event || window.event;
+
+     var keyID = (event.which) ? event.which : event.keyCode;
+
+     //48~57: 숫자키 / 96~105: 숫자 키패드
+     if ((keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105)
+           || (keyID == 8) || (keyID == 46) || (keyID == 110) || (keyID == 190) //8->backspace, 46->delete, 110,190->.
+           || (keyID >= 65 && keyID <= 90) && //65~90 영소문자, 
+           (keyID != 16) && (keyID != 20) && (keyID != 21)) { //16->shift, 20->capslock, 21->한/영
+           
+        return true;
+     } else {
+        return false;
+     }
+
+  }
+
+function ko(event) {
+  event = event || window.event;
+  
+  var keyID = (event.which) ? event.which : event.keyCode;
+  
+  if((keyID >= 65 && keyID <= 90) && //65~90 영소문자, 
+           (keyID != 16) && (keyID != 20) && (keyID != 21)) {
+     return false;
+  }else {
+     return true;
+  }
+}
+</script>
+ 
+ 
+ 
+
+
+
+
+
 <body>
 	
 	<div class="limiter">
@@ -43,12 +153,14 @@
 					</span>
 										
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "아이디을 입력해주세요">
-						<input class="input100" type="text" name="user_id" placeholder="아이디">
+						<input class="input100" type="text" id = "user_id" name="user_id" placeholder="아이디" onKeyUp="return eng(event);">
 						<span class="focus-input100"></span>
+						
+						<input class="login100-form-btn" type="button" id="idCheck" onclick="checkId();" value="아이디중복체크" />
 					</div>
 					
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "이름을 입력해주세요">
-						<input class="input100" type="text" name="user_name" placeholder="이름">
+						<input class="input100" type="text" name="user_name" placeholder="이름" onKeyDown="ko(event);">
 						<span class="focus-input100"></span>
 					</div>
 					
@@ -57,12 +169,7 @@
 						<span class="focus-input100"></span>
 					</div>
 					
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "비밀번호를 한번 더 입력해주세요">
-						<input class="input100" type="password" name="password" placeholder="비밀번호확인">
-						<span class="focus-input100"></span>
-					</div>
-					
-					<div class="wrap-input100 validate-input m-b-16" data-validate = "이메일을 입력해주세요">
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "이메일을 입력해주세요" onKeyDown="return eng(event);">
 						<input class="input100" type="email" name="email" placeholder="이메일">
 						<span class="focus-input100"></span>
 					</div>
@@ -108,7 +215,7 @@
 					</div> -->
 
 					<div class="container-login100-form-btn m-t-17">
-						<button class="login100-form-btn" style="width:190px;">회원가입</button>&nbsp;
+						<button class="login100-form-btn" style="width:190px;" id="sendMessageButton">회원가입</button>&nbsp;
 						<button type="reset" class="login100-form-btn" style="width:190px;">초기화</button>
 					</div>
 						

@@ -31,6 +31,47 @@
 	<link rel="stylesheet" type="text/css" href="/resources/login/css/main.css">
 <!--===============================================================================================-->
 </head>
+
+<script>
+
+
+function han(obj) { 
+	
+var pattern = /[^(ㄱ-힣)]/; //한글만 허용 할때
+
+if (pattern.test(obj.value)) { 
+	
+alert("한글만 허용합니다."); 
+
+obj.value = ''; 
+
+obj.focus(); 
+
+return false; 
+
+} 
+} 
+
+function eng(obj) { 
+	
+var pattern = /[^(a-zA-Z)]/; //영문만 허용
+
+if (pattern.test(obj.value)) { 
+	
+alert("영문만 허용합니다."); 
+
+obj.value = ''; 
+obj.focus(); 
+
+return false; 
+} 
+
+} 
+
+</script>
+
+
+
 <body>
 	
 	<div class="limiter">
@@ -44,7 +85,7 @@
 
 										
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "이름을 입력해주세요">
-						<input class="input100" type="text" name="user_name" placeholder="이름">
+						<input class="input100" type="text" name="user_name" placeholder="이름" onkeyUp="han(this)">
 						<span class="focus-input100"></span>
 					</div>
 					

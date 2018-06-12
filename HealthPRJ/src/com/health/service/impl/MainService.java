@@ -186,5 +186,11 @@ public class MainService implements IMainService {
 		return mainMapper.favoriteDelete(hDTO);
 	}
 
+	@Override
+	public int getUseridCheck(mainDTO uDTO) {
+
+		return mainMapper.getUseridCheck(uDTO);
+	}
+
 
 }

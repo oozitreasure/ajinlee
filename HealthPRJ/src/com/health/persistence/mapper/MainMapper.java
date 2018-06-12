@@ -65,6 +65,8 @@ public interface MainMapper {
 
 	int favoriteDelete(HoDTO hDTO);
 
+	int getUseridCheck(mainDTO uDTO);
+
 
 
 

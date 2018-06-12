@@ -56,7 +56,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  function openJoin()
  {
      window.name = "JoinForm";
-     window.open("register.do", "childForm", "width=450, height=700, left=730, top=120, resizable = no, scrollbars = no"); 
+     window.open("register.do", "childForm", "width=450, height=750, left=730, top=120, resizable = no, scrollbars = no"); 
    
  }	 
  
