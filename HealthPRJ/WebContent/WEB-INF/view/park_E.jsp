@@ -244,6 +244,10 @@ div.blueTable {
 <div class="divTableHead"><input type="text" name="admin_no" value="<%= CmmUtil.nvl(aDTO.getAdmin_no()) %>"></div>
 </div>
 </div>
+<input type="hidden" name="addr2" value="<%= CmmUtil.nvl(aDTO.getAddr2()) %>">
+<input type="hidden" name="lat" value="<%= CmmUtil.nvl(aDTO.getLat()) %>">
+<input type="hidden" name="har" value="<%= CmmUtil.nvl(aDTO.getHar()) %>">
+<input type="hidden" name="park_area" value="<%= CmmUtil.nvl(aDTO.getPark_area()) %>">	  
 <div class="divTableBody">
 <div class="divTableRow">
 <div class="divTableCell">공원명</div>

@@ -166,16 +166,25 @@ public class MainService implements IMainService {
 		return mainMapper.getparkDelete(pDTO);
 	}
 
-	@Override
-	public HoDTO favoriteSelectList(HoDTO hDTO) {
-		
-		return mainMapper.favoriteSelectList(hDTO);
-	}
+
 
 	@Override
 	public void apark_update(parkDTO fDTO) {
 		mainMapper.apark_update(fDTO);
 		
 	}
+
+	@Override
+	public void favoriteInsert(HoDTO hDTO) {
+		mainMapper.favoriteInsert(hDTO);
+		
+	}
+
+	@Override
+	public int favoriteDelete(HoDTO hDTO) {
+		
+		return mainMapper.favoriteDelete(hDTO);
+	}
+
 
 }

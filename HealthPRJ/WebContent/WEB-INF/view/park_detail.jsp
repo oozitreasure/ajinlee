@@ -18,6 +18,9 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 <%
 
+mainDTO mDTO = (mainDTO)request.getAttribute("mDTO");
+if(mDTO == null) mDTO = new mainDTO();
+
 parkDTO aDTO = (parkDTO)request.getAttribute("aDTO");
 if(aDTO == null) aDTO = new parkDTO();
 
@@ -124,7 +127,71 @@ function freeUp(){
  </script>
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
+ <script>
  
+ 
+ function Hinsert() {
+	 
+	    var like = document.getElementById('like'); 
+	    var unlike = document.getElementById('unlike');
+	    
+	       $.ajax({
+	          type : 'post',
+	          url : '/my_page/Hinsert.do',
+	          data : {
+	             'user_no' : '${sessionScope.SESSION_USER_NO}',
+	             'admin_no' : '<%=aDTO.getAdmin_no() %>',
+	             'reg_no' : '${sessionScope.SESSION_USER_NO}',
+	             'park_name' : '<%=aDTO.getPark_name() %>'
+	          },
+	          success : function(data) {
+	              alert("즐겨찾기에 추가되었습니다.");
+	              console.log("즐찾추가");
+	              console.log(data);
+
+	              
+	             $('#like').hide();
+	              $('#unlike').show();
+	              
+	          },
+	          error : function(data) {
+	             alert("다시 시도해주세요.");
+	            
+	          }
+	    });
+	 }
+ 
+ 
+//즐겨찾기 취소
+function Hdelete(){
+	 
+	 var like = document.getElementById('like'); 
+	 var unlike = document.getElementById('unlike');
+	 
+	 
+       $.ajax({
+          type : 'post',
+          url : '/my_page/Hdelete.do',
+          data : {
+             'admin_no' : '<%=aDTO.getAdmin_no() %>'
+          },
+          success : function(data) {
+       
+                alert("즐겨찾기 삭제되었습니다.");
+                console.log("즐찾삭제");
+                
+               $('#unlike').hide();
+                $('#like').show();
+                
+          },
+          error : function(data) {
+             alert("다시 시도해주시기 바랍니다.");
+          }
+    });
+}
+
+ 
+ </script>
 
 <style>
 
@@ -247,7 +314,7 @@ div.blueTable {
 </div>
 
 
-<form method="post" action="/parkDelete.do">
+<form action="/parkDelete.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
@@ -263,7 +330,7 @@ div.blueTable {
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
 <div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
-<input type="hidden" name="admin_no" value="<%= CmmUtil.nvl(aDTO.getAdmin_no()) %>">
+
 </div>
 </div>
 <div class="divTableBody">
@@ -342,23 +409,46 @@ div.blueTable {
 					</script>
 					<br>
 					
+					
+					
+					
+	<%if(hDTO.getHo_no() == null) {%>		
+	
 	<div align="right" style="width:60%;">
-	<button style="background-color:white; border:0px;">좋아요<img style="width:40px; height:40px;" src="/resources/img/like.png"></button>
+	
+	<img style="background-color:white; border:0px; width:40px; height:40px" id="like" name="like" onclick="javascript:Hinsert();return false; " src="/resources/img/like3.png">
+	<img style="background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like.png">
+	
+	<%}else{%>
+	
+	<img style="background-color:white; border:0px; width:40px; height:40px" id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png">
+    <img style="background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like3.png">
+              		 	
+	<%} %>
+	
 	</div>
+              		 	
+	
+	
+	
+	<!-- <img style="background-color:white; border:0px;" name="unlike">좋아요<img style="width:40px; height:40px;" src="/resources/img/like3.png"> -->
+	
+	
+	
+	
+	
+	<div align="left" style="width:60%;">
+<input type="text" style="height:40px;" readonly value="<%= CmmUtil.nvl(mDTO.getUser_name()) %>" />
+</div>
+<br>
+<input type="text" id="com" style="width:55.5%; height:100px;">
+<input type="button" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
+	
+	<br><br>
 	<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkE()">
 	<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
 </form>
-
-
-				<%if(hDTO.getHo_no() == null) {%>
-              		 	<img id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png" style="width: 30px; height: 30px">
-              		 	<img id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/image/star.png" style="display:none;width:30px; height: 30px">
-              		 	<%}else{%>
-              		 	<img id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/image/star-sign.png" style="display:none; width: 30px; height: 30px">
-              		 	<img id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/image/star.png" style="width:30px; height: 30px">
-            		<%} %>
-
 
 
 <br>

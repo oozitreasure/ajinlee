@@ -58,9 +58,13 @@ public interface MainMapper {
 
 	int getparkDelete(parkDTO pDTO);
 
-	HoDTO favoriteSelectList(HoDTO hDTO);
 
 	void apark_update(parkDTO fDTO);
+
+	void favoriteInsert(HoDTO hDTO);
+
+	int favoriteDelete(HoDTO hDTO);
+
 
 
 

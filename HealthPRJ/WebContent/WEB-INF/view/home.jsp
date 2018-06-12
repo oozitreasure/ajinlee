@@ -69,7 +69,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  
  function parkIn(){
 		
-	   location.href="parkList.do";
+	   location.href="parkList2.do";
 	}
  
  function freeIn(){

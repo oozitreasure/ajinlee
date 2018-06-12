@@ -9,10 +9,27 @@
 
     <script>
       var str = 'http://localhost:8080/map.do#연천군';
-      var sta = 'http://localhost:8080/map.do#동두천시'
+      var sta = 'http://localhost:8080/map.do#동두천시';
+      
+      var sta1 = 'http://localhost:8080/map.do#유성구';
+      var sta2 = 'http://localhost:8080/map.do#대덕구';
+      var sta3 = 'http://localhost:8080/map.do#동구';
+      var sta4 = 'http://localhost:8080/map.do#서구';
+      var sta5 = 'http://localhost:8080/map.do#중구';
+      
       //document.write(str);
+      
       var stq = str.substring( 29 , 33);
       var stb = sta.substring( 29, 34);
+      
+      var stb1 = sta.substring( 29, 34);
+      var stb2 = sta.substring( 29, 34);
+      var stb3 = sta.substring( 29, 34);
+      var stb4 = sta.substring( 29, 34);
+      var stb5 = sta.substring( 29, 34);
+      
+     
+      
       //document.write(stq);
       
       
@@ -24,6 +41,27 @@
       function parksearch1(){
     		
     	  location.href="parkList.do?="+stb;
+   	}
+      
+      function parksearch2(){
+  		
+    	  location.href="parkList.do?="+stb1;
+   	}
+      function parksearch3(){
+  		
+    	  location.href="parkList.do?="+stb2;
+   	}
+      function parksearch4(){
+  		
+    	  location.href="parkList.do?="+stb3;
+   	}
+      function parksearch5(){
+  		
+    	  location.href="parkList.do?="+stb4;
+   	}
+      function parksearch6(){
+  		
+    	  location.href="parkList.do?="+stb5;
    	}
       
       
@@ -448,11 +486,11 @@ function imsi_open(){
   <tbody><tr>
     <td><img src="/resources/img/s_daejeon.gif" alt="대전지도" width="570" height="450" border="0" usemap="#Gis_daejeon">
       <map name="Gis_daejeon">
-    <area shape="poly" coords="319,411,298,411,272,374,273,333,254,319,243,299,269,271,275,244,287,236,291,215,307,217,363,284,329,300,329,344,344,360,338,379,321,379" href="#중구" onclick="Select_daejeon('중구')">
-    <area shape="poly" coords="195,444,243,391,245,358,240,333,250,320,239,299,268,268,271,243,285,233,291,207,275,180,217,211,223,237,205,240,208,272,185,281,163,320,127,341,148,385,166,386" href="#서구" onclick="Select_daejeon('서구')">
-    <area shape="poly" coords="264,4,296,25,291,68,274,81,313,125,295,174,216,208,215,233,202,239,204,267,183,276,160,317,143,327,123,331,83,291,126,119,158,107,197,110,235,47,231,18" href="#유성구" onclick="Select_daejeon('유성구')">
-    <area shape="poly" coords="281,183,299,175,315,123,281,79,295,64,397,25,428,78,393,102,383,127,360,142,352,172,376,199,372,213,345,207,339,197,312,216,295,211" href="#대덕구" onclick="Select_daejeon('대덕구')">
-    <area shape="poly" coords="321,412,362,428,415,365,405,333,427,295,415,284,437,211,459,190,452,163,500,143,471,108,445,102,428,135,410,95,397,103,388,125,361,144,355,169,379,197,374,216,345,209,338,202,315,219,369,286,333,304,333,341,347,359,340,380,323,382" href="#동구" onclick="Select_daejeon('동구')">
+    <area shape="poly" coords="319,411,298,411,272,374,273,333,254,319,243,299,269,271,275,244,287,236,291,215,307,217,363,284,329,300,329,344,344,360,338,379,321,379" onclick="parksearch2()" onclick="Select_daejeon('중구')">
+    <area shape="poly" coords="195,444,243,391,245,358,240,333,250,320,239,299,268,268,271,243,285,233,291,207,275,180,217,211,223,237,205,240,208,272,185,281,163,320,127,341,148,385,166,386" onclick="parksearch3()" onclick="Select_daejeon('서구')">
+    <area shape="poly" coords="264,4,296,25,291,68,274,81,313,125,295,174,216,208,215,233,202,239,204,267,183,276,160,317,143,327,123,331,83,291,126,119,158,107,197,110,235,47,231,18" onclick="parksearch4()" onclick="Select_daejeon('유성구')">
+    <area shape="poly" coords="281,183,299,175,315,123,281,79,295,64,397,25,428,78,393,102,383,127,360,142,352,172,376,199,372,213,345,207,339,197,312,216,295,211" onclick="parksearch5()" onclick="Select_daejeon('대덕구')">
+    <area shape="poly" coords="321,412,362,428,415,365,405,333,427,295,415,284,437,211,459,190,452,163,500,143,471,108,445,102,428,135,410,95,397,103,388,125,361,144,355,169,379,197,374,216,345,209,338,202,315,219,369,286,333,304,333,341,347,359,340,380,323,382" onclick="parksearch6()" onclick="Select_daejeon('동구')">
       </map></td>
   </tr>
 </tbody></table>

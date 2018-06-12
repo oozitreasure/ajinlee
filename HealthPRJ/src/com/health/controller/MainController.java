@@ -63,18 +63,9 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="parkList2", method=RequestMethod.GET)
-	public String parkList2(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
-		return "parkList2";
-		
-	}
+	@RequestMapping(value = "/parkList2")
 	
-	
-	
-	@RequestMapping(value = "dae")
-	
-	public String dae(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+	public String parkList2(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   getParkList start!!!");
@@ -90,12 +81,8 @@ public class MainController {
 		
 		log.info(this.getClass() + "   getParkList end!!!");
 		
-		return "dae";
+		return "/parkList2";
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -400,7 +387,7 @@ public class MainController {
 	
 
 	@RequestMapping(value = "/user_detail")
-	public String mypage2(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+	public String user_datail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
 		log.info(this.getClass() + "   user_detail start!!!");
@@ -605,10 +592,10 @@ public class MainController {
 	
 	@RequestMapping(value = "/mypage")
 	
-	public String user_detail(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
+	public String mypage(HttpServletRequest re, HttpServletResponse resp, Model model, HttpSession session)
 			throws Exception {
 		
-		log.info(this.getClass() + "   user_detail start!!!");
+		log.info(this.getClass() + "   mypage start!!!");
 		
 		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 		
@@ -621,25 +608,8 @@ public class MainController {
 		}
 		model.addAttribute("gDTO", gDTO);
 		
-		  
-		  String park_name = CmmUtil.nvl(re.getParameter("park_name"));
-		  String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
-		  
-		  HoDTO hDTO = new HoDTO();
-		  
-		  hDTO.setPark_name(park_name);
-		  hDTO.setAdmin_no(admin_no);
-		  
-		  log.info("admin_no : " + admin_no);
-		  log.info("park_name : " + park_name);
-		  
-		  HoDTO favorites = mainService.favoriteSelectList(hDTO);
+		log.info(this.getClass() + "   mypage end!!!");
 
-		  log.info("List:" + favorites);
-		  
-		
-		log.info(this.getClass() + "   user_detail end!!!");
-		
 		return "/mypage";
 	}
 	
@@ -651,13 +621,16 @@ public class MainController {
 		log.info(this.getClass() + "   user_update start!!!");
 		
 		/*String user_no = CmmUtil.nvl(re.getParameter("user_no"));*/
-		String email = CmmUtil.nvl(re.getParameter("email"));
+		/*String email = CmmUtil.nvl(re.getParameter("email"));
 		String addr = CmmUtil.nvl(re.getParameter("addr"));
+				String addr = (String)session.getAttribute("session_addr");*/
 		
-		String user_no = (String)session.getAttribute("session_user_no");
-		String chg_no = (String)session.getAttribute("session_user_no");
-		/*String addr = (String)session.getAttribute("session_addr");*/
-		/*String email = (String)session.getAttribute("session_email");*/
+		
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
+		String addr = CmmUtil.nvl(re.getParameter("addr"));
+		String email = CmmUtil.nvl(re.getParameter("email"));
+		String chg_no = CmmUtil.nvl(re.getParameter("chg_no"));
+	
 
 		log.info("email :" + email);
 		log.info("addr : " + addr);
@@ -821,7 +794,7 @@ public class MainController {
 
 	      String msg = "";
 	      String url = "";
-
+ 
 	      try {
 	    	  
 	         String user_id = CmmUtil.nvl((String) session.getAttribute("session_user_id")); // 아이디
@@ -1039,20 +1012,27 @@ public class MainController {
 
 		      try {
 
-		         String park_name = CmmUtil.nvl((String) session.getAttribute("session_park_name"));
-		         String park_div = CmmUtil.nvl((String) session.getAttribute("session_park_div"));
-		         String addr1 = CmmUtil.nvl((String) session.getAttribute("session_addr1"));
-		         String addr2 = CmmUtil.nvl((String) session.getAttribute("session_addr2"));
-		         String lat = CmmUtil.nvl((String) session.getAttribute("session_lat"));
-		         String har = CmmUtil.nvl((String) session.getAttribute("session_har"));
-		         String park_area = CmmUtil.nvl((String) session.getAttribute("session_park_area"));
-		         String park_est1 = CmmUtil.nvl((String) session.getAttribute("session_park_est1"));
-		         String park_est2 = CmmUtil.nvl((String) session.getAttribute("session_park_est2"));
-		         String park_est3 = CmmUtil.nvl((String) session.getAttribute("session_park_est3"));
-		         String park_est4 = CmmUtil.nvl((String) session.getAttribute("session_park_est4"));
-		         String park_est5 = CmmUtil.nvl((String) session.getAttribute("session_park_est5"));
-		         String admin_name = CmmUtil.nvl((String) session.getAttribute("session_admin_name"));	
-		         String number = CmmUtil.nvl((String) session.getAttribute("session_number"));
+		         String park_name = CmmUtil.nvl(request.getParameter("park_name"));
+		         String park_div = CmmUtil.nvl(request.getParameter("park_div"));
+		         
+		         
+		         String addr = CmmUtil.nvl((String)request.getParameter("addr1"));
+		         String addr1 = TextUtil.exchangeEscapeNvl(addr);	
+
+		         
+		         
+		         
+		         String addr2 = CmmUtil.nvl(request.getParameter("addr2"));
+		         String lat = CmmUtil.nvl(request.getParameter("lat"));
+		         String har = CmmUtil.nvl(request.getParameter("har"));
+		         String park_area = CmmUtil.nvl(request.getParameter("park_area"));
+		         String park_est1 = CmmUtil.nvl(request.getParameter("park_est1"));
+		         String park_est2 = CmmUtil.nvl(request.getParameter("park_est2"));
+		         String park_est3 = CmmUtil.nvl(request.getParameter("park_est3"));
+		         String park_est4 = CmmUtil.nvl(request.getParameter("park_est4"));
+		         String park_est5 = CmmUtil.nvl(request.getParameter("park_est5"));
+		         String admin_name = CmmUtil.nvl(request.getParameter("admin_name"));	
+		         String number = CmmUtil.nvl(request.getParameter("number"));
 					
 		         log.info("admin_no : " + admin_no);
 		         log.info("park_name : " + park_name);
@@ -1151,6 +1131,7 @@ public class MainController {
 		      return "/alert";
 		   }
 		 
+		 
 		 @RequestMapping(value = "/parkDelete")
 		 
 		   public String parkDelete(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
@@ -1186,8 +1167,89 @@ public class MainController {
 		 
 		 
 		 
- 
-		
-	
+/*		 @RequestMapping(value = "/favorites")
+		  public @ResponseBody HoDTO favorite(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
+		    throws Exception {
+		   
+		  log.info(this.getClass().getName() + "favorite list start!");
+		  
+		  String admin_no = CmmUtil.nvl(req.getParameter("admin_no"));
+		  String user_no =  CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+		  HoDTO hDTO = new HoDTO();
+		  hDTO.setAdmin_no(admin_no);
+		  hDTO.setUser_no(user_no);
+		  log.info("admin_no : " + admin_no);
+		  log.info("user_no : " + user_no);
+		  HoDTO favorites = mainService.favoriteSelectList(hDTO);
 
+		  log.info("List:" + favorites);
+		  
+		  log.info(this.getClass().getName() + "favorite list end!");
+		  
+		  
+		     return favorites;
+		  }*/
+		 
+		 
+		 
+ 
+		 @RequestMapping(value="/my_page/Hinsert")
+		  public @ResponseBody HoDTO favoriteInsert(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
+		      throws Exception {
+			 
+			 
+		  log.info(this.getClass().getName() + "   favoriteInsert start!");
+		  
+		  String user_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+		  String admin_no = CmmUtil.nvl((String) req.getParameter("admin_no"));
+		  String reg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+		  String park_name1 = CmmUtil.nvl((String) req.getParameter("park_name"));
+		  String park_name = TextUtil.exchangeEscapeNvl(park_name1);
+		  
+		  log.info("user_no : " + user_no);
+		  log.info("admin_no : " + admin_no);
+		  log.info("reg_no : " + reg_no);
+		  log.info("park_name : " + park_name);
+		  
+		  HoDTO hDTO = new HoDTO();
+		  
+		  hDTO.setUser_no(user_no);
+		  hDTO.setAdmin_no(admin_no);
+		  hDTO.setReg_no(reg_no);
+		  hDTO.setPark_name(park_name);
+		  
+		  mainService.favoriteInsert(hDTO);
+		  
+		  log.info(this.getClass().getName() + "favoriteInsert end!");
+		  
+		  return hDTO;
+		  }
+		  
+		 /* ##############################
+		  * #######<< 즐겨찾기 삭제  >>#########
+		  * ##############################
+		  */
+		  @RequestMapping(value="/my_page/Hdelete")
+		  public @ResponseBody int favoriteDelete(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
+		      throws Exception {
+			  
+		   log.info(this.getClass().getName() + "favoriteDelete start!");
+		   
+		   String user_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+		   String admin_no = CmmUtil.nvl(req.getParameter("admin_no"));
+		   
+		   log.info("user_no : " + user_no);
+		   log.info("admin_no :" + admin_no);
+		   
+		   HoDTO hDTO = new HoDTO();
+		   
+		   hDTO.setAdmin_no(admin_no);
+		   hDTO.setUser_no(user_no);
+		   
+		   log.info(this.getClass().getName() + "favoriteDelete end!");
+		   
+		   return mainService.favoriteDelete(hDTO);
+		  }
+		
 	}
+

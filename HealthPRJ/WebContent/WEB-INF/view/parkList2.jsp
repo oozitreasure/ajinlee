@@ -178,9 +178,9 @@ function doSearch() {
 
     <script>
       var str = 'http://localhost:8080/map.do#대호지';
-      document.write(str);
+     //document.write(str);
       var stq = str.substring( 29 , 33);
-      document.write(stq);
+      //document.write(stq);
       
     		  
     </script>
@@ -298,7 +298,7 @@ div.blueTable {
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -357,7 +357,7 @@ div.blueTable {
 <br>
 
 
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
 
     <div class="footer-copyright">
         <div class="container">

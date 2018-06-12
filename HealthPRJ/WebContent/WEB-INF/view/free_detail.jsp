@@ -8,6 +8,9 @@
 freeDTO rDTO = (freeDTO)request.getAttribute("rDTO");
 if(rDTO == null) rDTO = new freeDTO();
 
+mainDTO mDTO = (mainDTO)request.getAttribute("mDTO");
+if(mDTO == null) mDTO = new mainDTO();
+
 %>
 
 <%
@@ -107,9 +110,15 @@ function freeUp(){
 		   
  }
  
+ 
+ 
 
 
  </script>
+ 
+ 
+ 
+
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
 
@@ -247,14 +256,22 @@ div.blueTable {
 <div class="divTableBody" >
 <div class="divTableRow">
 <div class="divTableCell">
-<textarea style="width:77%; height:500px; border:0px;"><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
+<textarea style="width:77%; height:500px; border:0px; resize: none;" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
 </div>
 </div>
 <br>
-<hr>
+<hr style="width:60%">
+<div align="left" style="width:60%;">
+<input type="text" style="height:40px;" readonly value="<%= CmmUtil.nvl(mDTO.getUser_name()) %>" />
 </div>
-<input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(rDTO.getFr_no()) %>" />
+<br>
+<input type="text" id="com" style="width:55.5%; height:100px;">
+<input type="button" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
 
+</div>
+
+<input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(rDTO.getFr_no()) %>" />
+<br><br>
 
 <div align="center">	
 <input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="freeE()">

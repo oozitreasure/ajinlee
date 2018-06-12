@@ -111,9 +111,18 @@ DELETE FROM FREE_INFO WHERE FR_NO = #{fr_no}
 DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
 </delete>
 
-<select parameterType="HoDTO" id="favoriteSelectList" resultType="HoDTO">
-SELECT HO_NO, USER_NO, ADMIN_NO, PARK_NAME, REG_DT FROM HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no}
-</select>
+
+<insert parameterType="HoDTO" id="favoriteInsert">
+INSERT INTO HO_PARK ( HO_NO, USER_NO, ADMIN_NO, REG_NO, REG_DT, PARK_NAME )
+ VALUES((SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), #{user_no}, #{admin_no},
+  (SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), NOW(), #{park_name} )
+ </insert>
+ 
+ 
+<delete parameterType="HoDTO" id="favoriteDelete"> 
+DELETE FROM HO_PARK WHERE USER_NO = #{user_no} AND ADMIN_NO = #{admin_no} 
+</delete>
+
 
 
 </mapper>

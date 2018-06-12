@@ -21,7 +21,6 @@ request.setCharacterEncoding("euc-kr");
 String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_id"));
 String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
-String SESSION_EMAIL = CmmUtil.nvl((String)session.getAttribute("session_email"));
 
 %>
 
@@ -30,7 +29,7 @@ String SESSION_EMAIL = CmmUtil.nvl((String)session.getAttribute("session_email")
 if (hList==null){
    hList = new ArrayList();
 }
-   
+
    System.out.println("list: " + hList);
 
 %>
@@ -261,10 +260,11 @@ div.blueTable {
 <div class="divTableCell"><input style="width:100%" type = text value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly ></div></div>
 <div class="divTableRow">
 <div class="divTableCell">이메일</div>
-<div class="divTableCell"><input style="width:100%" type = email value="<%= CmmUtil.nvl(gDTO.getEmail()) %>"></div></div>
+<div class="divTableCell"><input style="width:100%" id="email" name="email" type = email value="<%= CmmUtil.nvl(gDTO.getEmail()) %>"></div></div>
 <div class="divTableRow">
 <div class="divTableCell">주소</div>
 <div class="divTableCell"><select name="addr" style="width:100%">
+						<option value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" selected ><%= CmmUtil.nvl(gDTO.getAddr()) %></option>
   						<option value="서울특별시">서울특별시</option>
  						<option value="경기도">경기도</option>
   						<option value="인천광역시">인천광역시</option>
@@ -311,8 +311,20 @@ div.blueTable {
 </div>
 </div>
 <div class="divTableBody">
+
+
+
+<%-- <a href="javascript:doDetail('<%=hDTO.getLicense_no()%>')"></a> --%>
+
+
 <%for (HoDTO hDTO : hList) {%>
+
+<input type="hidden" value="<%=CmmUtil.nvl(hDTO.getHo_no()) %>" />
+
+<%System.out.println("Ho_no : " + hDTO.getHo_no()); %>
+
 <div class="divTableRow">
+<img id="like" src="/resources/img/like.png" style="width:30px; height: 30px">
 <div class="divTableCell"><%=CmmUtil.nvl(hDTO.getAdmin_no()) %></div>
 <div class="divTableCell"><%=CmmUtil.nvl(hDTO.getPark_name()) %></div></div>
 </div>

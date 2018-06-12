@@ -105,9 +105,16 @@ function parkIn(){
     location.href="/park_insert.do"
  }
 </script>
+
+
 <script>
+
+var str = 'http://localhost:8080/map.do#연천군';
 var sta = 'http://localhost:8080/map.do#동두천시'
-	var stb = sta.substring( 29, 34);
+//document.write(str);
+var stq = str.substring( 29 , 33);
+var stb = sta.substring( 29, 34);
+//document.write(stq);
 	
 function onSearch(){
 	var contents = "";
@@ -159,69 +166,6 @@ function onSearch(){
 </script>
 
 
-
-<script>
-
-var str = 'http://localhost:8080/map.do#연천군';
-var sta = 'http://localhost:8080/map.do#동두천시'
-//document.write(str);
-var stq = str.substring( 29 , 33);
-var stb = sta.substring( 29, 34);
-//document.write(stq);
-
-
-
-		
-		function onSearch1(){
-			var contents = "";
-			var cnt = 10;
-			var search = str;
-				
-				
-				
-		 		$.ajax({
-		 			url : "/parkSearch.do",
-		 			method : "get",
-		 			data : {'search' : search},
-		 			datatype : "json", 
-		 			success : function(data) {
-		 					var contents = "";
-		 					var content = "";
-							contents += "<div class='divTable blueTable' style='width:100%'>";
-							contents += "<div class='divTableHeading'>";
-							contents += "<div class='divTableRow'>";
-							contents += "<div class='divTableHead'>공원명</div>";
-							contents += "<div class='divTableHead'>공원주소</div>";
-							contents += "<div class='divTableHead'>관리기관명</div>";
-							contents += "<div class='divTableHead'>전화번호</div></div></div>";
-							contents += "<div class='divTableBody'>";
-						$.each(data, function (key, value) {
-							console.log(key);
-							console.log(value);
-							content += "<div class='divTableRow'>";
-				 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
-				 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
-				 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
-				 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
-		 				});
-						content += "</div></div>";
-						if(content == ""){
-							content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
-				 			$('#divTable').html(content);
-				 			$('#delete').remove();
-						}else{
-		 					$('#divTable').html(contents+content);
-						}
-		 				if ((data).length<10) {
-		 					$('#addview').remove();
-		 				}
-		 			}
-
-		 			
-		 		});
- 		};
-
-</script>
 <style>
 div.blueTable {
   background-color: #FFFFFF;
@@ -325,7 +269,7 @@ div.blueTable {
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
