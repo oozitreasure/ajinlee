@@ -24,6 +24,16 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 %>
 
+<%
+   List<HoDTO> hList = (List<HoDTO>) request.getAttribute("hList");
+if (hList==null){
+   hList = new ArrayList();
+}
+
+   System.out.println("list: " + hList);
+
+%>
+
 
 
 <!DOCTYPE html>
@@ -88,11 +98,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 		
 	   location.href="freeList.do";
 	}
- 
- function like(){
-	 
-	 location.href="like.do";
- }
 
  
 
@@ -100,17 +105,26 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
  
+<script>
 
+function user_delete(){
+	
+	   location.href="/user_delete.do";
+	}
+  
+</script>
 
 <script>
 
-//상세보기 이동
-function doDetail(admin_no)
-{
- location.href="park_detail.do?admin_no="+ admin_no;
-}
-
+function user_delete(){
+	
+	   location.href="/user_delete.do";
+	}
+  
 </script>
+
+
+
 <style>
 
 div.blueTable {
@@ -231,11 +245,12 @@ div.blueTable {
 </div>
 
 
+
 <br><br><br><br><br>
-<form method="post" action="/user_update.do">
+
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
-<h2 align="center">정보상세</h2>
+<h2 align="center">나의 좋아요</h2>
 </div>
 </div>
 <br>
@@ -243,64 +258,26 @@ div.blueTable {
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead">NO.</div>
-<div class="divTableHead"><%=CmmUtil.nvl(gDTO.getUser_no()) %></div>
+<div class="divTableHead">공원번호</div>
+<div class="divTableHead">공원이름</div>
 </div>
 </div>
 <div class="divTableBody">
+<%for (HoDTO hoDTO : hList) {%>
 <div class="divTableRow">
-<div class="divTableCell">아이디</div>
-<div class="divTableCell"><input style="width:100%" type = text value="<%= CmmUtil.nvl(gDTO.getUser_id()) %>" readonly ></div></div>
-<div class="divTableRow">
-<div class="divTableCell">이름</div>
-<div class="divTableCell"><input style="width:100%" type = text value="<%= CmmUtil.nvl(gDTO.getUser_name()) %>" readonly ></div></div>
-<div class="divTableRow">
-<div class="divTableCell">이메일</div>
-<div class="divTableCell"><input style="width:100%" id="email" name="email" type = email value="<%= CmmUtil.nvl(gDTO.getEmail()) %>"></div></div>
-<div class="divTableRow">
-<div class="divTableCell">주소</div>
-<div class="divTableCell"><select name="addr" style="width:100%">
-						<option value="<%= CmmUtil.nvl(gDTO.getAddr()) %>" selected ><%= CmmUtil.nvl(gDTO.getAddr()) %></option>
-  						<option value="서울특별시">서울특별시</option>
- 						<option value="경기도">경기도</option>
-  						<option value="인천광역시">인천광역시</option>
-  						<option value="강원도">강원도</option>
-  						<option value="충청북도">충청북도</option>
-  						<option value="충청남도">충청남도</option>
-  						<option value="대전광역시">대전광역시</option>
-  						<option value="세종특별자차시">세종특별자치시</option>
-  						<option value="광주광역시">광주광역시</option>
-  						<option value="전라북도">전라북도</option>
-  						<option value="전라남도">전라남도</option>
-  						<option value="경상북도">경상북도</option>
-  						<option value="경상남도">경상남도</option>
-  						<option value="대구광역시">대구광역시</option>
-  						<option value="부산광역시">부산광역시</option>
-  						<option value="울산광역시">울산광역시</option>
-  						<option value="제주특별자치도">제주특별자치도</option>
-					</select></div></div>
+<div class="divTableCell"><img id="like" src="/resources/img/like.png" style="width:30px; height: 30px">
+<a href="javascript:doDetail('<%=hoDTO.getAdmin_no()%>')"></a></div>
+<div class="divTableCell"><%=CmmUtil.nvl(hoDTO.getPark_name()) %></div></div>
 </div>
+<%} %>
 </div>
 </div>
 
 <br>
-<div align="center">
-<input type="submit" value="수정" style="border:1px; background-color:#ede6da; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
-<input type="button" value="탈퇴" onclick="user_delete()" style="border:1px; background-color:#ede6da; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
-</div>
-</form>
 
-<br><br>
 
-<div align="center">
-<div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
-<button onclick="like()">나의 좋아요 보러가기</button>
-</div>
-</div>
 
-	<div id="dropDownSelect1"></div>
-	
-	
+
 <footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">

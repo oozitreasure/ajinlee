@@ -3,17 +3,16 @@
 <%@ page import="com.health.DTO.freeDTO" %>
 <%@ page import="com.health.util.CmmUtil" %>
 <%@ page import="com.health.DTO.mainDTO" %>
+<%@ page import="com.health.DTO.fiDTO" %>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 <%
-freeDTO rDTO = (freeDTO)request.getAttribute("rDTO");
-if(rDTO == null) rDTO = new freeDTO();
+freeDTO fDTO = (freeDTO)request.getAttribute("rDTO");
+if(fDTO == null) fDTO = new freeDTO();
 
 mainDTO mDTO = (mainDTO)request.getAttribute("mDTO");
 if(mDTO == null) mDTO = new mainDTO();
-
-%>
-
-<%
 
 request.setCharacterEncoding("euc-kr");
 
@@ -21,6 +20,42 @@ String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_
 String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
 
+	request.setCharacterEncoding("UTF-8");
+
+	List<fiDTO> list = (List<fiDTO>) request.getAttribute("list");
+
+	//공지글 정보를 못불러왔다면, 객체 생성
+	if (fDTO == null) {
+		fDTO = new freeDTO();
+
+	}
+
+	//게시판 조회 결과 보여주기
+	if (list == null) {
+		list = new ArrayList<fiDTO>();
+
+	}
+
+	String ss_user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
+	String ss_user_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+	String ss_user_id = CmmUtil.nvl((String) session.getAttribute("session_user_id"));
+	
+	//본인이 작성한 글만 수정 가능하도록 하기(1:작성자 아님 / 2: 본인이 작성한 글 / 3: 로그인안함)
+	int edit = 1;
+
+	//로그인 안했다면
+	if (ss_user_name.equals("")) {
+		edit = 3;
+
+		//본인이 작성한 글이면 2가 되도록 변경
+	} else if (ss_user_name.equals(CmmUtil.nvl(fDTO.getUser_name()))) {
+		edit = 2;
+
+	} else if (ss_user_name.equals("관리자")){
+		edit = 4;
+	}
+
+	System.out.println("ss_user_name : " + ss_user_name);
 %>
 
 
@@ -105,7 +140,7 @@ function freeUp(){
 	 location.href="free_E.do";
 	 
 	 
-		var no = <%=rDTO.getFr_no()%>;
+		var no = <%=fDTO.getFr_no()%>;
 		   location.href="free_E.do?fr_no="+no;
 		   
  }
@@ -117,8 +152,238 @@ function freeUp(){
  </script>
  
  
+<script>
+
+
+$(function() {
+	var fr_no = '<%=fDTO.getFr_no() %>';
+
+	
+	console.log(fr_no);
+	
+	commentList(); //페이지 로딩시 댓글 목록 출력 
+		// 댓글 쓰기
+		$("#write").click(function(){ 
+			// 로그인과 글 내용 유무 확인
+				if ("<%=edit%>" == 3) {
+					alert("로그인 하시길 바랍니다.");
+					location.href = "Login.do";
+					return false;
+					
+				} else {
+					
+					if ($("#content").val() == "") {
+						alert("댓글을 입력해주세요");
+						$("#content").focus();						
+						return false;
+						
+					} else{
+					
+					
+					$.ajax({
+						type : 'post',
+						url : "/free/insert.do",
+						data : {
+							'fr_no' : "${param.fr_no}",
+							'user_name' : "${sessionScope.ss_user_name}",
+							'frc_no' : "${param.frc_no}",
+							'content' : $("#content").val(),
+							'user_no' : "${sessionScope.ss_user_no}",
+							'secret_check' : $('input:checkbox[id="secret_check"]').val()
+						},
+						
+						
+						success : function(data) {
+							
+							if(data==1){
+							
+								alert("댓글이 등록되었습니다.");
+								console.log("댓글 등록");
+								//댓글 목록
+								commentList(data);
+								$('#content').val('');
+							}
+						},
+						
+						error : function(data) {
+							alert("다시 입력해주세요.");
+						}
+				});
+			}
+						 
+		}
+	})
+})
+
+//댓글 목록
+function commentList(){
+	$.ajax({
+	    url : '/free/list.do',
+	    data : { 'fr_no' : "${param.fr_no}" },
+	    type : 'get',
+	    success : function(data) {
+	    	 
+	    
+	    	console.log(data);
+	    	
+	    	   var output="";
+		       var user_name = '<%=ss_user_name%>';
+		       var user_no = '<%=ss_user_no%>';
+		       var reg_no = <%=fDTO.getReg_no()%>;
+		       var num = Object.keys(data).length;
+		       
+				<%System.out.println("reg_no : " + fDTO.getReg_no());%>
+		       
+		    $.each(data,function(index,value){
+					if(value.secret_check == "1"){
+						if (user_no == reg_no || user_no == value.reg_no || user_name == "관리자"){
+							   output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
+					    	   output += "<div class='post-preview' style='width:100%'>";
+					    	   output += 	   	"<hr/>&emsp;<img src='/image/key2.png' width='20' height='20'><font color='red' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/>";
+					    	   output +=		"&emsp; <font style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
+					    	   	if(user_no == value.reg_no){ 
+					    	   output +=		"<input type='button' value='수정' onclick='commentUpdateForm("+value.fic_no+",\""+value.content+"\")'/>&nbsp;&nbsp;"
+						    	output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.fic_no+")'/>";
+					    	   	}
+					    	   output += 		"</font><br/>";
+					    	   output += 		"&emsp;<font style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
+				               output += "</div>";
+						
+						}else{
+							output += 	"<div class='row'>";
+				    	    output += 	"<div class='post-preview' style='width:100%'>"
+				    	    output +=	"<hr><img src='/image/secret.png' width='20' height='20'><font color='gray' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/></div>";
+				    		output += 	"</div>";
+				    	  }   	
+					}else{
+							    output += "<div class='row' id='updateCommentForm"+value.fic_no+"'>";
+					    	    output += "<div class='post-preview' style='width:100%'>";
+					    	    output +=		"<hr/>&emsp;<font  style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" +  value.reg_dt + "&nbsp;";
+					    	   	if(user_no == value.reg_no){ 
+					    	    output +=	   "<input type='button'  style='font-family: 조선일보명조' value='수정' onclick='commentUpdateForm("+value.fic_no+",\""+value.content+"\");' />&nbsp;&nbsp;";
+					    		output +=	   "<input type='button'  style='font-family: 조선일보명조' value='삭제' onclick='commentDelete("+value.fic_no+")'/>";
+					    	   	}
+					    	   output += 		"</font><br/>";
+					    	   output += 		"&emsp;<font  style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
+				               output += "</div>";
+					}
+		       })
+		    $('#commentCount').html(num);
+			$('#listComment').html('');
+		   	$('#listComment').html(output);
+				
+	    }
+		       
+	 });
+	
+}
+
+//수정 Form
+function commentUpdateForm(fic_no, content) {
+	
+	console.log("수정Form :"+fic_no, content);
+	
+	var output = '';
+	
+	output +=	"<div class='modal-footer'>";
+	output +=	"<textarea name='content' id='edit' style='margin-top: 0px; margin-bottom: 0px; width: 600px; height: 70px;'>"+content+"</textarea>"
+	output +=	"<input type='button' class='btn default' value='수정' id='updateComment' onclick='commentUpdate(" + fic_no + ");'></div>";
+	
+	$("#updateCommentForm"+fic_no).html(output);
+}
+
+//수정 실행
+function commentUpdate(fic_no) {
+
+	
+	var content = $("#edit").val();
+	
+	
+	console.log(fic_no, content);
+	
+	
+	if($("#edit").val() == "") {
+			
+			alert("댓글을 입력해 주세요.");
+			$("#edit").focus();
+			return false;	}
+	
+		$.ajax({
+			
+			url : "/free/update.do",
+			type : 'post',
+			data : {'content' : content , 'fic_no' : fic_no},
+			
+			
+			success : function(data) {
+				
+				if(data==1){
+					alert("수정하였습니다.");
+					console.log(data);
+					
+					//댓글 목록
+					commentList(data);
+				}
+			},
+			
+			error : function(data) {
+				alert("다시 입력해주세요.");
+			}
+				
+			});
+	
+	}
+
+//댓글 삭제
+function commentDelete(frc_no) {
+	 
+	console.log(frc_no);
+	
+	if (!confirm("삭제하시겠습니까?")) {
+		return true;
+	
+	}
+		$.ajax ({
+
+			url : "/free/delete.do",
+			type : 'post',
+			data : { 'frc_no' : frc_no },
+			
+			success : function(data){
+				if(data==1){
+					
+					alert("삭제되었습니다.");
+					console.log(data + "삭제됨");
+					
+					//댓글 목록
+					commentList(data);
+					$("#content").val('');
+					
+				}
+					
+				
+			},
+			
+			error : function() {
+				alert("실패하였습니다.");
+		}
+	});
+}
+
+function sc() {
+	var sc = document.getElementById("secret_check");
+	if(sc.value == "0"){
+		sc.value = "1";
+	}else{
+		sc.value="0";
+	}
+}
+
+ 
  
 
+ </script>
+ 
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
 
@@ -247,8 +512,8 @@ div.blueTable {
 <div class="divTable blueTable">
 <div class="divTableHeading">
 <div class="divTableRow">
-<div class="divTableHead"><h3 style="display:inline-block; width:60%; text-align:left;"><%= CmmUtil.nvl(rDTO.getTitle()) %></h3>
-<div style="display: inline-block; align:right;"><%= CmmUtil.nvl(rDTO.getUser_name()) %>&nbsp;|&nbsp;<%= CmmUtil.nvl(rDTO.getReg_dt()) %></div>
+<div class="divTableHead"><h3 style="display:inline-block; width:60%; text-align:left;"><%= CmmUtil.nvl(fDTO.getTitle()) %></h3>
+<div style="display: inline-block; align:right;"><%= CmmUtil.nvl(fDTO.getUser_name()) %>&nbsp;|&nbsp;<%= CmmUtil.nvl(fDTO.getReg_dt()) %></div>
 </div>
 </div>
 </div>
@@ -256,7 +521,7 @@ div.blueTable {
 <div class="divTableBody" >
 <div class="divTableRow">
 <div class="divTableCell">
-<textarea style="width:77%; height:500px; border:0px; resize: none;" readonly ><%= CmmUtil.nvl(rDTO.getContent()) %></textarea></div></div>
+<textarea style="width:77%; height:500px; border:0px; resize: none;" readonly ><%= CmmUtil.nvl(fDTO.getContent()) %></textarea></div></div>
 </div>
 </div>
 <br>
@@ -268,9 +533,10 @@ div.blueTable {
 <input type="text" id="com" style="width:55.5%; height:100px;">
 <input type="button" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
 
+				
 </div>
 
-<input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(rDTO.getFr_no()) %>" />
+<input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(fDTO.getFr_no()) %>" />
 <br><br>
 
 <div align="center">	
@@ -279,6 +545,21 @@ div.blueTable {
 </div>		
 <br><br>
 </form>
+
+				(<span id="commentCount"></span>)
+					<div id="listComment" style="display: none"></div>
+					<% if ( edit != 3) { %>
+						<div class="form-group col-xs-12 floating-label-form-group controls">
+						<br/><b><%=ss_user_name%>(<%=ss_user_id%>)</b>
+							주인만 보기
+								<input type="checkbox" id="secret_check" value="0" onclick="sc();"></div>
+					<form id="commentInsertForm" onsubmit="return ok(this);">
+					<div class="modal-footer">
+						<textarea name="content" id="content" placeholder="Comment"></textarea>
+						<input type="button" class="btn default" value="확인" id="write"></div>
+				</form>
+				<%} %>
+				
 
 	<div id="dropDownSelect1"></div>
 	

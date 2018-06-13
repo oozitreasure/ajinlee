@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.health.DTO.HoDTO;
-
+import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -62,6 +62,33 @@ public class MainController {
 		return "register";
 		
 	}
+	
+	@RequestMapping(value="/like", method=RequestMethod.POST)
+	public String like(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+					ModelMap model) throws Exception {
+
+		   
+		  log.info(this.getClass().getName() + "favorite list start!");
+		  
+		  String admin_no = CmmUtil.nvl(request.getParameter("admin_no"));
+		  String user_no =  CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+		  HoDTO hDTO = new HoDTO();
+		  hDTO.setAdmin_no(admin_no);
+		  hDTO.setUser_no(user_no);
+		  log.info("admin_no : " + admin_no);
+		  log.info("user_no : " + user_no);
+		  HoDTO favorites = mainService.favoriteSelectList(hDTO);
+
+		  log.info("List:" + favorites);
+		  
+		  log.info(this.getClass().getName() + "favorite list end!");
+
+		
+		
+		return "/like";
+		
+	}
+	
 	
 	@RequestMapping(value = "/parkList2")
 	
@@ -341,14 +368,7 @@ public class MainController {
 		
 	}
 	
-	@RequestMapping(value="mylike", method=RequestMethod.GET)
-	public String mylike(HttpServletRequest request, HttpServletResponse response, 
-					ModelMap model) throws Exception {
-		
-		
-		return "mylike";
-		
-	}
+
 	@RequestMapping(value="main", method=RequestMethod.GET)
 	public String main(HttpServletRequest request, HttpServletResponse response, 
 					ModelMap model) throws Exception {
@@ -1132,12 +1152,15 @@ public class MainController {
 		   }
 		 
 		 
-		 @RequestMapping(value = "/parkDelete")
 		 
-		   public String parkDelete(@RequestParam String admin_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+		 @RequestMapping(value = "/parkDelete")
+
+		   public String parkDelete(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 		         ModelMap model) throws Exception {
 			 
 		      log.info(this.getClass().getName() + "   parkDelete start!");
+		      
+		      String admin_no = request.getParameter("admin_no");
 
 		      log.info("admin_no : " + admin_no);
 
@@ -1167,28 +1190,7 @@ public class MainController {
 		 
 		 
 		 
-/*		 @RequestMapping(value = "/favorites")
-		  public @ResponseBody HoDTO favorite(HttpServletRequest req, HttpServletResponse resp, Model model, HttpSession session)
-		    throws Exception {
-		   
-		  log.info(this.getClass().getName() + "favorite list start!");
-		  
-		  String admin_no = CmmUtil.nvl(req.getParameter("admin_no"));
-		  String user_no =  CmmUtil.nvl((String) session.getAttribute("session_user_no"));
-		  HoDTO hDTO = new HoDTO();
-		  hDTO.setAdmin_no(admin_no);
-		  hDTO.setUser_no(user_no);
-		  log.info("admin_no : " + admin_no);
-		  log.info("user_no : " + user_no);
-		  HoDTO favorites = mainService.favoriteSelectList(hDTO);
 
-		  log.info("List:" + favorites);
-		  
-		  log.info(this.getClass().getName() + "favorite list end!");
-		  
-		  
-		     return favorites;
-		  }*/
 		 
 		 
 		 
@@ -1272,6 +1274,56 @@ public class MainController {
 
 				log.info(this.getClass() + "idCheck end!!");
 			}
+			
+			
+			
+			@RequestMapping(value="free/insert")
+			   //리턴데이터를 json으로 변환
+			  public @ResponseBody int insert(@RequestParam int fr_no, 
+					   HttpSession session, HttpServletRequest request) throws Exception{
+				   
+				   log.info(this.getClass().getName() + "comment Insert start!");
+				   
+				   String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
+				   String contentd = CmmUtil.nvl((String) request.getParameter("content"));
+					String content = TextUtil.exchangeEscapeNvl(contentd);
+					content = content.replace("\r\n", "<br>");
+				   String user_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+				   String reg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+				   String secret_check = CmmUtil.nvl(request.getParameter("secret_check"));
+				   
+				   
+				   log.info("user_name : " + user_name);
+				   log.info("fr_no : " + fr_no);
+				   log.info("user_no : " + user_no);
+				   log.info("content : " + content);
+				   log.info("reg_no : " + reg_no);
+				   log.info("secret_check: " + secret_check);
+				   
+				   fiDTO fiDTO = new fiDTO();
+				   
+				   fiDTO.setFr_no(fr_no);
+				   fiDTO.setUser_name(user_name);
+				   fiDTO.setUser_no(user_no);
+				   fiDTO.setContent(content);
+				   fiDTO.setReg_no(reg_no);
+				   fiDTO.setSecret_check(secret_check);
+				   
+				   log.info(this.getClass().getName() + "comment Insert ok!");
+				   
+					   
+					log.info(this.getClass().getName() + "comment list start!");
+					   
+					List<fiDTO> list = mainService.list(fiDTO);
+					   
+					log.info(this.getClass().getName() + "comment list ok!");
+					   
+					log.info(list);
+					   
+					return mainService.insert(fiDTO);
+				   
+			 }
+			
 			
 		
 	}

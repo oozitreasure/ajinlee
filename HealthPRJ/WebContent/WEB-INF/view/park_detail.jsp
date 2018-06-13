@@ -130,6 +130,33 @@ function freeUp(){
  <script>
  
  
+ $(function() {
+	 
+		Hselect();
+	})
+	function Hselect() {
+
+	 
+		$.ajax({
+			type: 'post',
+			url : '/like.do',
+			data : {
+		             'user_no' : '${sessionScope.SESSION_USER_NO}',
+		             'admin_no' : '<%=aDTO.getAdmin_no() %>',
+		    },
+		    success : function(data) {
+		    	console.log(data);
+		    }, 
+			error : function(data) {
+	           console.log("검색 실패");
+		    }
+		    
+		});
+		
+	}
+ 
+ 
+ 
  function Hinsert() {
 	 
 	    var like = document.getElementById('like'); 
@@ -314,7 +341,7 @@ div.blueTable {
 </div>
 
 
-<form action="/parkDelete.do">
+<form method="post" action="/parkDelete.do">
 <br><br><br><br><br>
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
@@ -330,7 +357,7 @@ div.blueTable {
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
 <div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
-
+<input type="hidden" name="admin_no" value="<%=aDTO.getAdmin_no()%>">
 </div>
 </div>
 <div class="divTableBody">
@@ -410,21 +437,23 @@ div.blueTable {
 					<br>
 					
 					
-					
+	<%if (SESSION_USER_ID.equals("") || SESSION_USER_NAME.equals("관리자")) {%>
+	
+	<%} else {%>				
 					
 	<%if(hDTO.getHo_no() == null) {%>		
 	
 	<div align="right" style="width:60%;">
 	
 	<img style="background-color:white; border:0px; width:40px; height:40px" id="like" name="like" onclick="javascript:Hinsert();return false; " src="/resources/img/like3.png">
-	<img style="background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like.png">
+	<img style="display:none; background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like.png">
 	
 	<%}else{%>
 	
-	<img style="background-color:white; border:0px; width:40px; height:40px" id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png">
+	<img style="display:none; background-color:white; border:0px; width:40px; height:40px" id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png">
     <img style="background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like3.png">
               		 	
-	<%} %>
+	<%} }%>
 	
 	</div>
               		 	

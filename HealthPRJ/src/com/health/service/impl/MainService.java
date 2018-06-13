@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.health.DTO.HoDTO;
+import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -190,6 +191,24 @@ public class MainService implements IMainService {
 	public int getUseridCheck(mainDTO uDTO) {
 
 		return mainMapper.getUseridCheck(uDTO);
+	}
+
+	@Override
+	public HoDTO favoriteSelectList(HoDTO hDTO) {
+	
+		return mainMapper.favoriteSelectList(hDTO);
+	}
+
+	@Override
+	public List<fiDTO> list(fiDTO fiDTO) {
+
+		return mainMapper.list(fiDTO);
+	}
+
+	@Override
+	public int insert(fiDTO fiDTO) {
+		
+		return mainMapper.insert(fiDTO);
 	}
 
 

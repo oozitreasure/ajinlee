@@ -3,6 +3,7 @@ package com.health.persistence.mapper;
 import java.util.List;
 
 import com.health.DTO.HoDTO;
+import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
@@ -58,7 +59,6 @@ public interface MainMapper {
 
 	int getparkDelete(parkDTO pDTO);
 
-
 	void apark_update(parkDTO fDTO);
 
 	void favoriteInsert(HoDTO hDTO);
@@ -66,6 +66,12 @@ public interface MainMapper {
 	int favoriteDelete(HoDTO hDTO);
 
 	int getUseridCheck(mainDTO uDTO);
+
+	HoDTO favoriteSelectList(HoDTO hDTO);
+
+	List<fiDTO> list(fiDTO fiDTO);
+
+	int insert(fiDTO fiDTO);
 
 
 

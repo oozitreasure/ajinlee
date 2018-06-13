@@ -128,4 +128,34 @@ SELECT COUNT(*) FROM USER_INFO WHERE USER_ID = #{user_id}
 </select>
 
 
+<select parameterType="HoDTO" id="favoriteSelectList" resultType="HoDTO"> 
+SELECT HO_NO, USER_NO, ADMIN_NO, PARK_NAME FROM HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no} 
+</select>
+
+<insert parameterType="fiDTO" id="insert"> 
+INSERT INTO FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
+VALUES( (SELECT IFNULL(MAX(CAST(FI.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FI), 
+#{fr_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(FI.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FI),
+ NOW(), #{user_name} ) 
+</insert>
+
+<select id="list" resultType="fiDTO"> 
+SELECT FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME FROM 
+FR_COMMENT WHERE FR_NO = #{fr_no} ORDER BY FRC_NO 
+</select>
+
+<!-- <update parameterType="FiCommentDTO" id="update"> 
+UPDATE FI_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = SYSDATE WHERE FIC_NO = #{fic_no} 
+</update>
+
+<delete parameterType="FiCommentDTO" id="delete"> 
+DELETE FROM FI_COMMENT WHERE FIC_NO = #{fic_no} 
+</delete>
+
+<delete parameterType="FiCommentDTO" id="codelete"> 
+DELETE FROM FI_COMMENT WHERE FI_NO = #{fi_no} 
+</delete> -->
+
+
+
 </mapper>

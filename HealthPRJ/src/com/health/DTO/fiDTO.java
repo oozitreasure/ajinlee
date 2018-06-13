@@ -6,7 +6,7 @@ public class fiDTO {
 	    private int fr_no;
 	    private String user_no;
 	    private String user_name;
-	    private String contenet;
+	    private String content;
 	    private String secret_check;
 	    private String reg_no;
 	    private String reg_dt;
@@ -67,12 +67,13 @@ public class fiDTO {
 		public void setChg_dt(String chg_dt) {
 			this.chg_dt = chg_dt;
 		}
-		public String getContenet() {
-			return contenet;
+		public String getContent() {
+			return content;
 		}
-		public void setContenet(String contenet) {
-			this.contenet = contenet;
+		public void setContent(String content) {
+			this.content = content;
 		}
+
 	    
 	   
 	
