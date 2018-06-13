@@ -26,6 +26,7 @@ import com.health.DTO.parkDTO;
 import com.health.service.IMainService;
 import com.health.util.CmmUtil;
 import com.health.util.TextUtil;
+import com.health.DTO.piDTO;
 	
 @Controller
 public class MainController {
@@ -286,9 +287,11 @@ public class MainController {
 		parkDTO aDTO = mainService.getPark(admin_no);
 		
 		if (aDTO == null) {
+			
 			aDTO = new parkDTO();
 		}
 		HoDTO hDTO = new HoDTO();
+		
 		hDTO.setAdmin_no(admin_no);
 		hDTO.setUser_no(user_no);
 		hDTO = mainService.favoriteSelectList(hDTO);
@@ -1300,10 +1303,136 @@ public class MainController {
 			}
 			
 			
+			  @RequestMapping(value="/park/insert")
+			   //리턴데이터를 json으로 변환
+			  public @ResponseBody int pinsert(@RequestParam String admin_no, 
+					  
+					   HttpSession session, HttpServletRequest request) throws Exception{
+				   
+				   log.info(this.getClass().getName() + "  comment Insert start!");
+				   
+				   
+				   String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
+				   String contentd = CmmUtil.nvl((String) request.getParameter("content"));
+					String content = TextUtil.exchangeEscapeNvl(contentd);
+					content = content.replace("\r\n", "<br>");
+				   String user_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+				   String reg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+				   String secret_check = CmmUtil.nvl(request.getParameter("secret_check"));
+				   
+				   
+				   log.info("user_name : " + user_name);
+				   log.info("admin_no : " + admin_no);
+				   log.info("user_no : " + user_no);
+				   log.info("content : " + content);
+				   log.info("reg_no : " + reg_no);
+				   log.info("secret_check: " + secret_check);
+				   
+				   piDTO piDTO = new piDTO();
+				   
+				   piDTO.setAdmin_no(admin_no);
+				   piDTO.setUser_name(user_name);
+				   piDTO.setUser_no(user_no);
+				   piDTO.setContent(content);
+				   piDTO.setReg_no(reg_no);
+				   piDTO.setSecret_check(secret_check);
+				   
+				   log.info(this.getClass().getName() + "  comment Insert ok!");
+				   
+					   
+					log.info(this.getClass().getName() + "  comment list start!");
+					   
+					List<piDTO> plist =mainService.plist(piDTO);
+					   
+					log.info(this.getClass().getName() + "  comment list ok!");
+					   
+					log.info(plist);
+					   
+					return mainService.pinsert(piDTO);
+				   
+			 }
+				 
+			  @RequestMapping(value="/park/update")
+			  public @ResponseBody int pupdate(@RequestParam int prc_no,@RequestParam String content, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+				         ModelMap model) throws Exception {
+			  
+				   log.info(this.getClass().getName() + ".CommentUpdate start!");
+				   
+				   piDTO piDTO = new piDTO();
+				   String contentd = TextUtil.exchangeEscapeNvl(content);
+					content = contentd.replace("\r\n", "<br>");
+					
+				   //String secret_check = CmmUtil.nvl(request.getParameter("secret_check"));
+					
+				   String chg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+
+				   log.info("content: " + content);
+				   //log.info("secret_check: " + secret_check);
+				   log.info("chg_no: " + chg_no);
+
+				   
+				   piDTO.setPrc_no(prc_no);
+				   piDTO.setContent(content);
+				   //riDTO.setSecret_check(secret_check);
+				   piDTO.setChg_no(chg_no);
+				   		
+				   log.info(this.getClass().getName() + ".CommentUpdate end!");
+				   
+				   return mainService.pupdate(piDTO);
+				   
+			}
+						   
+			
+				 
+			  @RequestMapping(value="/park/delete")
+			  public @ResponseBody int pdelete(@RequestParam int prc_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+				         ModelMap model) throws Exception {
+				   log.info(this.getClass().getName() + ".Comment delete start!");
+
+				   log.info(this.getClass()+ ".Comment delete end!");
+				   
+				   return mainService.pdelete(prc_no);
+			  }
+	
+				
+			 @RequestMapping("/park/list")
+			 @ResponseBody //리턴데이터를 json으로 변환
+			 public List<piDTO> plist(Model model, HttpServletRequest req) throws Exception{
+				   
+				   log.info(this.getClass().getName() + "comment list start!");
+				  String admin_no = CmmUtil.nvl(req.getParameter("admin_no"));
+				  /*String admin_no = Integer.parseInt(sadmin_no);*/
+				   
+				   piDTO prc = new piDTO();
+				   prc.setAdmin_no(admin_no);
+				   log.info(this.getClass().getName() + "comment list ok!");
+				   
+				   List<piDTO> plist = mainService.plist(prc);
+				   
+				   log.info("List : "+ plist);
+				   
+				   return mainService.plist(prc);
+			 }
+			 
+			 
+			
+			
 			
 			
 
-			  
+			 
+			
+			 @RequestMapping(value="/chart", method=RequestMethod.POST)
+			   public @ResponseBody List<HoDTO> chart(HttpSession session) throws Exception {
+			      log.info(getClass() + "chart start!!!");
+			      String user_no = (String)session.getAttribute("session_user_no");
+			      List<HoDTO> gList = mainService.getChart(user_no);
+			      
+			      log.info(getClass() + "chart end!!!");
+			      return gList;
+			   }
+			 
+			 
 			  @RequestMapping(value="/free/insert")
 			   //리턴데이터를 json으로 변환
 			  public @ResponseBody int insert(@RequestParam int fr_no, 
@@ -1415,16 +1544,6 @@ public class MainController {
 				   return mainService.list(frc);
 			 }
 			 
-			
-			 @RequestMapping(value="/chart", method=RequestMethod.POST)
-			   public @ResponseBody List<HoDTO> chart(HttpSession session) throws Exception {
-			      log.info(getClass() + "chart start!!!");
-			      String user_no = (String)session.getAttribute("session_user_no");
-			      List<HoDTO> gList = mainService.getChart(user_no);
-			      
-			      log.info(getClass() + "chart end!!!");
-			      return gList;
-			   }
 			 
 			
 		

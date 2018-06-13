@@ -173,12 +173,12 @@ function commentList(){
 		       
 		    $.each(data,function(index,value){
 					if(value.secret_check == "1"){
-						if (user_no == reg_no || user_no == value.reg_no || user_name == "관리자"){
+						if (user_name == "관리자"){
 							   output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
 					    	   output += "<div class='post-preview' style='width:100%'>";
 					    	   output += 	   	"<hr/>&emsp;<font color='red' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/>";
 					    	   output +=		"&emsp; <font style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
-					    	   	if(user_no == value.reg_no){ 
+					    	   	if(user_no != value.reg_no){ 
 					    	   output +=		"<input type='button' value='수정' onclick='commentUpdateForm("+value.frc_no+",\""+value.content+"\")'/>&nbsp;&nbsp;"
 						    	output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.frc_no+")'/>";
 					    	   	}
@@ -196,10 +196,10 @@ function commentList(){
 							    output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
 					    	    output += "<div class='post-preview' style='width:100%'>";
 					    	    output +=		"<hr/>&emsp;<font  style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" +  value.reg_dt + "&nbsp;";
-					    	   	if(user_no == value.reg_no){ 
+
 					    	    output +=	   "<input type='button'  style='font-family: 조선일보명조' value='수정' onclick='commentUpdateForm("+value.frc_no+",\""+value.content+"\");' />&nbsp;&nbsp;";
 					    		output +=	   "<input type='button'  style='font-family: 조선일보명조' value='삭제' onclick='commentDelete("+value.frc_no+")'/>";
-					    	   	}
+
 					    	   output += 		"</font><br/>";
 					    	   output += 		"&emsp;<font  style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
 				               output += "</div>";
@@ -582,7 +582,7 @@ div.blueTable {
 <input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="javascript:doDelete();">
 </div>		
 <br><br>
-					<div style="width:60%;">
+					<div>
 					<div class="form-group floating-label-form-group controls">
 					 <font style="font-family: 조선일보명조" size="4">댓글</font>(<span id="commentCount"></span>)
 					
@@ -596,8 +596,8 @@ div.blueTable {
 					<form id="commentInsertForm" onsubmit="return ok(this);">
 					<div class="modal-footer">
 						<textarea name="content" id="content" placeholder="Comment" 
-							style="margin-top: 0px; margin-bottom: 0px; width: 60%; height: 70px; resize:none;font-family: 조선일보명조"></textarea>
-						<input type="button" class="btn default" value="확인" id="write"></div>
+							style="margin-top: 0px; margin-bottom: 0px; width: 100%; height: 70px; resize:none;"></textarea>
+						<input type="button" class="btn default" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" value="확인" id="write"></div>
 				</form>
 					</div>
 					<%} %>

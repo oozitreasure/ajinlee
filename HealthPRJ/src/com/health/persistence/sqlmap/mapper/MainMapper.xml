@@ -143,6 +143,12 @@ FR_COMMENT WHERE FR_NO = #{fr_no} ORDER BY FRC_NO
 </select>
 
 
+<select id="plist" resultType="piDTO"> 
+SELECT PRC_NO, ADMIN_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME FROM 
+PR_COMMENT WHERE ADMIN_NO = #{admin_no} ORDER BY PRC_NO 
+</select>
+
+
 <insert parameterType="fiDTO" id="insert"> 
 INSERT INTO FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
 VALUES( (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FR), 
@@ -172,6 +178,27 @@ DELETE FROM FR_COMMENT WHERE FR_NO = #{fr_no}
 <update parameterType="freeDTO" id="updateFreeCnt"> 
 UPDATE FREE_INFO SET CNT = CNT + 1 WHERE FR_NO = #{fr_no} 
 </update>
+
+
+<insert parameterType="piDTO" id="pinsert"> 
+INSERT INTO PR_COMMENT ( PRC_NO, ADMIN_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
+VALUES( (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM PR_COMMENT PR), 
+#{admin_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM PR_COMMENT PR),
+ NOW(), #{user_name} ) 
+</insert>
+
+ <update parameterType="piDTO" id="pupdate"> 
+UPDATE PR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE PRC_NO = #{prc_no} 
+</update>
+
+<delete parameterType="piDTO" id="pdelete"> 
+DELETE FROM PR_COMMENT WHERE PRC_NO = #{prc_no} 
+</delete>
+
+<delete parameterType="piDTO" id="pcodelete"> 
+DELETE FROM PR_COMMENT WHERE ADMIN_NO = #{pr_no} 
+</delete>
+
 
 
 </mapper>

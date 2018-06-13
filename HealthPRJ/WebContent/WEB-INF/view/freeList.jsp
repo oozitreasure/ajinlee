@@ -71,75 +71,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 <script>
 
-//더보기
-$(function() {
- 
- var count = 10;
- var now = '<%=now%>';
-
- $("#addview").click(function() {
-	 
-    $.ajax({
-       
-       url : "freeMoreView.do",
-       method : "post",
-       data : {'count' : count },
-       dataType : 'json',
-       success : function(data) {
-          var contents = "";
-          
-          
-          $.each(data, function (key, value) {
-             
-              contents += "<div class='divTable blueTable' style='width:100%'>";
-  			contents += "<div class='divTableHeading'>";
-  			contents += "<div class='divTableRow'>";
-  			contents += "<div class='divTableHead'>번호</div>";
-  			contents += "<div class='divTableHead'>제목</div>";
-  			contents += "<div class='divTableHead'>작성자</div>";
-  			contents += "<div class='divTableHead'>작성일</div>";
-  			contents += "<div class='divTableHead'>조회수</div></div></div>";
-  			
-  			
-  			contents += "<div class='divTableBody'>";
-			content += "<div class='divTableRow'>";
-			content += "<div class='divTableCell'>"+value.fr_no+"</div>";
-			content += "<div class='divTableCell' onclick='doDetail("+value.fr_no+");'>"+value.title+"</div>";
-			content += "<div class='divTableCell'>"+value.user_name+"</div>";
-			content += "<div class='divTableCell'>"+value.reg_dt+"</div>";
-			content += "<div class='divTableCell'>"+value.cnt+"</div></div>";
-             
-          });
-        
-			
-			
-          
-          $('#divTable').append(contents);
-          
-          if ((data).length<10) {
-             $('#addview').remove();
-          }
-          
-       }
-       
-    });
-    
-    count += 10;
- 
- });
- 
-}); 
-
-function addview(){
-  
- <%if(fList.size() < 10){%> 
-       $('#addview1').remove();
- <%}%>
-}
-
-</script>
-
-
 
 <script type="text/javascript">
 
@@ -223,7 +154,7 @@ function doSearch() {
  		$.ajax({
  			
  			url : "/freeSearch.do",
- 			method : "get",
+ 			method : "post",
  			data : {'search' : search},
  			datatype : "json", 
  			success : function(data) {

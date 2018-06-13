@@ -1,6 +1,5 @@
 package com.health.DTO;
 
-import org.springframework.web.multipart.MultipartFile;
 
 public class parkDTO {
 
@@ -24,14 +23,7 @@ public class parkDTO {
 	private String chg_no;
 	private String chg_dt;
 	private String Search;
-	private MultipartFile upfile;
-	
-	public MultipartFile getUpfile(){
-	    return upfile;
-	}
-	public void setUpfile(MultipartFile upfile){
-	    this.upfile = upfile;
-	}   
+
 	
 	public String getAdmin_no() {
 		return admin_no;

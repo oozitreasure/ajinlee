@@ -10,5 +10,6 @@
     	<typeAlias type="com.health.DTO.freeDTO" alias="freeDTO" />
     	<typeAlias type="com.health.DTO.HoDTO" alias="HoDTO" />
     	<typeAlias type="com.health.DTO.fiDTO" alias="fiDTO" />
+    	<typeAlias type="com.health.DTO.piDTO" alias="piDTO" />
     </typeAliases>
 </configuration>

@@ -7,6 +7,7 @@ import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
+import com.health.DTO.piDTO;
 import com.health.config.Mapper;
 
 
@@ -84,6 +85,15 @@ public interface MainMapper {
 	List<HoDTO> getChart(String user_no);
 
 	void updateFreeCnt(freeDTO rDTO);
+
+	List<piDTO> plist(piDTO piDTO);
+
+	int pinsert(piDTO piDTO);
+
+	int pupdate(piDTO piDTO);
+
+	int pdelete(int prc_no);
+
 
 
 

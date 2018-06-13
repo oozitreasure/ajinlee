@@ -11,6 +11,7 @@ import com.health.DTO.fiDTO;
 import com.health.DTO.freeDTO;
 import com.health.DTO.mainDTO;
 import com.health.DTO.parkDTO;
+import com.health.DTO.piDTO;
 import com.health.persistence.mapper.MainMapper;
 import com.health.service.IMainService;
 
@@ -244,6 +245,31 @@ public class MainService implements IMainService {
 		mainMapper.updateFreeCnt(rDTO);
 		
 	}
+
+	@Override
+	public List<piDTO> plist(piDTO piDTO) {
+		
+		return mainMapper.plist(piDTO);
+	}
+
+	@Override
+	public int pinsert(piDTO piDTO) {
+		
+		return mainMapper.pinsert(piDTO);
+	}
+
+	@Override
+	public int pupdate(piDTO piDTO) {
+		
+		return mainMapper.pupdate(piDTO);
+	}
+
+	@Override
+	public int pdelete(int prc_no) {
+		
+		return mainMapper.pdelete(prc_no);
+	}
+
 	
 
 
