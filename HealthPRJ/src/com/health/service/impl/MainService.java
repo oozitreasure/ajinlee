@@ -211,5 +211,28 @@ public class MainService implements IMainService {
 		return mainMapper.insert(fiDTO);
 	}
 
+	@Override
+	public List<HoDTO> getFavoriteList(String user_no) {
+		return mainMapper.getFavoriteList(user_no);
+	}
+
+	@Override
+	public List<freeDTO> freeMoreView(freeDTO fDTO) {
+	
+		return mainMapper.freeMoreView(fDTO);
+	}
+
+	@Override
+	public int delete(int frc_no) {
+		
+		return mainMapper.delete(frc_no);
+	}
+
+	@Override
+	public int update(fiDTO fiDTO) {
+
+		return mainMapper.update(fiDTO);
+	}
+
 
 }

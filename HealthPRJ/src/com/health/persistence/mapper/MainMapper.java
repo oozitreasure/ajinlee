@@ -73,6 +73,14 @@ public interface MainMapper {
 
 	int insert(fiDTO fiDTO);
 
+	List<HoDTO> getFavoriteList(String user_no);
+
+	List<freeDTO> freeMoreView(freeDTO fDTO);
+
+	int delete(int frc_no);
+
+	int update(fiDTO fiDTO);
+
 
 
 

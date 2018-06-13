@@ -12,9 +12,7 @@
    if(fList == null){
       fList = new ArrayList();
    }
-   
-   
-   System.out.println("list:"+ fList);
+
   
 %>
 
@@ -57,6 +55,76 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <![endif]-->
 
 </head>
+
+<script>
+
+//더보기
+$(function() {
+ 
+ var count = 10;
+<%--  var now = '<%=now%>'; --%>
+
+ $("#addview").click(function() {
+    $.ajax({
+       
+       url : "freeMoreView.do",
+       method : "post",
+       data : {'count' : count },
+       dataType : 'json',
+       success : function(data) {
+          var contents = "";
+          
+          
+          $.each(data, function (key, value) {
+             
+             contents += "<div class='divTableBody'>";
+             contents += "<div class='divTableRow'>";
+             contents += "<div class='divTableCell'>";
+                if(value.notice_check==1){
+             contents += "out.print('<font style='font-family: 조선일보명조'><b>[공지]</b></font>')";
+                }else if(value.cnt >= 100) {
+                    contents += "<img src='/image/bestof.png' width='50' height='30' />";
+                 }else if(value.reg_dt==now) {
+                    contents += "<b><font color='red'> NEW </font></b>";
+              }else{
+             contents += value.fr_no;
+                };
+             contents += "</div>";
+             contents += "<div class='divTableCell'>";
+             contents += "<a href='/free/free_detail.do?fi_no=" + value.fr_no + "'>"+value.title+"</a></div>";
+             contents += "<div class='divTableCell'>"+value.user_name+"</div>";
+             contents += "<div class='divTableCell'>"+value.reg_dt+"</div>";
+             contents += "<div class='divTableCell'>"+value.cnt+"</div>";
+             contents += "<div class='divTableCell'>"+value.comment_count+"</div></div></div>";
+             
+          });
+          
+          $('#divTable').append(contents);
+          
+          if ((data).length<10) {
+             $('#addview').remove();
+          }
+          
+       }
+       
+    });
+    
+    count += 10;
+ 
+ });
+ 
+}); 
+
+function addview(){
+  
+ <%if(fList.size() < 10){%> 
+       $('#addview1').remove();
+ <%}%>
+}
+</script>
+
+
+
 <script type="text/javascript">
 
  
@@ -350,6 +418,17 @@ div.blueTable {
 </div>
 </div>
 
+<div class="ReviewList outerTableFooter">
+<div class="tableFootStyle">
+   <%if(fList.size() >= 10){%>
+         <div align="center"><input type="button" class="btn default" id="addview" value="더보기">
+        
+   <%} %>
+</div>
+</div></div>
+
+
+
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
 <div align="right" id="divss">
@@ -360,14 +439,15 @@ div.blueTable {
 <input type="submit" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
 </div>
 <br>
-<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
 </div>
 </div>
 </div>
 <br><br>
 
 
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+
+
+<footer id="footer" ><!-- style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
 
     <div class="footer-copyright">
         <div class="container">

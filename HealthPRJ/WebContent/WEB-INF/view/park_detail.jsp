@@ -357,7 +357,7 @@ div.blueTable {
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
 <div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
-<input type="hidden" name="admin_no" value="<%=aDTO.getAdmin_no()%>">
+<input type="hidden" name="admin_no" value="<%= aDTO.getAdmin_no()%>">
 </div>
 </div>
 <div class="divTableBody">
@@ -440,18 +440,18 @@ div.blueTable {
 	<%if (SESSION_USER_ID.equals("") || SESSION_USER_NAME.equals("관리자")) {%>
 	
 	<%} else {%>				
-					
-	<%if(hDTO.getHo_no() == null) {%>		
+	<%System.out.println("과연? : " + hDTO.getHo_no()); %>
 	
-	<div align="right" style="width:60%;">
+	<div align="right" style="width:60%;">				
+	<%if(hDTO.getHo_no() == null) {%>		
 	
 	<img style="background-color:white; border:0px; width:40px; height:40px" id="like" name="like" onclick="javascript:Hinsert();return false; " src="/resources/img/like3.png">
 	<img style="display:none; background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like.png">
 	
 	<%}else{%>
 	
-	<img style="display:none; background-color:white; border:0px; width:40px; height:40px" id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like.png">
-    <img style="background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like3.png">
+	<img style="display:none; background-color:white; border:0px; width:40px; height:40px" id="like" name="like"  onclick="javascript:Hinsert();return false;" src="/resources/img/like3.png">
+    <img style=" background-color:white; border:0px; width:40px; height:40px" id="unlike" name="unlike" onclick="javascript:Hdelete('<%=CmmUtil.nvl(aDTO.getAdmin_no()) %>');return false;" src="/resources/img/like.png">
               		 	
 	<%} }%>
 	

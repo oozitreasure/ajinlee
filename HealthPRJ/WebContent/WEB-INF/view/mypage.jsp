@@ -25,6 +25,19 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 %>
 
 
+<%
+   List<HoDTO> hList = (List<HoDTO>) request.getAttribute("hList");
+if (hList==null){
+   hList = new ArrayList();
+}
+   
+   System.out.println("list: " + hList);
+
+%>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,10 +118,10 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 <script>
 
 //상세보기 이동
-function doDetail(admin_no)
-{
- location.href="park_detail.do?admin_no="+ admin_no;
-}
+function doDetail(n){
+	var admin_no = n;
+	   location.href="park_detail.do?admin_no="+ admin_no;
+	}
 
 </script>
 <style>
@@ -283,7 +296,7 @@ div.blueTable {
 </div>
 </div>
 
-<br>
+<br><br>
 <div align="center">
 <input type="submit" value="수정" style="border:1px; background-color:#ede6da; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
 <input type="button" value="탈퇴" onclick="user_delete()" style="border:1px; background-color:#ede6da; color:#1c1c1c; width:60px; height:40px; border-radius: 3px;">
@@ -293,15 +306,38 @@ div.blueTable {
 <br><br>
 
 <div align="center">
+<br><br><br>
+
+<div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
-<button onclick="like()">나의 좋아요 보러가기</button>
+<h2 align="center">좋아요</h2>
+</div>
+</div>
+<br>
+<div align="center">
+<div class="divTable blueTable">
+<div class="divTableHeading">
+<div class="divTableRow">
+<div class="divTableHead">공원번호</div>
+<div class="divTableHead">공원이름</div>
+</div>
+</div>
+<div class="divTableBody">
+<%for (HoDTO hoDTO : hList) {%>
+<div class="divTableRow">
+<div class="divTableCell" onclick="doDetail('<%=hoDTO.getAdmin_no()%>')"><%=hoDTO.getAdmin_no()%></div>
+<div class="divTableCell"><%=CmmUtil.nvl(hoDTO.getPark_name()) %></div></div>
+<%} %>
+</div>
 </div>
 </div>
 
+<br>
+</div><br><br>
 	<div id="dropDownSelect1"></div>
 	
 	
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+<footer id="footer" ><!-- style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
 
     <div class="footer-copyright">
         <div class="container">

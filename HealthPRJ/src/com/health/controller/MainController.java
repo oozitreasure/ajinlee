@@ -273,6 +273,7 @@ public class MainController {
 		log.info(this.getClass() + "   park_detail start!!!");
 		
 		String admin_no = CmmUtil.nvl(re.getParameter("admin_no"));
+		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 		
 		log.info("admin_no : " + admin_no);
 		
@@ -281,7 +282,13 @@ public class MainController {
 		if (aDTO == null) {
 			aDTO = new parkDTO();
 		}
+		HoDTO hDTO = new HoDTO();
+		hDTO.setAdmin_no(admin_no);
+		hDTO.setUser_no(user_no);
+		hDTO = mainService.favoriteSelectList(hDTO);
+		
 		model.addAttribute("aDTO", aDTO);
+		model.addAttribute("hDTO", hDTO);
 		
 		log.info(this.getClass() + "   park_detail end!!!");
 		
@@ -626,9 +633,14 @@ public class MainController {
 		if (gDTO == null) {
 			gDTO = new mainDTO();
 		}
+		
+		List<HoDTO> hList = mainService.getFavoriteList(user_no);
+		
 		model.addAttribute("gDTO", gDTO);
+		model.addAttribute("hList", hList);
 		
 		log.info(this.getClass() + "   mypage end!!!");
+			
 
 		return "/mypage";
 	}
@@ -948,6 +960,9 @@ public class MainController {
 			
 			return "/freeList";
 		}
+
+
+
 		
 		@RequestMapping(value = "/park_insert_proc")
 		   public String park_insert_proc(HttpSession session, HttpServletRequest re, HttpServletResponse response,
@@ -1277,12 +1292,33 @@ public class MainController {
 			
 			
 			
-			@RequestMapping(value="free/insert")
+			
+			
+			@RequestMapping(value="/free/freeMoreView")
+			  public @ResponseBody List<freeDTO> reviewMoreView(@RequestParam(value = "count") String count) throws Exception{
+				
+				   freeDTO fDTO = new freeDTO();
+				   
+				   fDTO.setRead_more(count);
+				   log.info("count :" + count);
+				   
+				   List<freeDTO> FreeMoreList = mainService.freeMoreView(fDTO);
+				   
+				   for(freeDTO f : FreeMoreList){
+					  /* System.out.println("comment_count: "+f.getComment_count());*/
+				   }
+				   return FreeMoreList;
+			  }
+
+			  
+			  @RequestMapping(value="free/insert")
 			   //리턴데이터를 json으로 변환
 			  public @ResponseBody int insert(@RequestParam int fr_no, 
+					  
 					   HttpSession session, HttpServletRequest request) throws Exception{
 				   
 				   log.info(this.getClass().getName() + "comment Insert start!");
+				   
 				   
 				   String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
 				   String contentd = CmmUtil.nvl((String) request.getParameter("content"));
@@ -1314,7 +1350,7 @@ public class MainController {
 					   
 					log.info(this.getClass().getName() + "comment list start!");
 					   
-					List<fiDTO> list = mainService.list(fiDTO);
+					List<fiDTO> list =mainService.list(fiDTO);
 					   
 					log.info(this.getClass().getName() + "comment list ok!");
 					   
@@ -1323,6 +1359,79 @@ public class MainController {
 					return mainService.insert(fiDTO);
 				   
 			 }
+				/* ##############################
+				 * ########<< 댓글 수정  >>##########
+				 * ##############################
+				 */
+			  @RequestMapping(value="free/update")
+			  public @ResponseBody int update(@RequestParam int frc_no,@RequestParam String content, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+				         ModelMap model) throws Exception {
+			  
+				   log.info(this.getClass().getName() + ".CommentUpdate start!");
+				   
+				   fiDTO fiDTO = new fiDTO();
+				   String contentd = TextUtil.exchangeEscapeNvl(content);
+					content = contentd.replace("\r\n", "<br>");
+					
+				   //String secret_check = CmmUtil.nvl(request.getParameter("secret_check"));
+					
+				   String chg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
+
+				   log.info("content: " + content);
+				   //log.info("secret_check: " + secret_check);
+				   log.info("chg_no: " + chg_no);
+
+				   
+				   fiDTO.setFrc_no(frc_no);
+				   fiDTO.setContent(content);
+				   //riDTO.setSecret_check(secret_check);
+				   fiDTO.setChg_no(chg_no);
+				   		
+				   log.info(this.getClass().getName() + ".CommentUpdate end!");
+				   
+				   return mainService.update(fiDTO);
+				   
+			}
+						   
+				   
+				/* ##############################
+				 * ########<< 댓글 삭제  >>##########
+				 * ##############################
+				 */
+			  @RequestMapping(value="free/delete")
+			  public @ResponseBody int delete(@RequestParam int frc_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
+				         ModelMap model) throws Exception {
+				   log.info(this.getClass().getName() + ".Comment delete start!");
+
+				   log.info(this.getClass()+ ".Comment delete end!");
+				   
+				   return mainService.delete(frc_no);
+			  }
+			  
+			  /* ##############################
+				* ########<< 댓글 목록  >>##########
+				* ##############################
+				*/
+			 @RequestMapping("free/list")
+			 @ResponseBody //리턴데이터를 json으로 변환
+			 public List<fiDTO> list(Model model, HttpServletRequest req) throws Exception{
+				   
+				   log.info(this.getClass().getName() + "comment list start!");
+				  String sfi_no = CmmUtil.nvl(req.getParameter("fr_no"));
+				  int fr_no = Integer.parseInt(sfi_no);
+				   
+				   fiDTO fic = new fiDTO();
+				   fic.setFr_no(fr_no);
+				   log.info(this.getClass().getName() + "comment list ok!");
+				   
+				   List<fiDTO> list = mainService.list(fic);
+				   
+				   log.info("List : "+ list);
+				   
+				   return mainService.list(fic);
+			 }
+			 
+			
 			
 			
 		

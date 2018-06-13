@@ -56,6 +56,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 	}
 
 	System.out.println("ss_user_name : " + ss_user_name);
+	
 %>
 
 
@@ -156,6 +157,7 @@ function freeUp(){
 
 
 $(function() {
+	
 	var fr_no = '<%=fDTO.getFr_no() %>';
 
 	
@@ -167,7 +169,7 @@ $(function() {
 			// 로그인과 글 내용 유무 확인
 				if ("<%=edit%>" == 3) {
 					alert("로그인 하시길 바랍니다.");
-					location.href = "Login.do";
+					location.href = "login.do";
 					return false;
 					
 				} else {
@@ -230,7 +232,7 @@ function commentList(){
 		       var user_name = '<%=ss_user_name%>';
 		       var user_no = '<%=ss_user_no%>';
 		       var reg_no = <%=fDTO.getReg_no()%>;
-		       var num = Object.keys(data).length;
+
 		       
 				<%System.out.println("reg_no : " + fDTO.getReg_no());%>
 		       
@@ -238,37 +240,37 @@ function commentList(){
 					if(value.secret_check == "1"){
 						if (user_no == reg_no || user_no == value.reg_no || user_name == "관리자"){
 							   output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
-					    	   output += "<div class='post-preview' style='width:100%'>";
+					    	   output += "<div class='post-preview'>";
 					    	   output += 	   	"<hr/>&emsp;<img src='/image/key2.png' width='20' height='20'><font color='red' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/>";
-					    	   output +=		"&emsp; <font style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
+					    	   output +=		"&emsp;<b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
 					    	   	if(user_no == value.reg_no){ 
 					    	   output +=		"<input type='button' value='수정' onclick='commentUpdateForm("+value.fic_no+",\""+value.content+"\")'/>&nbsp;&nbsp;"
 						    	output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.fic_no+")'/>";
 					    	   	}
 					    	   output += 		"</font><br/>";
-					    	   output += 		"&emsp;<font style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
+					    	   output += 		"&emsp;" + value.content + "</div>";
 				               output += "</div>";
 						
 						}else{
 							output += 	"<div class='row'>";
 				    	    output += 	"<div class='post-preview' style='width:100%'>"
-				    	    output +=	"<hr><img src='/image/secret.png' width='20' height='20'><font color='gray' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/></div>";
+				    	    output +=	"<hr><img src='/image/secret.png' width='20' height='20'><b> 비밀댓글 입니다. </b><br/></div>";
 				    		output += 	"</div>";
 				    	  }   	
 					}else{
-							    output += "<div class='row' id='updateCommentForm"+value.fic_no+"'>";
+							    output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
 					    	    output += "<div class='post-preview' style='width:100%'>";
-					    	    output +=		"<hr/>&emsp;<font  style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" +  value.reg_dt + "&nbsp;";
+					    	    output +=		"<hr/>&emsp;<b>" + value.user_name +"</b>&emsp; | &emsp;" +  value.reg_dt + "&nbsp;";
 					    	   	if(user_no == value.reg_no){ 
-					    	    output +=	   "<input type='button'  style='font-family: 조선일보명조' value='수정' onclick='commentUpdateForm("+value.fic_no+",\""+value.content+"\");' />&nbsp;&nbsp;";
-					    		output +=	   "<input type='button'  style='font-family: 조선일보명조' value='삭제' onclick='commentDelete("+value.fic_no+")'/>";
+					    	    output +=	   "<input type='button' value='수정' onclick='commentUpdateForm("+value.frc_no+",\""+value.content+"\");' />&nbsp;&nbsp;";
+					    		output +=	   "<input type='button' value='삭제' onclick='commentDelete("+value.frc_no+")'/>";
 					    	   	}
 					    	   output += 		"</font><br/>";
-					    	   output += 		"&emsp;<font  style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
+					    	   output += 		"&emsp;" + value.content + "</div>";
 				               output += "</div>";
 					}
 		       })
-		    $('#commentCount').html(num);
+
 			$('#listComment').html('');
 		   	$('#listComment').html(output);
 				

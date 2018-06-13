@@ -83,6 +83,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
  
+ 
  <script>
 	
 	$(function(){
@@ -100,6 +101,9 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                  console.log("도시이름  : "+ resp.name );
                  console.log("현재온도 : "+ (resp.main.temp- 273.15));
                  console.log("날씨 : "+ resp.weather[0].main );
+                 
+                 var nal = resp.main.temp-273.15;
+
                  
                 var tableStr ="<table>";
                 tableStr += "<tr><th><b>"+ resp.name +"</b></th></tr>";

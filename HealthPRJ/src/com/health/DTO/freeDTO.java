@@ -15,6 +15,7 @@ public class freeDTO {
 	private String chg_no;
 	private String chg_dt;
 	private String Search;
+	private String Read_more;
 	
 
 
@@ -96,6 +97,12 @@ public class freeDTO {
 	}
 	public void setFr_no(String fr_no) {
 		this.fr_no = fr_no;
+	}
+	public String getRead_more() {
+		return Read_more;
+	}
+	public void setRead_more(String read_more) {
+		Read_more = read_more;
 	}
 
 	
