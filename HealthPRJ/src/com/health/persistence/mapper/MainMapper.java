@@ -81,6 +81,10 @@ public interface MainMapper {
 
 	int update(fiDTO fiDTO);
 
+	List<HoDTO> getChart(String user_no);
+
+	void updateFreeCnt(freeDTO rDTO);
+
 
 
 

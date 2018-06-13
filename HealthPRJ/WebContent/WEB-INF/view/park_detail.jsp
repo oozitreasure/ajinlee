@@ -169,7 +169,8 @@ function freeUp(){
 	             'user_no' : '${sessionScope.SESSION_USER_NO}',
 	             'admin_no' : '<%=aDTO.getAdmin_no() %>',
 	             'reg_no' : '${sessionScope.SESSION_USER_NO}',
-	             'park_name' : '<%=aDTO.getPark_name() %>'
+	             'park_name' : '<%=aDTO.getPark_name() %>',
+	             'addr' : '<%=aDTO.getAddr1()%>'
 	          },
 	          success : function(data) {
 	              alert("즐겨찾기에 추가되었습니다.");
@@ -349,8 +350,7 @@ div.blueTable {
 <br>
 </div>
 
-<br><br>
-<img style="width:50%; height:600px; align:center;" src="/resources/img/park.GIF">
+
 <br><br>
 <div class="divTable blueTable">
 <div class="divTableHeading">

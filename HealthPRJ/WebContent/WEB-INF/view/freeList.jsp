@@ -16,6 +16,19 @@
   
 %>
 
+<%
+@SuppressWarnings("unchecked")
+
+java.text.SimpleDateFormat sf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+String now = sf.format(new java.util.Date());
+
+//게시판 조회 결과 보여주기
+if (fList==null){
+   fList = new ArrayList();
+}
+%>
+
+
  <%
 
 request.setCharacterEncoding("euc-kr");
@@ -62,9 +75,10 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 $(function() {
  
  var count = 10;
-<%--  var now = '<%=now%>'; --%>
+ var now = '<%=now%>';
 
  $("#addview").click(function() {
+	 
     $.ajax({
        
        url : "freeMoreView.do",
@@ -77,27 +91,28 @@ $(function() {
           
           $.each(data, function (key, value) {
              
-             contents += "<div class='divTableBody'>";
-             contents += "<div class='divTableRow'>";
-             contents += "<div class='divTableCell'>";
-                if(value.notice_check==1){
-             contents += "out.print('<font style='font-family: 조선일보명조'><b>[공지]</b></font>')";
-                }else if(value.cnt >= 100) {
-                    contents += "<img src='/image/bestof.png' width='50' height='30' />";
-                 }else if(value.reg_dt==now) {
-                    contents += "<b><font color='red'> NEW </font></b>";
-              }else{
-             contents += value.fr_no;
-                };
-             contents += "</div>";
-             contents += "<div class='divTableCell'>";
-             contents += "<a href='/free/free_detail.do?fi_no=" + value.fr_no + "'>"+value.title+"</a></div>";
-             contents += "<div class='divTableCell'>"+value.user_name+"</div>";
-             contents += "<div class='divTableCell'>"+value.reg_dt+"</div>";
-             contents += "<div class='divTableCell'>"+value.cnt+"</div>";
-             contents += "<div class='divTableCell'>"+value.comment_count+"</div></div></div>";
+              contents += "<div class='divTable blueTable' style='width:100%'>";
+  			contents += "<div class='divTableHeading'>";
+  			contents += "<div class='divTableRow'>";
+  			contents += "<div class='divTableHead'>번호</div>";
+  			contents += "<div class='divTableHead'>제목</div>";
+  			contents += "<div class='divTableHead'>작성자</div>";
+  			contents += "<div class='divTableHead'>작성일</div>";
+  			contents += "<div class='divTableHead'>조회수</div></div></div>";
+  			
+  			
+  			contents += "<div class='divTableBody'>";
+			content += "<div class='divTableRow'>";
+			content += "<div class='divTableCell'>"+value.fr_no+"</div>";
+			content += "<div class='divTableCell' onclick='doDetail("+value.fr_no+");'>"+value.title+"</div>";
+			content += "<div class='divTableCell'>"+value.user_name+"</div>";
+			content += "<div class='divTableCell'>"+value.reg_dt+"</div>";
+			content += "<div class='divTableCell'>"+value.cnt+"</div></div>";
              
           });
+        
+			
+			
           
           $('#divTable').append(contents);
           
@@ -121,6 +136,7 @@ function addview(){
        $('#addview1').remove();
  <%}%>
 }
+
 </script>
 
 
@@ -418,14 +434,6 @@ div.blueTable {
 </div>
 </div>
 
-<div class="ReviewList outerTableFooter">
-<div class="tableFootStyle">
-   <%if(fList.size() >= 10){%>
-         <div align="center"><input type="button" class="btn default" id="addview" value="더보기">
-        
-   <%} %>
-</div>
-</div></div>
 
 
 

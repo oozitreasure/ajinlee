@@ -130,6 +130,12 @@ public class MainController {
 		}
 		model.addAttribute("rDTO", rDTO);
 		
+		mainService.updateFreeCnt(rDTO);
+
+	    log.info("cnt update success!!!");
+	      
+	      
+		
 		log.info(this.getClass() + "   free_detail end!!!");
 		
 		return "/free_detail";
@@ -443,7 +449,7 @@ public class MainController {
 		log.info(this.getClass() + "login_proc start!!!");
 
 		String user_id = re.getParameter("user_id");
-		String password =/* SHA256.SHA256_encode(*/re.getParameter("password");
+		String password = /*SAH256.SAH256_encode(*/re.getParameter("password");
 
 		log.info(getClass() + "user_id : " + user_id);
 		log.info(getClass() + "password : " + password);
@@ -1222,11 +1228,13 @@ public class MainController {
 		  String reg_no = CmmUtil.nvl((String) session.getAttribute("session_user_no"));
 		  String park_name1 = CmmUtil.nvl((String) req.getParameter("park_name"));
 		  String park_name = TextUtil.exchangeEscapeNvl(park_name1);
+		  String addr = CmmUtil.nvl((String)req.getParameter("addr"));
 		  
 		  log.info("user_no : " + user_no);
 		  log.info("admin_no : " + admin_no);
 		  log.info("reg_no : " + reg_no);
 		  log.info("park_name : " + park_name);
+		  log.info("addr : " + addr);
 		  
 		  HoDTO hDTO = new HoDTO();
 		  
@@ -1234,6 +1242,7 @@ public class MainController {
 		  hDTO.setAdmin_no(admin_no);
 		  hDTO.setReg_no(reg_no);
 		  hDTO.setPark_name(park_name);
+		  hDTO.setAddr(addr);
 		  
 		  mainService.favoriteInsert(hDTO);
 		  
@@ -1294,7 +1303,7 @@ public class MainController {
 			
 			
 			
-			@RequestMapping(value="/free/freeMoreView")
+			@RequestMapping(value="freeMoreView")
 			  public @ResponseBody List<freeDTO> reviewMoreView(@RequestParam(value = "count") String count) throws Exception{
 				
 				   freeDTO fDTO = new freeDTO();
@@ -1304,14 +1313,14 @@ public class MainController {
 				   
 				   List<freeDTO> FreeMoreList = mainService.freeMoreView(fDTO);
 				   
-				   for(freeDTO f : FreeMoreList){
-					  /* System.out.println("comment_count: "+f.getComment_count());*/
+				   for(freeDTO f : FreeMoreList) {
+					   System.out.println("comment_count: "+f.getComment_count());
 				   }
 				   return FreeMoreList;
 			  }
 
 			  
-			  @RequestMapping(value="free/insert")
+			  @RequestMapping(value="/free/insert")
 			   //리턴데이터를 json으로 변환
 			  public @ResponseBody int insert(@RequestParam int fr_no, 
 					  
@@ -1432,7 +1441,15 @@ public class MainController {
 			 }
 			 
 			
-			
+			 @RequestMapping(value="/chart", method=RequestMethod.POST)
+			   public @ResponseBody List<HoDTO> chart(HttpSession session) throws Exception {
+			      log.info(getClass() + "chart start!!!");
+			      String user_no = (String)session.getAttribute("session_user_no");
+			      List<HoDTO> gList = mainService.getChart(user_no);
+			      
+			      log.info(getClass() + "chart end!!!");
+			      return gList;
+			   }
 			
 		
 	}

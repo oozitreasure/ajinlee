@@ -234,5 +234,16 @@ public class MainService implements IMainService {
 		return mainMapper.update(fiDTO);
 	}
 
+	@Override
+	public List<HoDTO> getChart(String user_no) {
+		return mainMapper.getChart(user_no);
+	}
+
+	@Override
+	public void updateFreeCnt(freeDTO rDTO) {
+		mainMapper.updateFreeCnt(rDTO);
+		
+	}
+
 
 }

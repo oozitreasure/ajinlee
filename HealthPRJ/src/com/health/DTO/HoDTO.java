@@ -10,6 +10,10 @@ public class HoDTO {
 	private String reg_dt;
 	private String chg_no;
 	private String chg_dt;
+	private String addr;
+	private String data;
+	private String num;
+	
 	
 	
 	public String getHo_no() {
@@ -59,6 +63,24 @@ public class HoDTO {
 	}
 	public void setChg_dt(String chg_dt) {
 		this.chg_dt = chg_dt;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	public String getNum() {
+		return num;
+	}
+	public void setNum(String num) {
+		this.num = num;
 	}
 	
 	

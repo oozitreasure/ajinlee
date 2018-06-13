@@ -528,14 +528,7 @@ div.blueTable {
 </div>
 <br>
 <hr style="width:60%">
-<div align="left" style="width:60%;">
-<input type="text" style="height:40px;" readonly value="<%= CmmUtil.nvl(mDTO.getUser_name()) %>" />
-</div>
-<br>
-<input type="text" id="com" style="width:55.5%; height:100px;">
-<input type="button" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
-
-				
+		
 </div>
 
 <input type="hidden" name="fr_no" value="<%= CmmUtil.nvl(fDTO.getFr_no()) %>" />
@@ -548,20 +541,20 @@ div.blueTable {
 <br><br>
 </form>
 
-				(<span id="commentCount"></span>)
-					<div id="listComment" style="display: none"></div>
-					<% if ( edit != 3) { %>
-						<div class="form-group col-xs-12 floating-label-form-group controls">
-						<br/><b><%=ss_user_name%>(<%=ss_user_id%>)</b>
-							주인만 보기
-								<input type="checkbox" id="secret_check" value="0" onclick="sc();"></div>
-					<form id="commentInsertForm" onsubmit="return ok(this);">
-					<div class="modal-footer">
-						<textarea name="content" id="content" placeholder="Comment"></textarea>
-						<input type="button" class="btn default" value="확인" id="write"></div>
-				</form>
-				<%} %>
-				
+<form id="commentInsertForm" onsubmit="return ok(this);">
+<div align="left" style="width:60%;">
+<input type="text" style="height:40px;" readonly value="<%=ss_user_name%>(<%=ss_user_id%>)"/>
+주인만 보기<input type="checkbox" id="secret_check" value="0" onclick="sc();">
+								
+</div>
+
+<br>
+<input type="text" id="content" style="width:55.5%; height:100px;">
+<input type="submit" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
+</form>
+		
+		
+
 
 	<div id="dropDownSelect1"></div>
 	

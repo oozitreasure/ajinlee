@@ -115,6 +115,9 @@ if (hList==null){
  
 
 
+
+
+
 <script>
 
 //상세보기 이동
@@ -308,6 +311,12 @@ div.blueTable {
 <div align="center">
 <br><br><br>
 
+
+<%if (SESSION_USER_ID.equals("admin")){ %>
+
+<%}else{ %> 
+
+
 <div align="center">
 <div style="display: inline-block; position: relative; padding: 15px 15px 14px 14px; border : 1px solid #dde4e9;">
 <h2 align="center">좋아요</h2>
@@ -322,6 +331,8 @@ div.blueTable {
 <div class="divTableHead">공원이름</div>
 </div>
 </div>
+
+
 <div class="divTableBody">
 <%for (HoDTO hoDTO : hList) {%>
 <div class="divTableRow">
@@ -334,10 +345,104 @@ div.blueTable {
 
 <br>
 </div><br><br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<div align="center">
+<div style="width:42%; height:40%;">
+<canvas id="myChart"></canvas>
+</div>
+</div>
+<br><br><br>
+<script>
+window.onload = function() {
+	$.ajax({
+		url : "/chart.do",
+		method : "post",
+		success : function(data){
+			var num1 = []; //주소
+			var num2 = []; //count
+			$.each(data, function(key, value){
+				if(value != null) {
+					num1.push(value.data)
+					num2.push(value.num);
+				}
+				console.log(num1);
+				console.log(num2);
+			});
+			var ctx = document.getElementById("myChart");
+
+			var myChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: {
+			        labels: num1,
+			        datasets: [{
+			            label: '지역별 좋아요 분석',
+			            data: num2,
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 159, 250, 0.2)',
+			                'rgba(153, 15, 251, 1)',
+			                'rgba(154, 135, 45, 1)',
+			                'rgba(155, 201, 7, 1)',
+			                'rgba(156, 510, 6, 1)',
+			                'rgba(157, 925, 32, 0.1)',
+			                'rgba(158, 120, 74, 0.4)',
+			                'rgba(159, 159, 65, 0.6)',
+			                'rgba(160, 167, 84, 0.5)',
+			                'rgba(161, 189, 15, 0.4)',
+			                'rgba(162, 131, 25, 0.8)',
+			                'rgba(255, 159, 64, 1)'
+			            ],
+			            borderColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 103, 255, 0.2)',
+			                'rgba(153, 104, 255, 0.2)',
+			                'rgba(154, 105, 255, 0.2)',
+			                'rgba(155, 106, 255, 0.2)',
+			                'rgba(156, 107, 255, 0.2)',
+			                'rgba(157, 108, 255, 0.2)',
+			                'rgba(158, 109, 255, 0.2)',
+			                'rgba(159, 110, 255, 0.2)',
+			                'rgba(160, 111, 255, 0.2)',
+			                'rgba(161, 112, 255, 0.2)',
+			                'rgba(162, 131, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero:true
+			                }
+			            }]
+			        }
+			    }
+			});
+		}
+	})
+}
+
+</script>
+
+<%} %>
 	<div id="dropDownSelect1"></div>
 	
-	
+<%if (SESSION_USER_ID.equals("admin")){ %>
+
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+
+<%}else{ %> 	
 <footer id="footer" ><!-- style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
+<% } %>
 
     <div class="footer-copyright">
         <div class="container">

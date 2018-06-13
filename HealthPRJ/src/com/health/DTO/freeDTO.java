@@ -104,6 +104,10 @@ public class freeDTO {
 	public void setRead_more(String read_more) {
 		Read_more = read_more;
 	}
+	public String getComment_count() {
+
+		return getComment_count();
+	}
 
 	
 

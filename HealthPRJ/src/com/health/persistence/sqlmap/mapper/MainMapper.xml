@@ -113,9 +113,9 @@ DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
 
 
 <insert parameterType="HoDTO" id="favoriteInsert">
-INSERT INTO HO_PARK ( HO_NO, USER_NO, ADMIN_NO, REG_NO, REG_DT, PARK_NAME )
+INSERT INTO HO_PARK ( HO_NO, USER_NO, ADMIN_NO, REG_NO, REG_DT, PARK_NAME, ADDR )
  VALUES((SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), #{user_no}, #{admin_no},
-  (SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), NOW(), #{park_name} )
+  (SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), NOW(), #{park_name}, #{addr} )
  </insert>
  
  
@@ -132,12 +132,6 @@ SELECT COUNT(*) FROM USER_INFO WHERE USER_ID = #{user_id}
 SELECT HO_NO FROM HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no} 
 </select>
 
-<insert parameterType="fiDTO" id="insert"> 
-INSERT INTO FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
-VALUES( (SELECT IFNULL(MAX(CAST(FI.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FI), 
-#{fr_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(FI.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FI),
- NOW(), #{user_name} ) 
-</insert>
 
 <select id="list" resultType="fiDTO"> 
 SELECT FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME FROM 
@@ -148,16 +142,13 @@ FR_COMMENT WHERE FR_NO = #{fr_no} ORDER BY FRC_NO
 	SELECT * FROM HO_PARK WHERE USER_NO = #{user_no}
 </select>
 
-<select parameterType="freeDTO" id="freeMoreView" resultType="freeDTO">
 
-<![CDATA[SELECT * FROM 
-( SELECT ROWNUM RNUM, FR_NO, TITLE, NOTICE_CHECK, USER_NAME, TO_CHAR(REG_DT, 'YYYY-MM-DD') 
-AS REG_DT, CNT, FROM ( SELECT FR_NO, TITLE, NOTICE_CHECK, USER_NAME, REG_DT, CNT, 
-(SELECT COUNT(*) FROM FR_COMMENT WHERE FR_NO = F.FR_NO) AS COMMENT_COUNT FROM FREE_INFO F ORDER BY NOTICE_CHECK, FR_NO DESC )
- MOREPAGE WHERE ROWNUM <= #{read_more} + 10 ) WHERE RNUM >= #{read_more} + 1]]>
-
-</select>
-
+<insert parameterType="fiDTO" id="insert"> 
+INSERT INTO FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
+VALUES( (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FR), 
+#{fr_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FR),
+ NOW(), #{user_name} ) 
+</insert>
 
  <update parameterType="fiDTO" id="update"> 
 UPDATE FR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FRC_NO = #{frc_no} 
@@ -171,6 +162,16 @@ DELETE FROM FR_COMMENT WHERE FRC_NO = #{frc_no}
 DELETE FROM FR_COMMENT WHERE FR_NO = #{fr_no} 
 </delete>
 
+<select id="getChart" parameterType="String" resultType="HoDTO">
+	SELECT SUBSTRING_INDEX(ADDR, ' ', 1) DATA, COUNT(admin_no) NUM
+	FROM HO_PARK
+	WHERE USER_NO = #{user_no}
+	GROUP BY DATA
+</select>
+
+<update parameterType="freeDTO" id="updateFreeCnt"> 
+UPDATE FREE_INFO SET CNT = CNT + 1 WHERE FR_NO = #{fr_no} 
+</update>
 
 
 </mapper>
