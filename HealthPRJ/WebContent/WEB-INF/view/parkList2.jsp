@@ -298,6 +298,7 @@ div.blueTable {
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a onclick="openMap()">지역검색</a></li>
             <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -349,11 +350,11 @@ div.blueTable {
 <div align="right">
 <input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
 </div>
-<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
+
 </div>
 </div>
 </div>
-</div>
+
 <br>
 
 

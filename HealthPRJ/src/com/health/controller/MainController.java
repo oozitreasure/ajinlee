@@ -1302,22 +1302,6 @@ public class MainController {
 			
 			
 			
-			
-			@RequestMapping(value="freeMoreView")
-			  public @ResponseBody List<freeDTO> reviewMoreView(@RequestParam(value = "count") String count) throws Exception{
-				
-				   freeDTO fDTO = new freeDTO();
-				   
-				   fDTO.setRead_more(count);
-				   log.info("count :" + count);
-				   
-				   List<freeDTO> FreeMoreList = mainService.freeMoreView(fDTO);
-				   
-				   for(freeDTO f : FreeMoreList) {
-					   System.out.println("comment_count: "+f.getComment_count());
-				   }
-				   return FreeMoreList;
-			  }
 
 			  
 			  @RequestMapping(value="/free/insert")
@@ -1326,7 +1310,7 @@ public class MainController {
 					  
 					   HttpSession session, HttpServletRequest request) throws Exception{
 				   
-				   log.info(this.getClass().getName() + "comment Insert start!");
+				   log.info(this.getClass().getName() + "  comment Insert start!");
 				   
 				   
 				   String user_name = CmmUtil.nvl((String) session.getAttribute("session_user_name"));
@@ -1354,25 +1338,22 @@ public class MainController {
 				   fiDTO.setReg_no(reg_no);
 				   fiDTO.setSecret_check(secret_check);
 				   
-				   log.info(this.getClass().getName() + "comment Insert ok!");
+				   log.info(this.getClass().getName() + "  comment Insert ok!");
 				   
 					   
-					log.info(this.getClass().getName() + "comment list start!");
+					log.info(this.getClass().getName() + "  comment list start!");
 					   
 					List<fiDTO> list =mainService.list(fiDTO);
 					   
-					log.info(this.getClass().getName() + "comment list ok!");
+					log.info(this.getClass().getName() + "  comment list ok!");
 					   
 					log.info(list);
 					   
 					return mainService.insert(fiDTO);
 				   
 			 }
-				/* ##############################
-				 * ########<< 댓글 수정  >>##########
-				 * ##############################
-				 */
-			  @RequestMapping(value="free/update")
+				 
+			  @RequestMapping(value="/free/update")
 			  public @ResponseBody int update(@RequestParam int frc_no,@RequestParam String content, HttpSession session, HttpServletRequest request, HttpServletResponse response,
 				         ModelMap model) throws Exception {
 			  
@@ -1402,12 +1383,9 @@ public class MainController {
 				   
 			}
 						   
-				   
-				/* ##############################
-				 * ########<< 댓글 삭제  >>##########
-				 * ##############################
-				 */
-			  @RequestMapping(value="free/delete")
+			
+				 
+			  @RequestMapping(value="/free/delete")
 			  public @ResponseBody int delete(@RequestParam int frc_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
 				         ModelMap model) throws Exception {
 				   log.info(this.getClass().getName() + ".Comment delete start!");
@@ -1416,28 +1394,25 @@ public class MainController {
 				   
 				   return mainService.delete(frc_no);
 			  }
-			  
-			  /* ##############################
-				* ########<< 댓글 목록  >>##########
-				* ##############################
-				*/
-			 @RequestMapping("free/list")
+	
+				
+			 @RequestMapping("/free/list")
 			 @ResponseBody //리턴데이터를 json으로 변환
 			 public List<fiDTO> list(Model model, HttpServletRequest req) throws Exception{
 				   
 				   log.info(this.getClass().getName() + "comment list start!");
-				  String sfi_no = CmmUtil.nvl(req.getParameter("fr_no"));
-				  int fr_no = Integer.parseInt(sfi_no);
+				  String sfr_no = CmmUtil.nvl(req.getParameter("fr_no"));
+				  int fr_no = Integer.parseInt(sfr_no);
 				   
-				   fiDTO fic = new fiDTO();
-				   fic.setFr_no(fr_no);
+				   fiDTO frc = new fiDTO();
+				   frc.setFr_no(fr_no);
 				   log.info(this.getClass().getName() + "comment list ok!");
 				   
-				   List<fiDTO> list = mainService.list(fic);
+				   List<fiDTO> list = mainService.list(frc);
 				   
 				   log.info("List : "+ list);
 				   
-				   return mainService.list(fic);
+				   return mainService.list(frc);
 			 }
 			 
 			
@@ -1450,6 +1425,7 @@ public class MainController {
 			      log.info(getClass() + "chart end!!!");
 			      return gList;
 			   }
+			 
 			
 		
 	}

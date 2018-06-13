@@ -40,6 +40,7 @@ if (hDTO == null) {
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -331,6 +332,7 @@ div.blueTable {
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a onclick="openMap()">지역검색</a></li>
             <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -465,18 +467,25 @@ div.blueTable {
 	
 	
 	
-	
-	<div align="left" style="width:60%;">
+ 	
+<%-- 	<div align="left" style="width:60%;">
 <input type="text" style="height:40px;" readonly value="<%= CmmUtil.nvl(mDTO.getUser_name()) %>" />
 </div>
 <br>
 <input type="text" id="com" style="width:55.5%; height:100px;">
 <input type="button" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:100px; border-radius: 3px;">
-	
-	<br><br>
+	 --%>
+	 
+	 	<%if (SESSION_USER_ID.equals("") || SESSION_USER_NAME.equals("관리자")) {%>
+	 	<div align="center">
 	<input type="button" value="수정" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkE()">
 	<input type="submit" value="삭제" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>
+
+	<%} else {%>
+	<%} %>
+	<br><br>
+	</div>
 </form>
 
 

@@ -244,6 +244,7 @@ public class MainService implements IMainService {
 		mainMapper.updateFreeCnt(rDTO);
 		
 	}
+	
 
 
 }

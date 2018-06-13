@@ -43,49 +43,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <![endif]-->
 
 </head>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="/resources/cupid/js/jquery.js"></script>
-<script src="/resources/cupid/bootstrap/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        if($(window).width()>960){
-        var tw = $('.triangles').width()/7+32;
-        var ta = tw/2+22;
-        $('.down-triangle').css('border-top',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
-        $('.up-triangle').css('border-bottom',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
-        }
-        $('#wd-wrapper').sinusoid({
-            minImgW: 80,
-            maxImgW: 130,
-            minImgAngle: -20,
-            maxImgAngle: 20,
-            leftFactor: 60,
-            sinusoidFunction: {
-                A: 70,
-                T: 1700,
-                P: 0
-            }
-        });
-
-
-        $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-
-    });
-</script>
 <script type="text/javascript">
 
  
@@ -99,7 +56,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  function openJoin()
  {
      window.name = "JoinForm";
-     window.open("register.do", "childForm", "width=450, height=700, left=730, top=120, resizable = no, scrollbars = no"); 
+     window.open("register.do", "childForm", "width=450, height=750, left=730, top=120, resizable = no, scrollbars = no"); 
    
  }	 
  
@@ -112,7 +69,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  
  function parkIn(){
 		
-	   location.href="park.do";
+	   location.href="parkList2.do";
 	}
  
  function freeIn(){
@@ -125,6 +82,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  </script>
  
  <script src="/resources/js/jquery-3.3.1.min.js"></script>
+ 
  
  <script>
 	
@@ -143,11 +101,15 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                  console.log("도시이름  : "+ resp.name );
                  console.log("현재온도 : "+ (resp.main.temp- 273.15));
                  console.log("날씨 : "+ resp.weather[0].main );
+                 
+                 var nal = resp.main.temp-273.15;
+                 
+                 console.log("현재온도 : "+ nal);
 
-                
+                 
                 var tableStr ="<table>";
-                tableStr += "<tr><th>"+ resp.name +"</th></tr>";
-                tableStr += "<tr><th>"+ (resp.main.temp-273.15) +"</th></tr>";
+                tableStr += "<tr><th><b>"+ resp.name +"</b></th></tr>";
+                tableStr += "<tr><th>"+ (resp.main.temp- 273.15) +"</th></tr>";
                 tableStr += "<tr><th>"+ resp.weather[0].main +"</th></tr>";
 
                 
@@ -185,7 +147,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
             </button>
             <!-- <a class="navbar-brand" href="#">ParkMation</a> -->
         </div>
-        <div class="navbar-collapse collapse">
+	<div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.do">홈</a></li>
                 <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
@@ -196,13 +158,17 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                 <li><a href="/logout_proc.do">로그아웃</a></li>
                  <%if (SESSION_USER_ID.equals("admin")){ %>
                 <li><a href="userList.do">회원정보</a></li>
-                <%}else{ %>      
+                <%}else{ %> 
                <%} %>
             <%} %>
+             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a onclick="openMap()">지역검색</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
+            <li><a href="freeList.do">자유게시판</a></li>
+              <%} %>
             </ul>
 
         </div>
         <!--/.navbar-collapse -->
     </div>
 </div>
-

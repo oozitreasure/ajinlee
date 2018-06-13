@@ -236,6 +236,7 @@ div.blueTable {
                <%} %>
             <%} %>
              <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+             <li><a onclick="openMap()">지역검색</a></li>
             <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -418,13 +419,12 @@ window.onload = function() {
 			        }]
 			    },
 			    options: {
-			        scales: {
 			            yAxes: [{
 			                ticks: {
-			                    beginAtZero:true
+			                   
 			                }
 			            }]
-			        }
+
 			    }
 			});
 		}

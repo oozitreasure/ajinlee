@@ -111,23 +111,28 @@ function parkIn(){
 
 var str = 'http://localhost:8080/map.do#연천군';
 var sta = 'http://localhost:8080/map.do#동두천시'
+
 //document.write(str);
 var stq = str.substring( 29 , 33);
 var stb = sta.substring( 29, 34);
 //document.write(stq);
 	
 function onSearch(){
+	
 	var contents = "";
 	var cnt = 10;
 	var search = stb;
+	
  		$.ajax({
  			url : "/parkSearch.do",
  			method : "get",
  			data : {'search' : search},
  			datatype : "json", 
  			success : function(data) {
+ 				
  					var contents = "";
  					var content = "";
+ 					
 					contents += "<div class='divTable blueTable' style='width:100%'>";
 					contents += "<div class='divTableHeading'>";
 					contents += "<div class='divTableRow'>";
@@ -146,16 +151,16 @@ function onSearch(){
 		 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
  				});
 				content += "</div></div>";
+				
 				if(content == ""){
+					
 					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
 		 			$('#divTable').html(content);
 		 			$('#delete').remove();
 				}else{
  					$('#divTable').html(contents+content);
 				}
- 				if ((data).length<10) {
- 					$('#addview').remove();
- 				}
+
  			}
 
  			
@@ -269,6 +274,7 @@ div.blueTable {
                <%} %>
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a onclick="openMap()">지역검색</a></li>
             <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
@@ -306,7 +312,7 @@ div.blueTable {
 <%for (parkDTO pDTO : pList) { %>
 <div class="divTableRow">
 <div class="divTableCell" onclick="doDetail('<%=pDTO.getAdmin_no()%>');"><%=pDTO.getPark_name()%></div>
-<%-- <%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %> --%>
+<%System.out.println("공원번호 : " + pDTO.getAdmin_no()); %>
 <div class="divTableCell"><%=pDTO.getAddr1() %></div>
 <div class="divTableCell"><%=pDTO.getAdmin_name() %></div>
 <div class="divTableCell"><%=pDTO.getNumber() %></div>
@@ -320,15 +326,15 @@ div.blueTable {
 <div align="right">
 <input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
 </div>
-<div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a>
+
 </div>
 </div>
 </div>
-</div>
+
 <br>
 
 
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
 
     <div class="footer-copyright">
         <div class="container">

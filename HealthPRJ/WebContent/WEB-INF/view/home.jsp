@@ -15,124 +15,8 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 %>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
 
-    <title>PkMn</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/resources/cupid/skins/eden.css" rel="stylesheet">
-    <link href="/resources/cupid/css/animate.min.css" rel="stylesheet">
-    <link href="/resources/cupid/css/icons/icons.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="/resources/cupid/style.css" rel="stylesheet">
-
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="bootstrap/js/html5shiv.js"></script>
-    <script src="bootstrap/js/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-<script type="text/javascript">
-
- 
-  function openLogin()
- {
-     window.name = "LoginForm";
-     window.open("login.do", "childForm", "width=450, height=600, left=730, top=200, resizable = no, scrollbars = no"); 
-   
- }
- 
- function openJoin()
- {
-     window.name = "JoinForm";
-     window.open("register.do", "childForm", "width=450, height=750, left=730, top=120, resizable = no, scrollbars = no"); 
-   
- }	 
- 
- function openMap()
- {
-     window.name = "MapForm";
-     window.open("map.do", "childForm", "width=1220, height=730, left=350, top=120, resizable = no, scrollbars = no"); 
-   
- }	
- 
- function parkIn(){
-		
-	   location.href="parkList2.do";
-	}
- 
- function freeIn(){
-		
-	   location.href="freeList.do";
-	}
-
- 
-
- </script>
- 
- <script src="/resources/js/jquery-3.3.1.min.js"></script>
- 
- 
- <script>
-	
-	$(function(){
-
-	
- 	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=9387cf9977f607739cd8bcf11b24d319";
-        $.ajax({
-            url: apiURI,
-            dataType: "json",
-            type: "GET",
-            async: "false",
-            success: function(resp) {
-            	
-                 console.log(resp);
-                 console.log("도시이름  : "+ resp.name );
-                 console.log("현재온도 : "+ (resp.main.temp- 273.15));
-                 console.log("날씨 : "+ resp.weather[0].main );
-                 
-                 var nal = resp.main.temp-273.15;
-
-                 
-                var tableStr ="<table>";
-                tableStr += "<tr><th><b>"+ resp.name +"</b></th></tr>";
-                tableStr += "<tr><th>"+ (resp.main.temp- 273.15) +"</th></tr>";
-                tableStr += "<tr><th>"+ resp.weather[0].main +"</th></tr>";
-
-                
-                    
-               tableStr += "</table>";
-
-   			$(".divs").append(tableStr);
-
-                    
-    		},
-    		
-    		error : function(error) {
-    			
-    			alert("error!");
-    			
-    		},
-        
-
-       
-        });
-
-
-	});
-
-</script>
+<jsp:include page="/WEB-INF/view/top.jsp" flush="false"></jsp:include>
 
 <body data-spy="scroll" data-target="#topnav">
 
@@ -145,7 +29,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
             </button>
             <!-- <a class="navbar-brand" href="#">ParkMation</a> -->
         </div>
-        <div class="navbar-collapse collapse">
+	<div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.do">홈</a></li>
                 <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
@@ -156,9 +40,14 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
                 <li><a href="/logout_proc.do">로그아웃</a></li>
                  <%if (SESSION_USER_ID.equals("admin")){ %>
                 <li><a href="userList.do">회원정보</a></li>
-                <%}else{ %>      
+                <%}else{ %> 
                <%} %>
             <%} %>
+             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+            <li><a onclick="openMap()">지역검색</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
+            <li><a href="freeList.do">자유게시판</a></li>
+              <%} %>
             </ul>
 
         </div>
@@ -176,69 +65,15 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
                 <h3 class="text-center">Have A Good Rest In A Good Park</h3><br/>
             </div>
-            <div class="row triangles">
-                <div class="up-triangle animated fadeInUp" onclick="openMap()">
-                    <div class="info">
-                        <i class="icon icon-cogs" ></i><br/>
-                       지도 검색
-                    </div>
-                </div>
-                <div class="down-triangle animated fadeInDown">
-                    <div class="info">
-                   	<div style="text-align:center;" class="divs"> </div><br/>
-                   <!-- <i class="icon icon-envelope-alt"></i> -->
-                        
-                    </div>
-                </div>
-                <div class="up-triangle animated fadeInUp" onclick="parkIn()">
-                    <div class="info">
 
-                        <i class="icon icon-picture" ></i><br/>
-                        공원정보
-                    </div>
-                </div>
-                <div class="down-triangle animated fadeInDown">
-                    <div class="info">
 
-                        추천공원<br/>
-                        <i class="icon icon-code"></i>
-                    </div>
-                </div>
 
-                <!-- <div class="down-triangle animated fadeInDown visible-sm">
-                    <div class="info">
-						<i class="icon icon-thumbs-up"></i><br/>
-                       자유게시판
-                        <i class="icon icon-code"></i>
-                    </div>
-                </div> -->
 
-                <div class="up-triangle animated fadeInUp" onclick="freeIn()">
-                    <div class="info">
-
-                        <i class="icon icon-thumbs-up"></i><br/>
-                        자유게시판
-                    </div>
-                </div>
-                <div class="down-triangle animated fadeInDown">
-                    <div class="info">
-
-                        Secure<br/>
-                        <i class="icon icon-laptop"></i>
-                    </div>
-                </div>
-                <div class="up-triangle animated fadeInUp">
-                    <div class="info">
-
-                        <i class="icon icon-comments-alt"></i><br/>
-                        Helpful
-                    </div>
-                </div>
             </div>
 
         </div>
     </div>
-</div>
+
 
 <!-- <section id="services">
 <div class="container">

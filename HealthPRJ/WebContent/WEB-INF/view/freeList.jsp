@@ -455,7 +455,7 @@ div.blueTable {
 
 
 
-<footer id="footer" ><!-- style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
+<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
 
     <div class="footer-copyright">
         <div class="container">
