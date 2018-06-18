@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.health.DTO.mainDTO" %>
@@ -16,12 +17,12 @@
 %>
 
  <%
-
 request.setCharacterEncoding("euc-kr");
-
 String SESSION_USER_ID = CmmUtil.nvl((String)session.getAttribute("session_user_id"));
 String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
+
+
 
 %>
 
@@ -55,7 +56,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
 </head>
 <script type="text/javascript">
-
  
   function openLogin()
  {
@@ -87,27 +87,23 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 		
 	   location.href="freeList.do";
 	}
-
  
-
  </script>
  
  <script>
 function doDetail(n){
     var admin_no = n;
-    location.href="/park_detail.do?admin_no="+ admin_no;
+    location.href="/park_detail.do?admin_no="+admin_no;
  }
  
  
 function parkIn(){
-
     location.href="/park_insert.do"
  }
 </script>
 
 
 <script>
-
 function doSearch() {
  	
  	var contents = "";
@@ -122,7 +118,7 @@ function doSearch() {
  		$.ajax({
  			
  			url : "/parkSearch.do",
- 			method : "get",
+ 			method : "post",
  			data : {'search' : search},
  			datatype : "json", 
  			success : function(data) {
@@ -137,15 +133,15 @@ function doSearch() {
 					contents += "<div class='divTableHead'>공원주소</div>";
 					contents += "<div class='divTableHead'>관리기관명</div>";
 					contents += "<div class='divTableHead'>전화번호</div></div></div>";
-
 					contents += "<div class='divTableBody'>";
 				$.each(data, function (key, value) {
 					content += "<div class='divTableRow'>";
-		 			content += "<div class='divTableCell' onclick='doDetail("+value.admin_no+");'>"+value.park_name+"</div>";
+					console.log(value.admin_no);
+		 			content += "<div class='divTableCell' onclick=doDetail('"+value.admin_no +"');>"+value.park_name+"</div>";
+		 			console.log("admin_no : " + value.admin_no);
 		 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
 		 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
 		 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
-
  				});
 				content += "</div></div>";
 				
@@ -172,24 +168,11 @@ function doSearch() {
  	}
  	
 }
-
 </script>
 
 
-    <script>
-      var str = 'http://localhost:8080/map.do#대호지';
-     //document.write(str);
-      var stq = str.substring( 29 , 33);
-      //document.write(stq);
-      
-    		  
-    </script>
-    
-    
-
 
 <style>
-
 div.blueTable {
   background-color: #FFFFFF;
   width: 60%;
@@ -217,14 +200,12 @@ div.blueTable {
   color: #1c1c1c;
   text-align: center;
   background-color: #e8efe8;
-
 }
 .divTable.blueTable .divTableHeading .divTableHead:first-child {
   border-left: none;
   border-top : 1px solid #d1dee2;
   boerder-button :1px solid #d1dee2;
 }
-
 .blueTable .tableFootStyle {
   font-size: 15px;
   font-weight: normal;
@@ -234,14 +215,12 @@ div.blueTable {
   background: -webkit-linear-gradient(top, #ffffff 0%, #ffffff 66%, #FFFFFF 100%);
   background: linear-gradient(to bottom, #ffffff 0%, #ffffff 66%, #FFFFFF 100%); */
   border-top: 1px solid #FFFFFF;
-
 }
 .blueTable .tableFootStyle {
   font-size: 15px;
 }
 .blueTable .tableFootStyle .links {
 	 text-align: center;
-
 }
 .blueTable .tableFootStyle .links a{
   display: inline-block;
@@ -299,7 +278,7 @@ div.blueTable {
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a onclick="openMap()">지역검색</a></li>
-            <li><a href="parkList2.do">공원정보</a></li>
+            <li><a href="parkList.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -348,9 +327,12 @@ div.blueTable {
 <div class="blueTable outerTableFooter">
 <div class="tableFootStyle">
 <div align="right">
+<%if (SESSION_USER_ID.equals("") || SESSION_USER_NAME.equals("관리자")) {%>
 <input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
 </div>
-
+<%} else {%>
+	<%} %>
+<!-- <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a> -->
 </div>
 </div>
 </div>
@@ -358,7 +340,7 @@ div.blueTable {
 <br>
 
 
-<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;"> -->
+<footer id="footer"><!--  style="position: fixed;bottom: 0; right: 0; width: 100%;" -->
 
     <div class="footer-copyright">
         <div class="container">
@@ -411,8 +393,6 @@ div.blueTable {
                 P: 0
             }
         });
-
-
         $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                 var target = $(this.hash);
@@ -425,7 +405,6 @@ div.blueTable {
                 }
             }
         });
-
     });
 </script>
 </body>

@@ -27,10 +27,7 @@ if(mDTO == null) mDTO = new mainDTO();
 parkDTO aDTO = (parkDTO)request.getAttribute("aDTO");
 if(aDTO == null) aDTO = new parkDTO();
 
-%>
 
-
-<%
 HoDTO hDTO = (HoDTO)request.getAttribute("hDTO");
 
 if (hDTO == null) {
@@ -75,8 +72,8 @@ request.setCharacterEncoding("euc-kr");
 
 	System.out.println("ss_user_name : " + ss_user_name);
 	
+	
 %>
-
 
 
 
@@ -117,11 +114,7 @@ request.setCharacterEncoding("euc-kr");
 <script>
 $(function() {
 	
-	var admin_no = '<%=aDTO.getAdmin_no() %>';
 
-	
-	console.log(admin_no);
-	
 	commentList(); //페이지 로딩시 댓글 목록 출력 
 		// 댓글 쓰기
 		
@@ -184,29 +177,27 @@ function commentList(){
 	    type : 'get',
 	    success : function(data) {
 	    	 
-	    
-	    	console.log(data);
 	    	   var output="";
 		       var user_name = '<%=ss_user_name%>';
 		       var user_no = '<%=ss_user_no%>';
 		       var reg_no = <%=aDTO.getReg_no()%>;
+		       
 		       var num = Object.keys(data).length;
 				<%System.out.println("reg_no : " + aDTO.getReg_no());%>
 		       
 		    $.each(data,function(index,value){
 		    	
-					if(value.secret_check == "1"){
-						
-						if (user_name == "관리자"){
+		    	if(value.secret_check == "1"){
+					if (user_no == fi_reg_no || user_no == value.reg_no || user_name == "관리자"){
 							
 							   output += "<div class='row' id='updateCommentForm"+value.prc_no+"'>";
 					    	   output += "<div class='post-preview' style='width:100%'>";
 					    	   output += 	   	"<hr/>&emsp;<font color='red' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/>";
 					    	   output +=		"&emsp; <font style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
-					    	   	if(user_no == value.reg_no){ 
+					    	   if(user_no == value.user_no || user_name == "관리자" ){ 
 					    	   output +=		"<input type='button' value='수정' onclick='commentUpdateForm("+value.prc_no+",\""+value.content+"\")'/>&nbsp;&nbsp;"
 						    	output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.prc_no+")'/>";
-					    	   	}
+					    	   }
 					    	   output += 		"</font><br/>";
 					    	   output += 		"&emsp;<font style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
 				               output += "</div>";
@@ -221,10 +212,10 @@ function commentList(){
 							    output += "<div class='row' id='updateCommentForm"+value.prc_no+"'>";
 					    	    output += "<div class='post-preview' style='width:100%'>";
 					    	    output +=		"<hr/>&emsp;<font  style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" +  value.reg_dt + "&nbsp;";
-
+					    	    if(user_no == value.user_no || user_name == "관리자"){
 					    	    output +=	   "<input type='button'  style='font-family: 조선일보명조' value='수정' onclick='commentUpdateForm("+value.prc_no+",\""+value.content+"\");' />&nbsp;&nbsp;";
 					    		output +=	   "<input type='button'  style='font-family: 조선일보명조' value='삭제' onclick='commentDelete("+value.prc_no+")'/>";
-					    	   
+					    	    }
 					    	   output += 		"</font><br/>";
 					    	   output += 		"&emsp;<font  style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
 				               output += "</div>";
@@ -260,8 +251,7 @@ function commentUpdate(prc_no) {
 	
 	var content = $("#edit").val();
 	
-	
-	console.log(prc_no, content);
+
 	
 	
 	if($("#edit").val() == "") {
@@ -298,8 +288,7 @@ function commentUpdate(prc_no) {
 
 //댓글 삭제
 function commentDelete(prc_no) {
-	 
-	console.log(prc_no);
+
 	
 	if (!confirm("삭제하시겠습니까?")) {
 		return true;
@@ -400,14 +389,14 @@ function freeUp(){
  function parkE(){
 	 
 		var no = '<%=aDTO.getAdmin_no()%>';
+
 	   location.href="park_E.do?admin_no="+no;
 	   
 	}
 
-
  </script>
  
- <script src="/resources/js/jquery-3.3.1.min.js"></script>
+<!--  <script src="/resources/js/jquery-3.3.1.min.js"></script> -->
  <script>
  
  
@@ -426,7 +415,7 @@ function freeUp(){
 		             'admin_no' : '<%=aDTO.getAdmin_no() %>',
 		    },
 		    success : function(data) {
-		    	console.log(data);
+
 		    }, 
 			error : function(data) {
 	           console.log("검색 실패");
@@ -613,7 +602,7 @@ div.blueTable {
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a onclick="openMap()">지역검색</a></li>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -632,6 +621,11 @@ div.blueTable {
 <br>
 </div>
 
+<input type="hidden" name="admin_no" value="<%= aDTO.getAdmin_no()%>">
+
+<input type="hidden" name="lat" value="<%= aDTO.getLat()%>">
+<input type="hidden" name="har" value="<%= aDTO.getHar()%>">
+
 
 <br><br>
 <div class="divTable blueTable">
@@ -639,7 +633,7 @@ div.blueTable {
 <div class="divTableRow">
 <div class="divTableHead">NO.</div>
 <div class="divTableHead"><%= CmmUtil.nvl(aDTO.getAdmin_no()) %></div>
-<input type="hidden" name="admin_no" value="<%= aDTO.getAdmin_no()%>">
+
 </div>
 </div>
 <div class="divTableBody">
@@ -766,10 +760,11 @@ div.blueTable {
 	<%} %>
 	<br><br>
 	</div>
-</form>
+</form>				
 
 
-					<div style="width:100%;">
+					<div>
+					<div style="width:60%; margin-left: auto; margin-right: auto;">
 					<div class="form-group floating-label-form-group controls">
 					 <font style="font-family: 조선일보명조" size="4">댓글</font>(<span id="commentCount"></span>)
 					
@@ -790,9 +785,7 @@ div.blueTable {
 					</div>
 					<%} %>
 					</div>
-					
-					
-
+					</div>
 <br>
 
 
@@ -840,7 +833,7 @@ div.blueTable {
         $('.down-triangle').css('border-top',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
         $('.up-triangle').css('border-bottom',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
         }
-        $('#wd-wrapper').sinusoid({
+        /* $('#wd-wrapper').sinusoid({
             minImgW: 80,
             maxImgW: 130,
             minImgAngle: -20,
@@ -851,7 +844,7 @@ div.blueTable {
                 T: 1700,
                 P: 0
             }
-        });
+        }); */
 
 
         $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {

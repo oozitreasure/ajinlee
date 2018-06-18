@@ -218,7 +218,7 @@ div.blueTable {
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a onclick="openMap()">지역검색</a></li>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -236,7 +236,7 @@ div.blueTable {
 </div>
 
 <br><br>
-<img style="width:50%; height:600px; align:center;">
+
 <br><br>
 <div class="divTable blueTable">
 <div class="divTableHeading">

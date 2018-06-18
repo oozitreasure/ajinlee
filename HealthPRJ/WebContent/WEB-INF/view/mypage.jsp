@@ -106,6 +106,12 @@ if (hList==null){
 	 
 	 location.href="like.do";
  }
+ 
+ 
+ function user_delete(){
+	 
+	 location.href="/user_delete.do";
+ }
 
  
 
@@ -237,7 +243,7 @@ div.blueTable {
             <%} %>
              <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
              <li><a onclick="openMap()">지역검색</a></li>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -349,7 +355,7 @@ div.blueTable {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <div align="center">
-<div style="width:42%; height:40%;">
+<div style="width:500px; height:500px;">
 <canvas id="myChart"></canvas>
 </div>
 </div>

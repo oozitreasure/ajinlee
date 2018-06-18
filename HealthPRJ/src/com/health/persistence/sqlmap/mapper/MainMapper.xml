@@ -9,6 +9,7 @@ INSERT INTO USER_INFO
  VALUES ( (SELECT IFNULL(MAX(CAST(UI.USER_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
   #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(CAST(UI.REG_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
    NOW(), 'u' )
+
 </insert>
 
 <select parameterType="mainDTO" id="getUserInfo" resultType="mainDTO">

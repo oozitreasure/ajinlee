@@ -111,10 +111,6 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
  </script>
  
  <script>
-function doDetail(n){
-    var admin_no = n;
-    location.href="/park_detail.do?admin_no="+admin_no;
- }
  
  
 function parkIn(){

@@ -92,9 +92,9 @@ function freeUp(){
 	   location.href="freeList.do";
 	}
  
- function parkinsert(){
+ function freeinsert(){
 		
-	   location.href="park_insert.do";
+	   location.href="/free_insert_proc.do";
 	}
 
  
@@ -209,7 +209,7 @@ div.blueTable {
             <%} %>
             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a onclick="openMap()">지역검색</a></li>
-            <li><a href="parkList.do">공원정보</a></li>
+            <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
               <%} %>
             </ul>
@@ -249,7 +249,7 @@ div.blueTable {
 
 
 <div align="center">	
-<input type="submit" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" onclick="parkinsert()">
+<input type="submit" value="등록" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 <input type="reset" value="초기화" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;">
 </div>		
 <br><br>

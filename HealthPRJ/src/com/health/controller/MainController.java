@@ -27,6 +27,7 @@ import com.health.service.IMainService;
 import com.health.util.CmmUtil;
 import com.health.util.TextUtil;
 import com.health.DTO.piDTO;
+import com.health.util.AES256Util;
 	
 @Controller
 public class MainController {
@@ -42,14 +43,7 @@ public class MainController {
 		
 		log.info(this.getClass() + "   userList start!!!");
 		
-		List<freeDTO> fList = mainService.getFreeList();
 		
-		if (fList == null) {
-			
-			fList = new ArrayList<>();
-		}
-		
-		model.addAttribute("fList", fList);
 		
 		log.info(this.getClass() + "   userList end!!!");
 		
@@ -313,7 +307,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	@RequestMapping(value = "/join")
 	public String join(HttpServletRequest re, HttpServletResponse response, 
 			ModelMap model, HttpSession session) throws Exception {		
 		
@@ -322,7 +316,7 @@ public class MainController {
 		String user_id = CmmUtil.nvl(re.getParameter("user_id"));
 		String user_name = CmmUtil.nvl(re.getParameter("user_name"));
 		String email = CmmUtil.nvl(re.getParameter("email"));
-		String password = CmmUtil.nvl(re.getParameter("password"));
+		String password = AES256Util.strEncode(re.getParameter("password"));
 		String addr = CmmUtil.nvl(re.getParameter("addr"));
 		
 		log.info("user_id : " + user_id);
@@ -332,6 +326,7 @@ public class MainController {
 		log.info("user_name : " + user_name);
 		
 		mainDTO mDTO = new mainDTO();
+		
 		
 		mDTO.setUser_id(user_id);
 		mDTO.setUser_name(user_name);
@@ -452,7 +447,7 @@ public class MainController {
 		log.info(this.getClass() + "login_proc start!!!");
 
 		String user_id = re.getParameter("user_id");
-		String password = /*SAH256.SAH256_encode(*/re.getParameter("password");
+		String password = AES256Util.strEncode(re.getParameter("password"));
 
 		log.info(getClass() + "user_id : " + user_id);
 		log.info(getClass() + "password : " + password);
@@ -594,7 +589,7 @@ public class MainController {
 		
 		String user_no = CmmUtil.nvl((String)session.getAttribute("session_user_no"));
 		
-		String password = CmmUtil.nvl(/*(SHA256.SHA256_encode(*/re.getParameter("password"));
+		String password = AES256Util.strEncode(re.getParameter("password"));
 
 		log.info("user_no : " + user_no);
 		log.info("password : " + password);
