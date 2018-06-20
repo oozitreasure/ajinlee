@@ -358,7 +358,7 @@ div.blueTable {
         $('.down-triangle').css('border-top',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
         $('.up-triangle').css('border-bottom',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
         }
-        $('#wd-wrapper').sinusoid({
+/*         $('#wd-wrapper').sinusoid({
             minImgW: 80,
             maxImgW: 130,
             minImgAngle: -20,
@@ -369,7 +369,7 @@ div.blueTable {
                 T: 1700,
                 P: 0
             }
-        });
+        }); */
         $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                 var target = $(this.hash);

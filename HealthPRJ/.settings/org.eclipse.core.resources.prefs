@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/view/home.jsp=UTF-8
+encoding//WebContent/WEB-INF/view/parkList.jsp=UTF-8
 encoding//src/com/health/controller/MainController.java=UTF-8
 encoding//src/com/health/util/AES256Util.java=UTF-8
 encoding//src/com/health/util/MailUtil.java=UTF-8

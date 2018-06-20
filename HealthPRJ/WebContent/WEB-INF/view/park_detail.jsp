@@ -188,7 +188,7 @@ function commentList(){
 		    $.each(data,function(index,value){
 		    	
 		    	if(value.secret_check == "1"){
-					if (user_no == fi_reg_no || user_no == value.reg_no || user_name == "관리자"){
+					if (user_no == reg_no || user_no == value.user_no || user_name == "관리자"){
 							
 							   output += "<div class='row' id='updateCommentForm"+value.prc_no+"'>";
 					    	   output += "<div class='post-preview' style='width:100%'>";

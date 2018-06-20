@@ -173,22 +173,27 @@ function commentList(){
 		       
 		    $.each(data,function(index,value){
 		    	if(value.secret_check == "1"){
-					if (user_no == fi_reg_no || user_no == value.reg_no || user_name == "관리자"){
+		    	
+		    		if (user_no == reg_no || user_no == value.reg_no || user_name == "관리자"){
 						
 							   output += "<div class='row' id='updateCommentForm"+value.frc_no+"'>";
 					    	   output += "<div class='post-preview' style='width:100%'>";
 					    	   output += 	   	"<hr/>&emsp;<font color='red' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/>";
+					    	   
 					    	   output +=		"&emsp; <font style='font-family: 조선일보명조' size='4'><b>" + value.user_name +"</b>&emsp; | &emsp;" + value.reg_dt;
 					    	   if(user_no == value.user_no || user_name == "관리자" ){ 
 					    		   
 					    	   output +=		"<input type='button' value='수정' onclick='commentUpdateForm("+value.frc_no+",\""+value.content+"\")'/>&nbsp;&nbsp;"
-						    	output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.frc_no+")'/>";
+						    	
+					    	   output +=	    "<input type='button' value='삭제' onclick='commentDelete("+value.frc_no+")'/>";
 					    	   	}
+					    	   
 					    	   output += 		"</font><br/>";
 					    	   output += 		"&emsp;<font style='font-family: 조선일보명조' size='3'>" + value.content + "</font></div>";
 				               output += "</div>";
 						
 						}else{
+							
 							output += 	"<div class='row'>";
 				    	    output += 	"<div class='post-preview' style='width:100%'>"
 				    	    output +=	"<hr><font color='gray' style='font-family: 조선일보명조' size='3'><b> 비밀댓글 입니다. </b></font><br/></div>";

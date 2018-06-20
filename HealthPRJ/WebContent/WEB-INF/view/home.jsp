@@ -25,7 +25,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <meta name="author" content="">
     <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
 
-    <title>공원정보리스트</title>
+    <title>ParkMation</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
