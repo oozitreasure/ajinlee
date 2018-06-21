@@ -822,7 +822,7 @@ public class MainController {
 	
 	
 	
-	   @RequestMapping(value = "/freeUpdate")
+	   @RequestMapping(value = "/freeUpdate", method=RequestMethod.POST)
 	   public String FreeUpdate(@RequestParam String fr_no, HttpSession session, HttpServletRequest request, HttpServletResponse response,
 	         ModelMap model) throws Exception {
 
@@ -886,8 +886,8 @@ public class MainController {
 	      return "/alert";
 	   }
 	   
-		@RequestMapping(value="/parkSearch")
-		public @ResponseBody List<parkDTO> parkSearch(@RequestParam(value = "search") String search)throws Exception{
+		@RequestMapping(value="/parkSearch", method=RequestMethod.GET)
+		public @ResponseBody List<parkDTO> parkSearch(@RequestParam("search") String search)throws Exception{
 			
 			log.info(this.getClass().getName() + "   ParkSearch start!!!");
 			
@@ -1028,7 +1028,7 @@ public class MainController {
 		      
 		      if (req != 0) {
 		         model.addAttribute("msg", "등록되었습니다.");
-		         model.addAttribute("url", "/parkList.do");
+		         model.addAttribute("url", "/parkList2.do");
 		      } else {
 		         model.addAttribute("msg", "실패하였습니다.");
 		         model.addAttribute("url", "/park_insert.do");

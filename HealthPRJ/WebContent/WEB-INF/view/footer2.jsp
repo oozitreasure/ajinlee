@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<footer id="footer" style="position: fixed;bottom: 0; right: 0; width: 100%;">
+<footer id="footer">
 
     <div class="footer-copyright">
         <div class="container">

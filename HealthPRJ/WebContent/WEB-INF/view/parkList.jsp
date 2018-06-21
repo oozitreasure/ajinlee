@@ -23,7 +23,6 @@ String SESSION_USER_NO = CmmUtil.nvl((String)session.getAttribute("session_user_
 String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_user_name"));
 %>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +32,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <meta name="author" content="">
     <link rel="shortcut icon" href="/resources/cupid/images/favicon.png">
 
-    <title>공원정보리스트</title>
+    <title>ParkMation</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/cupid/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -52,8 +51,8 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
     <![endif]-->
 
 </head>
- <script src="/resources/js/jquery-3.3.1.min.js"></script>
-<script>
+
+<script type="text/javascript">
  
   function openLogin()
  {
@@ -75,18 +74,9 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
      window.open("map.do", "childForm", "width=1220, height=730, left=350, top=120, resizable = no, scrollbars = no"); 
    
  }	
- 
- function parkIn(){
-		
-	   location.href="park.do";
-	}
- 
- function freeIn(){
-		
-	   location.href="freeList.do";
-	}
- 
+
  </script>
+
  
  <script>
 function doDetail(n){
@@ -102,59 +92,193 @@ function parkIn(){
 
 
 <script>
-var str = 'http://localhost:8080/map.do#연천군';
-var sta = 'http://localhost:8080/map.do#동두천시'
-//document.write(str);
-var stq = str.substring( 29 , 33);
-var stb = sta.substring( 29, 34);
-//document.write(stq);
 	
-function onSearch(){
-	var contents = "";
-	var cnt = 10;
-	var search = stb;
- 		$.ajax({
- 			url : "/parkSearch.do",
- 			method : "get",
- 			data : {'search' : search},
- 			datatype : "json", 
- 			success : function(data) {
- 					var contents = "";
- 					var content = "";
-					contents += "<div class='divTable blueTable' style='width:100%'>";
-					contents += "<div class='divTableHeading'>";
-					contents += "<div class='divTableRow'>";
-					contents += "<div class='divTableHead'>공원명</div>";
-					contents += "<div class='divTableHead'>공원주소</div>";
-					contents += "<div class='divTableHead'>관리기관명</div>";
-					contents += "<div class='divTableHead'>전화번호</div></div></div>";
-					contents += "<div class='divTableBody'>";
-				$.each(data, function (key, value) {
-					console.log(key);
-					console.log(value);
-					content += "<div class='divTableRow'>";
-		 			content += "<div class='divTableCell' onclick=doDetail('"+value.admin_no+"');>"+value.park_name+"</div>";
-		 			console.log(value.admin_no);
-		 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
-		 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
-		 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
- 				});
-				content += "</div></div>";
-				if(content == ""){
-					content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
-		 			$('#divTable').html(content);
-		 			$('#delete').remove();
-				}else{
- 					$('#divTable').html(contents+content);
-				}
- 				if ((data).length<10) {
- 					$('#addview').remove();
- 				}
- 			}
- 			
- 		});
-	};
+var sta = window.location.href;
+console.log(sta);
+
+var stb = sta.substring( 35, 62);
+console.log(stb);
+
+if(stb == "%EB%8F%99%EB%91%90%EC%B2%9C"){
 	
+	var search = "동두천시";
+
+}else if(stb == "%ED%8C%8C%EC%A3%BC%EC%8B%9C"){
+	
+	var search = "파주시";
+	
+}else if(stb == "%EC%97%B0%EC%B2%9C%EA%B5%B0"){
+	
+	var search = "연천군";
+	
+}else if(stb == "%EC%96%91%EC%A3%BC%EC%8B%9C"){
+	
+	var search="양주시";
+	
+}else if(stb == "%EA%B3%A0%EC%96%91%EC%8B%9C"){
+	
+	var search="고양시";
+	
+}else if(stb == "%ED%8F%89%ED%83%9D%EC%8B%9C"){
+	
+	var search="평택시";
+	
+}else if(stb == "%EC%95%88%EC%84%B1%EC%8B%9C"){
+	
+	var search="안성시";
+	
+}else if(stb == "%EC%9D%B4%EC%B2%9C%EC%8B%9C"){
+	
+	var search = "이천시";
+	
+}else if(stb == "%ED%8F%AC%EC%B2%9C%EC%8B%9C"){
+	
+	var search="포천시";
+	
+}else if(stb == "%EA%B0%80%ED%8F%89%EA%B5%B0"){
+	
+	var search="가평군";
+	
+}else if(stb == "%EA%B5%B0%ED%8F%AC%EC%8B%9C"){
+	
+	var search="군포시";
+	
+}else if(stb == "%EC%95%88%EC%96%91%EC%8B%9C"){
+	
+	var search="안양시";
+	
+}else if(stb == "%EC%88%98%EC%9B%90%EC%8B%9C"){
+	
+	var search="수원시";
+	
+}else if(stb == "%ED%99%94%EC%84%B1%EC%8B%9C"){
+	
+	var search="화성시";
+	
+}else if (stb == "%EC%98%A4%EC%82%B0%EC%8B%9C"){
+	
+	var search="오산시";
+	
+}else if (stb == "%EC%9A%A9%EC%9D%B8%EC%8B%9C"){
+	
+	var search="용인시";
+	
+}else if(stb =="%EC%97%AC%EC%A3%BC%EA%B5%B0"){
+	
+	var search="여주군";
+}else if (stb =="%EC%96%91%ED%8F%89%EA%B5%B0"){
+	
+	var search="양평군";
+	
+}else if (stb == "%EC%95%88%EC%82%B0%EC%8B%9C"){
+	
+	var search="안산시";
+	
+}else if(stb == "%EC%8B%9C%ED%9D%A5%EC%8B%9C"){
+	
+	var search="시흥시";
+	
+}else if (stb == "%EA%B4%91%EB%AA%85%EC%8B%9C"){
+	
+	var search="광명시";
+	
+}else if (stb == "%EB%B6%80%EC%B2%9C%EC%8B%9C"){
+	
+	var search="부천시";
+	
+}else if (stb == "%EA%B3%BC%EC%B2%9C%EC%8B%9C"){
+	
+	var search="과천시";
+	
+}else if(stb == "%EC%9D%98%EC%99%95%EC%8B%9C"){
+	
+	var search="의왕시";
+	
+}else if (stb == "%EA%B9%80%ED%8F%AC%EC%8B%9C"){
+	
+	var search="김포시";
+	
+}else if (stb == "%EC%9D%98%EC%A0%95%EB%B6%80"){
+	
+	var search="의정부시";
+	
+}else if (stb == "%EB%82%A8%EC%96%91%EC%A3%BC"){
+	
+	var search="남양주시";
+	
+}else if(stb =="%EA%B4%91%EC%A3%BC%EC%8B%9C"){
+	
+	var search="광주시";
+	
+}else if( stb == "%EC%84%B1%EB%82%A8%EC%8B%9C"){
+	
+	var search="성남시";
+	
+}else if (stb == "%ED%95%98%EB%82%A8%EC%8B%9C"){
+	
+	var search="하남시";
+	
+}else if (stb == "%EA%B5%AC%EB%A6%AC%EC%8B%9C"){
+	
+	var search="구리시";
+	
+}
+
+
+	function doSearch() {
+		
+ 		
+	 		$.ajax({
+	 			
+	 			url : "/parkSearch.do",
+	 			method : "get",
+	 			data : {'search' : search},
+	 			datatype : "json", 
+	 			success : function(data) {
+	 				
+	 				
+	 					var contents = "";
+	 					var content = "";
+	 					
+						contents += "<div class='divTable blueTable' style='width:100%'>";
+						contents += "<div class='divTableHeading'>";
+						contents += "<div class='divTableRow'>";
+						contents += "<div class='divTableHead'>공원명</div>";
+						contents += "<div class='divTableHead'>공원주소</div>";
+						contents += "<div class='divTableHead'>관리기관명</div>";
+						contents += "<div class='divTableHead'>전화번호</div></div></div>";
+						contents += "<div class='divTableBody'>";
+					$.each(data, function (key, value) {
+						content += "<div class='divTableRow'>";
+						console.log(value.admin_no);
+			 			content += "<div class='divTableCell' onclick=doDetail('"+value.admin_no +"');>"+value.park_name+"</div>";
+			 			console.log("admin_no : " + value.admin_no);
+			 			content += "<div class='divTableCell'>"+value.addr1+"</div>";
+			 			content += "<div class='divTableCell'>"+value.admin_name+"</div>";
+			 			content += "<div class='divTableCell'>"+value.number+"</div></div>";
+	 				});
+					content += "</div></div>";
+					
+					if(content == ""){
+						
+						content += '<div>"'+search+'" 에 해당하는 검색결과가 없습니다.</div>';
+						
+			 			$('#divTable').html(content);
+			 			$('#delete').remove();
+			 			
+					}else{
+						
+	 				$('#divTable').html(contents+content);
+	 				
+					}
+					
+	 				if ((data).length<10) {
+	 					$('#addview').remove();
+	 				}
+	 			}
+	 			
+	 		});
+		}
 </script>
 
 
@@ -232,17 +356,18 @@ div.blueTable {
 .divTableBody { display: table-row-group;}
 </style> 
  
-<body data-spy="scroll" data-target="#topnav" onload="onSearch()">
+<body data-spy="scroll" data-target="#topnav" onload="doSearch()">
 
 <div class="navbar navbar-color navbar-fixed-top" id="topnav">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon icon-reorder"></span>
+
             </button>
             <!-- <a class="navbar-brand" href="#">ParkMation</a> -->
         </div>
-        <div class="navbar-collapse collapse">
+	<div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="home.do">홈</a></li>
                 <% if (SESSION_USER_ID.equals(" ")||SESSION_USER_ID.equals("")) {%>
@@ -256,7 +381,7 @@ div.blueTable {
                 <%}else{ %> 
                <%} %>
             <%} %>
-            <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
+             <% if (!SESSION_USER_ID.equals("")&&!SESSION_USER_ID.equals(" ")) {%>
             <li><a onclick="openMap()">지역검색</a></li>
             <li><a href="parkList2.do">공원정보</a></li>
             <li><a href="freeList.do">자유게시판</a></li>
@@ -264,7 +389,6 @@ div.blueTable {
             </ul>
 
         </div>
-        <!--/.navbar-collapse -->
     </div>
 </div>
 
@@ -278,8 +402,8 @@ div.blueTable {
 <br>
 <div align="center">
 <div>
-<input type="text"  id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
-<input type="button" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;">
+<!-- <input type="text" id="searchbox" style="width:25%; height:50px;" placeholder="공원이름 or 주소"/>
+<input type="button" value="검색" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:70px; height:50px; border-radius: 3px;"> -->
 </div>
 <br>
 <div class="divTable blueTable" id="divTable">
@@ -309,80 +433,12 @@ div.blueTable {
 <div align="right">
 <input type="button" value="글쓰기" onclick="parkIn()" style="border:1px; background-color:#e8efe8; color:#1c1c1c; width:75px; height:40px; border-radius: 3px;" />
 </div>
-<!-- <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a> -->
 </div>
 </div>
 </div>
 
 <br>
 
-
-<footer id="footer">
-
-    <div class="footer-copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <a class="logo" href="/resources/cupid/index.html">
-                        <img src="/resources/cupid/images/logo.png" alt="Template Eden">
-                    </a>
-                </div>
-                <div class="col-md-5">
-                    <p>&copy; Copyright 2013 by Template Eden. All Rights Reserved.</p>
-                </div>
-                <div class="col-md-5">
-                    <nav id="footer-menu">
-                        <ul>
-                            <li><a href="#">FAQ's</a></li>
-                            <li><a href="#">Sitemap</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="/resources/cupid/js/jquery.js"></script>
-<script src="/resources/cupid/bootstrap/js/bootstrap.min.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        if($(window).width()>960){
-        var tw = $('.triangles').width()/7+32;
-        var ta = tw/2+22;
-        $('.down-triangle').css('border-top',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
-        $('.up-triangle').css('border-bottom',tw+'px solid rgba(0,0,0,0.8)').css('border-left',ta+'px solid transparent').css('border-right',ta+'px solid transparent');
-        }
-/*         $('#wd-wrapper').sinusoid({
-            minImgW: 80,
-            maxImgW: 130,
-            minImgAngle: -20,
-            maxImgAngle: 20,
-            leftFactor: 60,
-            sinusoidFunction: {
-                A: 70,
-                T: 1700,
-                P: 0
-            }
-        }); */
-        $('a[href*=#]:not([href=#]):not([rel=crs])').click(function() {
-            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-</script>
+<jsp:include page="footer2.jsp" flush="false"></jsp:include>
 </body>
 </html>

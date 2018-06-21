@@ -70,7 +70,7 @@ String SESSION_USER_NAME = CmmUtil.nvl((String)session.getAttribute("session_use
 
  </script>
  
-<body data-spy="scroll" data-target="#topnav">
+<body data-spy="scroll" data-target="#topnav" onload="doSearch()">
 
 <div class="navbar navbar-color navbar-fixed-top" id="topnav">
     <div class="container">
