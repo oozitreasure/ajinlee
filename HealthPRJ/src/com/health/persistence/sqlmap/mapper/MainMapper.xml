@@ -4,200 +4,200 @@
 <mapper namespace="com.health.persistence.mapper.MainMapper">
 
 <insert parameterType ="mainDTO" id="insertJoin">
-INSERT INTO USER_INFO
+INSERT INTO leeajin.USER_INFO
 ( USER_NO, USER_ID, USER_NAME, PASSWORD, EMAIL, ADDR, REG_NO, REG_DT, AUTH )
- VALUES ( (SELECT IFNULL(MAX(CAST(UI.USER_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
-  #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(CAST(UI.REG_NO AS UNSIGNED)),0)+1 FROM USER_INFO UI),
+ VALUES ( (SELECT IFNULL(MAX(CAST(UI.USER_NO AS UNSIGNED)),0)+1 FROM leeajin.USER_INFO UI),
+  #{user_id}, #{user_name}, #{password}, #{email}, #{addr},(SELECT IFNULL(MAX(CAST(UI.REG_NO AS UNSIGNED)),0)+1 FROM leeajin.USER_INFO UI),
    NOW(), 'u' )
 
 </insert>
 
 <select parameterType="mainDTO" id="getUserInfo" resultType="mainDTO">
 SELECT USER_NO, USER_ID, USER_NAME, PASSWORD FROM 
-USER_INFO WHERE USER_ID = #{user_id} AND PASSWORD = #{password}
+leeajin.USER_INFO WHERE USER_ID = #{user_id} AND PASSWORD = #{password}
 </select>
 
 <select parameterType="mainDTO" id="getUserid" resultType="mainDTO">
-SELECT USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_NAME = #{user_name} AND EMAIL = #{email}
+SELECT USER_ID, USER_NAME, EMAIL FROM leeajin.USER_INFO WHERE USER_NAME = #{user_name} AND EMAIL = #{email}
 </select>
 
 
 <select parameterType="String" id="getUserInfoOne" resultType="mainDTO">
- SELECT * FROM USER_INFO WHERE USER_NO = #{user_no} 
+ SELECT * FROM leeajin.USER_INFO WHERE USER_NO = #{user_no} 
 </select>
 
 <update parameterType="mainDTO" id="getupdateUserInfo">
-UPDATE USER_INFO SET EMAIL = #{email}, ADDR = #{addr}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE USER_NO = #{user_no}
+UPDATE leeajin.USER_INFO SET EMAIL = #{email}, ADDR = #{addr}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE USER_NO = #{user_no}
 </update>
 
 <delete parameterType="mainDTO" id="deleteUserInfo">
-DELETE FROM USER_INFO WHERE USER_NO = #{user_no}
+DELETE FROM leeajin.USER_INFO WHERE USER_NO = #{user_no}
 </delete>
 
 <select id="getUserList" resultType="mainDTO">
-SELECT * FROM USER_INFO ORDER BY CAST(USER_NO AS UNSIGNED) DESC
+SELECT * FROM leeajin.USER_INFO ORDER BY CAST(USER_NO AS UNSIGNED) DESC
 </select>
 
 <select id="getParkList" resultType="parkDTO">
-SELECT * FROM APARK_INFO ORDER BY CAST(ADMIN_NO AS UNSIGNED) ASC 
+SELECT * FROM leeajin.APARK_INFO ORDER BY CAST(ADMIN_NO AS UNSIGNED) ASC 
 </select>
 
 <select id="getFreeList" resultType="freeDTO">
-SELECT * FROM FREE_INFO ORDER BY CAST(FR_NO AS UNSIGNED) DESC
+SELECT * FROM leeajin.FREE_INFO ORDER BY CAST(FR_NO AS UNSIGNED) DESC
 </select>
 
 <select parameterType="mainDTO" id="getPassword" resultType="mainDTO">
 
-SELECT USER_NO, USER_ID, USER_NAME, EMAIL FROM USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
+SELECT USER_NO, USER_ID, USER_NAME, EMAIL FROM leeajin.USER_INFO WHERE USER_ID = #{user_id} AND USER_NAME = #{user_name} AND EMAIL = #{email}
 </select>
 
 <select parameterType="String" id="getFree" resultType="freeDTO">
- SELECT * FROM FREE_INFO WHERE FR_NO = #{fr_no}
+ SELECT * FROM leeajin.FREE_INFO WHERE FR_NO = #{fr_no}
 </select>
 
 
 <select parameterType="String" id="getPark" resultType="parkDTO">
- SELECT * FROM APARK_INFO WHERE ADMIN_NO = #{admin_no} 
+ SELECT * FROM leeajin.APARK_INFO WHERE ADMIN_NO = #{admin_no} 
 </select>
 
 <insert parameterType="freeDTO" id="free_insert_proc">
-INSERT INTO FREE_INFO ( FR_NO, USER_NAME, TITLE, CONTENT, CNT, REG_NO, REG_DT, USER_ID )
-VALUES( (SELECT IFNULL(MAX(CAST(FI.FR_NO AS UNSIGNED)),0)+1 FROM FREE_INFO FI), #{user_name}, #{title}, #{content}, 0 , #{reg_no}, NOW(), #{user_id})
+INSERT INTO leeajin.FREE_INFO ( FR_NO, USER_NAME, TITLE, CONTENT, CNT, REG_NO, REG_DT, USER_ID )
+VALUES( (SELECT IFNULL(MAX(CAST(FI.FR_NO AS UNSIGNED)),0)+1 FROM leeajin.FREE_INFO FI), #{user_name}, #{title}, #{content}, 0 , #{reg_no}, NOW(), #{user_id})
 </insert>
 
 
 <insert parameterType="parkDTO" id="park_insert_proc">
-INSERT INTO APARK_INFO ( ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, ADDR2, LAT, HAR, PARK_AREA, PARK_EST1, PARK_EST2, PARK_EST3, PARK_EST4, PARK_EST5, ADMIN_NAME, NUMBER )
+INSERT INTO leeajin.APARK_INFO ( ADMIN_NO, PARK_NAME, PARK_DIV, ADDR1, ADDR2, LAT, HAR, PARK_AREA, PARK_EST1, PARK_EST2, PARK_EST3, PARK_EST4, PARK_EST5, ADMIN_NAME, NUMBER )
 VALUES( #{admin_no}, #{park_name}, #{park_div}, #{addr1}, #{addr2}, #{lat}, #{har}, #{park_area}, #{park_est1}, #{park_est2}, #{park_est3}, #{park_est4}, #{park_est5}, #{admin_name}, #{number})
 </insert>
 
 
 <update id="updatePassword">
-UPDATE USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
+UPDATE leeajin.USER_INFO SET PASSWORD = #{password} WHERE USER_NO = #{user_no}
 </update>
 
 <update parameterType="freeDTO" id="updateFree">
-UPDATE FREE_INFO SET TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
+UPDATE leeajin.FREE_INFO SET TITLE = #{title}, CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FR_NO = #{fr_no}
 </update>
 
 <select parameterType="parkDTO" id="getparkSearch" resultType="parkDTO">
-SELECT ADMIN_NO, PARK_NAME, ADDR1, ADMIN_NAME, NUMBER FROM APARK_INFO WHERE (PARK_NAME LIKE #{search} OR ADDR1 LIKE #{search}) ORDER BY ADMIN_NO ASC
+SELECT ADMIN_NO, PARK_NAME, ADDR1, ADMIN_NAME, NUMBER FROM leeajin.APARK_INFO WHERE (PARK_NAME LIKE #{search} OR ADDR1 LIKE #{search}) ORDER BY ADMIN_NO ASC
 </select>
 
 <select parameterType="freeDTO" id="getfreeSearch" resultType="freeDTO">
-SELECT FR_NO, TITLE, USER_NAME, REG_DT, CNT FROM FREE_INFO WHERE (TITLE LIKE #{search} OR USER_NAME LIKE #{search}) ORDER BY FR_NO ASC
+SELECT FR_NO, TITLE, USER_NAME, REG_DT, CNT FROM leeajin.FREE_INFO WHERE (TITLE LIKE #{search} OR USER_NAME LIKE #{search}) ORDER BY FR_NO ASC
 </select>
 
 <select parameterType="mainDTO" id="getuserSearch" resultType="mainDTO">
-SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM USER_INFO WHERE (USER_NAME LIKE #{search} OR USER_ID LIKE #{search}) ORDER BY USER_NO ASC
+SELECT USER_NO, USER_ID, USER_NAME, EMAIL, ADDR FROM leeajin.USER_INFO WHERE (USER_NAME LIKE #{search} OR USER_ID LIKE #{search}) ORDER BY USER_NO ASC
 </select>
 
 <update parameterType="mainDTO" id="delete_user">
-DELETE FROM USER_INFO WHERE USER_NO =#{user_no}
+DELETE FROM leeajin.USER_INFO WHERE USER_NO =#{user_no}
 </update>
 
 <update id="apark_update">
-UPDATE APARK_INFO SET PARK_NAME = #{park_name}, PARK_DIV = #{park_div}, ADDR1 = #{addr1}, ADDR2 = #{addr2}, LAT = #{lat}, HAR = #{har}, PARK_AREA = #{park_area}, PARK_EST1 = #{park_est1}, PARK_EST2 = #{park_est2}, PARK_EST3 = #{park_est3}, PARK_EST4 = #{park_est4}, PARK_EST5 = #{park_est5}, ADMIN_NAME = #{admin_name}, NUMBER = #{number} WHERE ADMIN_NO = #{admin_no}
+UPDATE leeajin.APARK_INFO SET PARK_NAME = #{park_name}, PARK_DIV = #{park_div}, ADDR1 = #{addr1}, ADDR2 = #{addr2}, LAT = #{lat}, HAR = #{har}, PARK_AREA = #{park_area}, PARK_EST1 = #{park_est1}, PARK_EST2 = #{park_est2}, PARK_EST3 = #{park_est3}, PARK_EST4 = #{park_est4}, PARK_EST5 = #{park_est5}, ADMIN_NAME = #{admin_name}, NUMBER = #{number} WHERE ADMIN_NO = #{admin_no}
 </update>
 
 <delete parameterType="parkDTO" id="parkDelete">
-DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
+DELETE FROM leeajin.APARK_INFO WHERE ADMIN_NO = #{admin_no}
 </delete>
 
 <delete parameterType="freeDTO" id="getfreeDelete">
-DELETE FROM FREE_INFO WHERE FR_NO = #{fr_no}
+DELETE FROM leeajin.FREE_INFO WHERE FR_NO = #{fr_no}
 </delete>
 
 <delete parameterType="parkDTO" id="getparkDelete">
-DELETE FROM APARK_INFO WHERE ADMIN_NO = #{admin_no}
+DELETE FROM leeajin.APARK_INFO WHERE ADMIN_NO = #{admin_no}
 </delete>
 
 
 <insert parameterType="HoDTO" id="favoriteInsert">
-INSERT INTO HO_PARK ( HO_NO, USER_NO, ADMIN_NO, REG_NO, REG_DT, PARK_NAME, ADDR )
- VALUES((SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), #{user_no}, #{admin_no},
-  (SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM HO_PARK HI), NOW(), #{park_name}, #{addr} )
+INSERT INTO leeajin.HO_PARK ( HO_NO, USER_NO, ADMIN_NO, REG_NO, REG_DT, PARK_NAME, ADDR )
+ VALUES((SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM leeajin.HO_PARK HI), #{user_no}, #{admin_no},
+  (SELECT IFNULL(MAX(CAST(HI.HO_NO AS UNSIGNED)),0)+1 FROM leeajin.HO_PARK HI), NOW(), #{park_name}, #{addr} )
  </insert>
  
  
 <delete parameterType="HoDTO" id="favoriteDelete"> 
-DELETE FROM HO_PARK WHERE USER_NO = #{user_no} AND ADMIN_NO = #{admin_no} 
+DELETE FROM leeajin.HO_PARK WHERE USER_NO = #{user_no} AND ADMIN_NO = #{admin_no} 
 </delete>
 
 <select parameterType="mainDTO" id="getUseridCheck" resultType="int"> 
-SELECT COUNT(*) FROM USER_INFO WHERE USER_ID = #{user_id} 
+SELECT COUNT(*) FROM leeajin.USER_INFO WHERE USER_ID = #{user_id} 
 </select>
 
 
 <select parameterType="HoDTO" id="favoriteSelectList" resultType="HoDTO"> 
-SELECT HO_NO FROM HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no} 
+SELECT HO_NO FROM leeajin.HO_PARK WHERE ADMIN_NO = #{admin_no} AND USER_NO = #{user_no} 
 </select>
 
 
 <select id="list" resultType="fiDTO"> 
 SELECT FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME FROM 
-FR_COMMENT WHERE FR_NO = #{fr_no} ORDER BY FRC_NO 
+leeajin.FR_COMMENT WHERE FR_NO = #{fr_no} ORDER BY FRC_NO 
 </select>
 
 <select id="getFavoriteList" resultType="HoDTO" parameterType="String">
-	SELECT * FROM HO_PARK WHERE USER_NO = #{user_no}
+	SELECT * FROM leeajin.HO_PARK WHERE USER_NO = #{user_no}
 </select>
 
 
 <select id="plist" resultType="piDTO"> 
 SELECT PRC_NO, ADMIN_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME FROM 
-PR_COMMENT WHERE ADMIN_NO = #{admin_no} ORDER BY PRC_NO 
+leeajin.PR_COMMENT WHERE ADMIN_NO = #{admin_no} ORDER BY PRC_NO 
 </select>
 
 
 <insert parameterType="fiDTO" id="insert"> 
-INSERT INTO FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
-VALUES( (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FR), 
-#{fr_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM FR_COMMENT FR),
+INSERT INTO leeajin.FR_COMMENT ( FRC_NO, FR_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
+VALUES( (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM leeajin.FR_COMMENT FR), 
+#{fr_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(FR.FRC_NO AS UNSIGNED)),0)+1 FROM leeajin.FR_COMMENT FR),
  NOW(), #{user_name} ) 
 </insert>
 
  <update parameterType="fiDTO" id="update"> 
-UPDATE FR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FRC_NO = #{frc_no} 
+UPDATE leeajin.FR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE FRC_NO = #{frc_no} 
 </update>
 
 <delete parameterType="fiDTO" id="delete"> 
-DELETE FROM FR_COMMENT WHERE FRC_NO = #{frc_no} 
+DELETE FROM leeajin.FR_COMMENT WHERE FRC_NO = #{frc_no} 
 </delete>
 
 <delete parameterType="fiDTO" id="codelete"> 
-DELETE FROM FR_COMMENT WHERE FR_NO = #{fr_no} 
+DELETE FROM leeajin.FR_COMMENT WHERE FR_NO = #{fr_no} 
 </delete>
 
 <select id="getChart" parameterType="String" resultType="HoDTO">
 	SELECT SUBSTRING_INDEX(ADDR, ' ', 1) DATA, COUNT(admin_no) NUM
-	FROM HO_PARK
+	FROM leeajin.HO_PARK
 	WHERE USER_NO = #{user_no}
 	GROUP BY DATA
 </select>
 
 <update parameterType="freeDTO" id="updateFreeCnt"> 
-UPDATE FREE_INFO SET CNT = CNT + 1 WHERE FR_NO = #{fr_no} 
+UPDATE leeajin.FREE_INFO SET CNT = CNT + 1 WHERE FR_NO = #{fr_no} 
 </update>
 
 
 <insert parameterType="piDTO" id="pinsert"> 
-INSERT INTO PR_COMMENT ( PRC_NO, ADMIN_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
-VALUES( (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM PR_COMMENT PR), 
-#{admin_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM PR_COMMENT PR),
+INSERT INTO leeajin.PR_COMMENT ( PRC_NO, ADMIN_NO, USER_NO, CONTENT, SECRET_CHECK, REG_NO, REG_DT, USER_NAME ) 
+VALUES( (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM leeajin.PR_COMMENT PR), 
+#{admin_no}, #{user_no}, #{content}, #{secret_check}, (SELECT IFNULL(MAX(CAST(PR.PRC_NO AS UNSIGNED)),0)+1 FROM leeajin.PR_COMMENT PR),
  NOW(), #{user_name} ) 
 </insert>
 
  <update parameterType="piDTO" id="pupdate"> 
-UPDATE PR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE PRC_NO = #{prc_no} 
+UPDATE leeajin.PR_COMMENT SET CONTENT = #{content}, CHG_NO = #{chg_no}, CHG_DT = NOW() WHERE PRC_NO = #{prc_no} 
 </update>
 
 <delete parameterType="piDTO" id="pdelete"> 
-DELETE FROM PR_COMMENT WHERE PRC_NO = #{prc_no} 
+DELETE FROM leeajin.PR_COMMENT WHERE PRC_NO = #{prc_no} 
 </delete>
 
 <delete parameterType="piDTO" id="pcodelete"> 
-DELETE FROM PR_COMMENT WHERE ADMIN_NO = #{pr_no} 
+DELETE FROM leeajin.PR_COMMENT WHERE ADMIN_NO = #{pr_no} 
 </delete>
 
 
